@@ -8,13 +8,36 @@ Give me a second.
 
 I was doing something.
 
-<p align="center">
-  <img src="./assets/ayesha-desktop.svg" width="100%" alt="Ayesha's desktop">
-</p>
+<br>
+
+<table>
+<tr>
+<td>
+
+```text
+╭─────────────────────────────────────────────────────────────╮
+│  AYESHA'S DESKTOP                              ● ● ●        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  >_ coding        ▣ reading        ~ making cha             │
+│                                                             │
+│  ◌ ML rabbit hole     ☢ nuclear accidents                  │
+│  ▧ Goodreads          ? questionable decisions              │
+│                                                             │
+│        17 tabs currently open.                              │
+│        4 of them are important.                              │
+│        I don't know which 4.                                 │
+│                                                             │
+╰─────────────────────────────────────────────────────────────╯
+```
+
+</td>
+</tr>
+</table>
 
 ### ⌁ Anyway.
 
-I'm Ayesha.
+I'm **Ayesha**.
 
 I build software, mostly backend stuff, and lately I've been getting curious about **how AI actually works**.
 
@@ -22,30 +45,50 @@ I build software, mostly backend stuff, and lately I've been getting curious abo
 
 # ⟡ Things I've built
 
-## `01` ▸ CareerPilot
+<table>
+<tr>
+<td width="33%" valign="top">
 
-An AI-powered career assistant.
+### `01`
 
-The idea was simple:
+## [CareerPilot](YOUR_CAREERPILOT_REPO_LINK)
 
-**give the AI useful information before asking it to answer.**
+An AI-powered career assistant built around **RAG**.
+
+The idea:
+
+> Give the AI useful information before asking it to answer.
 
 ```text
-documents → embeddings → search → relevant information → AI → answer
+documents
+    ↓
+embeddings
+    ↓
+search
+    ↓
+AI
+    ↓
+answer
 ```
 
-Then came the important question:
+And then:
 
 > **Why did it retrieve THAT?**
 
-That's what got me interested in retrieval, embeddings, semantic search and RAG.
+That's what got me interested in retrieval, embeddings and semantic search.
 
-**Built with:**
-`FastAPI` · `ChromaDB` · `Sentence Transformers` · `Redis` · `Docker`
+**Built with**
 
----
+`FastAPI` · `ChromaDB`
+`Sentence Transformers` · `Redis` · `Docker`
 
-## `02` ▸ [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend)
+</td>
+
+<td width="33%" valign="top">
+
+### `02`
+
+## [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend)
 
 A job discovery backend.
 
@@ -57,17 +100,43 @@ The sort of project that starts with:
 
 It wasn't.
 
-**Built with:**
-`FastAPI` · `PostgreSQL` · `SQLAlchemy` · `Alembic` · `spaCy`
+**Built with**
 
----
+`FastAPI` · `PostgreSQL`
+`SQLAlchemy` · `Alembic` · `spaCy`
 
-## `03` ▸ [PAMS Backend](https://github.com/ayeshamashiat/PAMS_Backend)
+**Focus**
 
-A backend system for APIs, business logic and data management.
+REST APIs · NLP · database design
 
-**Built with:**
-`Node.js` · `Express` · `JavaScript`
+</td>
+
+<td width="33%" valign="top">
+
+### `03`
+
+## [PAMS Backend](https://github.com/ayeshamashiat/PAMS_Backend)
+
+A **Postgraduate Academic Management System** backend.
+
+Built to manage postgraduate students, supervisors and thesis workflows.
+
+**Handles**
+
+Student eligibility · supervisor requests · thesis proposals · progress tracking · defense workflows · role-based access
+
+**Roles**
+
+`Admin` · `Student` · `Faculty` · `PGC`
+
+**Built with**
+
+`Node.js` · `Express` · `MongoDB`
+`Mongoose` · `JWT` · `bcrypt` · `Nodemailer`
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -87,21 +156,35 @@ model.fit(X, y)
 
 I'd like to know what that line is actually doing.
 
-Currently working through things like **linear regression, gradient descent, classification and the basics of neural networks**.
+Currently working through:
+
+`Linear Regression` · `Gradient Descent` · `Classification` · `Neural Networks`
 
 Very much a work in progress.
+
+### Next rabbit holes
+
+`RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
 
 ---
 
 # ⌘ My toolbox
 
+<table>
+<tr>
+<td width="50%" valign="top">
+
 ### Languages
 
-| Language       | Mostly used for           |
-| -------------- | ------------------------- |
-| **Python**     | Backend, AI/ML, NLP       |
-| **JavaScript** | Backend, web applications |
-| **SQL**        | Database work             |
+| Language       | Mostly used for       |
+| -------------- | --------------------- |
+| **Python**     | Backend · AI/ML · NLP |
+| **JavaScript** | Backend · Web         |
+| **SQL**        | Database work         |
+
+</td>
+
+<td width="50%" valign="top">
 
 ### Backend
 
@@ -109,21 +192,57 @@ Very much a work in progress.
 
 REST APIs · Authentication · JWT · RBAC · Business Logic
 
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
+
 ### Databases
 
 `PostgreSQL` · `MongoDB` · `MySQL`
 
+Schema design · Queries · Relationships · Migrations
+
+</td>
+
+<td width="50%" valign="top">
+
 ### AI / ML
 
-`NumPy` · `scikit-learn` · `spaCy` · `Sentence Transformers`
+`NumPy` · `scikit-learn`
+`spaCy` · `Sentence Transformers`
 
-Currently exploring:
+Exploring:
 
-`Machine Learning` · `NLP` · `RAG` · `Embeddings` · `Transformers` · `LLMs`
+`RAG` · `Embeddings` · `LLMs`
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
 
 ### Infrastructure
 
-`Docker` · `AWS` · `Nginx` · `GitHub Actions`
+`Docker` · `AWS` · `Nginx`
+`GitHub Actions`
+
+</td>
+
+<td width="50%" valign="top">
+
+### Currently learning
+
+`Machine Learning`
+
+### Next
+
+`LangChain` · `LangGraph`
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -131,32 +250,33 @@ Currently exploring:
 
 <table>
 <tr>
-<td align="center" width="25%">
+<td align="center">
 
-### `17+`
+<samp>REPOSITORIES</samp>
 
-Repositories
+<br>
 
-</td>
-<td align="center" width="25%">
-
-### `3×`
-
-Hackathon Finalist
+# `17+`
 
 </td>
-<td align="center" width="25%">
 
-### `1×`
+<td align="center">
 
-Top 100
+<samp>HACKATHON FINALS</samp>
+
+<br>
+
+# `3×`
 
 </td>
-<td align="center" width="25%">
 
-### `1×`
+<td align="center">
 
-Winning Project
+<samp>TOP 100</samp>
+
+<br>
+
+# `1×`
 
 </td>
 </tr>
@@ -164,65 +284,120 @@ Winning Project
 
 <br>
 
+<table>
+<tr>
+<td>
+
 ```text
-┌──────────────────────────────────────────────────────┐
-│                                                      │
-│  BACKEND              Python · JavaScript             │
-│  DATABASES            PostgreSQL · MongoDB · MySQL    │
-│  AI PROJECTS          3+                              │
-│  RAG PROJECTS         1                               │
-│                                                      │
-│  CURRENTLY LEARNING   Machine Learning                │
-│  CURRENTLY EXPLORING  NLP · RAG · Embeddings          │
-│                                                      │
-└──────────────────────────────────────────────────────┘
+┌─ WHAT I USE ──────────────────────────┐
+
+  PYTHON          Backend · AI/ML · NLP
+  JAVASCRIPT      Backend · Web
+  SQL             Databases
+
+  FASTAPI         APIs
+  NODE.JS         APIs
+  EXPRESS         APIs
+
+  POSTGRESQL      Relational data
+  MONGODB         Document data
+
+  DOCKER          Development / deployment
+
+└───────────────────────────────────────┘
 ```
+
+</td>
+
+<td>
+
+```text
+┌─ WHERE I'M HEADED ────────────────────┐
+
+  CURRENT
+
+  Machine Learning
+  Fundamentals
+
+  NEXT
+
+  RAG
+  LangChain
+  LangGraph
+  LLM workflows
+  Agents
+
+└───────────────────────────────────────┘
+```
+
+</td>
+</tr>
+</table>
 
 ---
 
-# [ACHIEVEMENTS.log]
+# [ ACHIEVEMENTS.log ]
 
-```text
-┌────────────────────────────────────────────────────────────┐
-│                                                            │
-│  [TOP 100]                                                 │
-│  Solvio AI Hackathon 2025                                  │
-│                                                            │
-│  [FINALIST]                                                 │
-│  CodeSprint — Inter-IUT Hackathon                          │
-│                                                            │
-│  [FINALIST]                                                 │
-│  SUST CSE Carnival Hackathon                                │
-│                                                            │
-│  [FINALIST]                                                 │
-│  IUT 12th ICT Fest — Agentic AI Hackathon                  │
-│                                                            │
-└────────────────────────────────────────────────────────────┘
-```
+<table>
+<tr>
+<td>
+
+### `TOP 100`
+
+**Solvio AI Hackathon 2025**
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### `FINALIST`
+
+**CodeSprint — Inter-IUT Hackathon**
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### `FINALIST`
+
+**SUST CSE Carnival Hackathon**
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### `FINALIST`
+
+**IUT 12th ICT Fest — Agentic AI Hackathon**
+
+</td>
+</tr>
+</table>
 
 Three finalist finishes.
 
 One Top 100 placement.
 
-One winning project.
-
-At this point I'm mostly collecting PDFs.
-
-**[View the certificates →](YOUR_CERTIFICATES_LINK)**
+And apparently a growing collection of certificates.
 
 ---
 
 # ▧ Currently open
 
 ```text
-┌─ reading / learning ─────────────────────────────┐
-│                                                   │
-│  [01]  Japanese invasion era history              │
-│  [02]  Nuclear accident rabbit hole               │
-│  [03]  Goodreads yearly reading goal              │
-│  [04]  Machine learning fundamentals              │
-│                                                   │
-└───────────────────────────────────────────────────┘
+┌─ CURRENTLY OPEN ───────────────────────────────┐
+│                                                │
+│  [01]  Machine learning fundamentals           │
+│  [02]  RAG / LLM rabbit holes                 │
+│  [03]  One extremely fast paced thriller       │
+│                                                │
+└────────────────────────────────────────────────┘
 ```
 
 One of these is going significantly better than the others.
@@ -231,21 +406,45 @@ I will not tell you which one.
 
 ---
 
-# ∿ One final thing
+# ∿ You're Still Here
 
-If you came here looking for **a developer**:
+Okay.
 
-you found one.
+So either:
 
-If you came looking for **an AI/ML person**:
+**A)** something here caught your attention.
 
-I'm getting there.
+**B)** you clicked by accident.
 
-If you came looking for someone who can discuss **backend systems, RAG pipelines, nuclear disasters, Japanese history and books**:
+**C)** you were intrigued by my profile pic.
 
-we should probably talk.
+**D)** you also have too many tabs open.
+
+Honestly, all four are valid.
+
+If you want to talk about something I'm building, something you're building, or how I ended up reading some extremely niche historical fact at 2 AM—
+
+## say hi.
 
 ---
+
+# Let's connect
+
+<p align="center">
+<a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/">
+<img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+</a>
+&nbsp;
+<a href="https://www.facebook.com/ayesha.mashiat">
+<img src="https://img.shields.io/badge/Facebook-Find%20me-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
+</a>
+&nbsp;
+<a href="https://instagram.com/_.ayshiat._">
+<img src="https://img.shields.io/badge/Instagram-_.ayshiat._-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"/>
+</a>
+</p>
+
+<br>
 
 ### Thanks for snooping around.
 
