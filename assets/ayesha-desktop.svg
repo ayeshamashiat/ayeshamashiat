@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#161a24"/>
+      <stop offset="1" stop-color="#252b3a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".35"/>
+    </filter>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .sans { font-family: Inter, Arial, sans-serif; }
+      .tiny { font-size: 13px; }
+      .small { font-size: 16px; }
+      .body { font-size: 18px; }
+      .title { font-size: 23px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <!-- desktop -->
+  <rect width="1100" height="520" rx="18" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1100" height="38" rx="18" fill="#10131b"/>
+  <rect x="0" y="20" width="1100" height="18" fill="#10131b"/>
+  <circle cx="22" cy="19" r="6" fill="#ff6b6b"/>
+  <circle cx="43" cy="19" r="6" fill="#ffd166"/>
+  <circle cx="64" cy="19" r="6" fill="#69db7c"/>
+  <text x="88" y="25" class="mono tiny" fill="#aeb7ca">AYESHA — desktop</text>
+  <text x="1018" y="25" class="mono tiny" fill="#69748b">17 tabs</text>
+
+  <!-- left terminal -->
+  <g filter="url(#shadow)">
+    <rect x="42" y="68" width="555" height="350" rx="12" fill="#0d1017" stroke="#3a4357"/>
+    <rect x="42" y="68" width="555" height="42" rx="12" fill="#171c27"/>
+    <rect x="42" y="98" width="555" height="12" fill="#171c27"/>
+    <circle cx="63" cy="89" r="5" fill="#6f7b91"/>
+    <circle cx="81" cy="89" r="5" fill="#6f7b91"/>
+    <circle cx="99" cy="89" r="5" fill="#6f7b91"/>
+    <text x="120" y="95" class="mono small" fill="#aeb7ca">currently_doing.txt</text>
+
+    <text x="67" y="142" class="mono body" fill="#8ce99a">&gt; hi.</text>
+    <text x="67" y="172" class="mono body" fill="#d9e0ec">Oh.</text>
+    <text x="67" y="202" class="mono body" fill="#d9e0ec">You're here.</text>
+    <text x="67" y="232" class="mono body" fill="#d9e0ec">Give me a second.</text>
+    <text x="67" y="262" class="mono body" fill="#d9e0ec">I was doing something.</text>
+
+    <text x="67" y="306" class="mono small" fill="#69748b">┌─────────────────────────────────────</text>
+    <text x="67" y="330" class="mono small" fill="#9aa6bb">│ tabs open: 17</text>
+    <text x="67" y="353" class="mono small" fill="#9aa6bb">│ important: 4</text>
+    <text x="67" y="376" class="mono small" fill="#9aa6bb">│ identified: 0</text>
+    <text x="67" y="399" class="mono small" fill="#69748b">└─────────────────────────────────────</text>
+  </g>
+
+  <!-- right cards -->
+  <g filter="url(#shadow)">
+    <rect x="625" y="68" width="205" height="150" rx="12" fill="#d9c9a6"/>
+    <text x="646" y="101" class="sans title" fill="#28231d">READING</text>
+    <text x="646" y="133" class="sans small" fill="#3c352b">Japanese history</text>
+    <text x="646" y="157" class="sans small" fill="#3c352b">+ nuclear accidents</text>
+    <text x="646" y="192" class="mono tiny" fill="#756a57">"one more chapter"</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="855" y="68" width="200" height="150" rx="12" fill="#b8c7df"/>
+    <text x="876" y="101" class="sans title" fill="#1e293b">ML</text>
+    <text x="876" y="133" class="sans small" fill="#26364d">learning the basics</text>
+    <text x="876" y="157" class="sans small" fill="#26364d">linear regression</text>
+    <text x="876" y="181" class="sans small" fill="#26364d">gradient descent</text>
+    <text x="876" y="207" class="mono tiny" fill="#56677f">status: confused</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="625" y="245" width="430" height="173" rx="12" fill="#11161f" stroke="#3a4357"/>
+    <text x="649" y="279" class="mono title" fill="#e5e9f0">SYSTEM STATUS</text>
+    <text x="649" y="312" class="mono small" fill="#8b97aa">backend</text>
+    <rect x="735" y="301" width="275" height="12" rx="6" fill="#2a3242"/>
+    <rect x="735" y="301" width="220" height="12" rx="6" fill="#8ce99a"/>
+    <text x="649" y="345" class="mono small" fill="#8b97aa">machine learning</text>
+    <rect x="815" y="334" width="195" height="12" rx="6" fill="#2a3242"/>
+    <rect x="815" y="334" width="85" height="12" rx="6" fill="#f3c969"/>
+    <text x="649" y="378" class="mono small" fill="#8b97aa">reading goal</text>
+    <rect x="765" y="367" width="245" height="12" rx="6" fill="#2a3242"/>
+    <rect x="765" y="367" width="105" height="12" rx="6" fill="#d9c9a6"/>
+    <text x="649" y="404" class="mono tiny" fill="#69748b">coffee dependency: 0%</text>
+    <text x="865" y="404" class="mono tiny" fill="#8ce99a">cha: 100%</text>
+  </g>
+
+  <!-- bottom dock -->
+  <rect x="330" y="452" width="440" height="48" rx="14" fill="#11151e" stroke="#343d50"/>
+  <text x="365" y="483" class="mono small" fill="#d9e0ec">⌘</text>
+  <text x="415" y="483" class="mono small" fill="#d9e0ec">▣</text>
+  <text x="465" y="483" class="mono small" fill="#d9e0ec">⌁</text>
+  <text x="515" y="483" class="mono small" fill="#d9e0ec">▤</text>
+  <text x="565" y="483" class="mono small" fill="#d9e0ec">◉</text>
+  <text x="615" y="483" class="mono small" fill="#d9e0ec">▱</text>
+  <text x="665" y="483" class="mono small" fill="#d9e0ec">?</text>
+  <text x="710" y="483" class="mono tiny" fill="#69748b">somehow working</text>
+</svg>
