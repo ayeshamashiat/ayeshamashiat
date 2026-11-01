@@ -1,0 +1,461 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 352" width="880" height="352" role="img" aria-label="ayeshamashiat's contributions as Pokéballs in tall grass; 160 days caught, longest streak 13 days">
+<style>
+  text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; font-weight: 700; }
+  .wob { transform-box: fill-box; transform-origin: 50% 100%; animation: wob 2.8s ease-in-out var(--o, 0s) infinite; }
+  @keyframes wob { 0%, 55%, 100% { transform: rotate(0); } 62% { transform: rotate(-16deg); } 72% { transform: rotate(14deg); }
+                   82% { transform: rotate(-8deg); } 90% { transform: rotate(0); } }
+  .sway { animation: sway 4s ease-in-out var(--o, 0s) infinite; }
+  @keyframes sway { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
+  .blink { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .ring { animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 50% { stroke-opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<defs>
+<symbol id="g" viewBox="0 0 13 13" overflow="visible"><path d="M2 11 L3.2 5 L4.6 11 M5.8 11 L6.5 3.5 L7.4 11 M8.6 11 L9.8 5.5 L11 11" fill="none" stroke="#3f7d4e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="b1" viewBox="0 0 13 13" overflow="visible"><circle cx="6.5" cy="6.5" r="6.5" fill="#f4f4f4"/><path d="M0 6.5 A6.5 6.5 0 0 1 13 6.5 Z" fill="#e74c3c"/><rect x="0" y="5.5" width="13" height="2" fill="#2b2b2b"/><circle cx="6.5" cy="6.5" r="2.3" fill="#2b2b2b"/><circle cx="6.5" cy="6.5" r="1.2" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="6.2" fill="none" stroke="#1a1a1a" stroke-width=".7"/></symbol>
+<symbol id="b2" viewBox="0 0 13 13" overflow="visible"><circle cx="6.5" cy="6.5" r="6.5" fill="#f4f4f4"/><path d="M0 6.5 A6.5 6.5 0 0 1 13 6.5 Z" fill="#3b82d6"/><rect x="0" y="5.5" width="13" height="2" fill="#2b2b2b"/><circle cx="6.5" cy="6.5" r="2.3" fill="#2b2b2b"/><circle cx="6.5" cy="6.5" r="1.2" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="6.2" fill="none" stroke="#1a1a1a" stroke-width=".7"/></symbol>
+<symbol id="b3" viewBox="0 0 13 13" overflow="visible"><circle cx="6.5" cy="6.5" r="6.5" fill="#2b2b2b"/><path d="M0 6.5 A6.5 6.5 0 0 1 13 6.5 Z" fill="#f4c20d"/><rect x="0" y="5.5" width="13" height="2" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="2.3" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="1.2" fill="#f4c20d"/><circle cx="6.5" cy="6.5" r="6.2" fill="none" stroke="#1a1a1a" stroke-width=".7"/></symbol>
+<symbol id="b4" viewBox="0 0 13 13" overflow="visible"><circle cx="6.5" cy="6.5" r="6.5" fill="#9b59b6"/><path d="M0 6.5 A6.5 6.5 0 0 1 13 6.5 Z" fill="#9b59b6"/><rect x="0" y="5.5" width="13" height="2" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="2.3" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="1.2" fill="#ff6fae"/><circle cx="6.5" cy="6.5" r="6.2" fill="none" stroke="#1a1a1a" stroke-width=".7"/></symbol>
+<pattern id="tile" width="30" height="30" patternUnits="userSpaceOnUse"><rect width="30" height="30" fill="#1d3b2a"/><rect width="15" height="15" fill="#21432f"/><rect x="15" y="15" width="15" height="15" fill="#21432f"/></pattern>
+<clipPath id="frame"><rect width="880" height="352" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#frame)">
+<rect width="880" height="352" fill="#14261c"/>
+<rect width="880" height="64" fill="#101a14"/><rect y="64" width="880" height="2" fill="#2e5a3d"/>
+<text x="32" y="30" font-size="14" fill="#f4f4f4"><tspan fill="#e74c3c">●</tspan> TRAINER AYESHAMASHIAT</text>
+<text x="32" y="50" font-size="10.5" fill="#7fa88c" font-weight="400">wild commits live in the tall grass. they get caught after midnight.</text>
+<text x="640" y="30" font-size="12" fill="#f4f4f4" text-anchor="end">Lv.58</text>
+<text x="654" y="30" font-size="10" fill="#f4d03f">STREAK</text>
+<rect x="654" y="38" width="194" height="7" rx="3.5" fill="#4a4f58"/><rect x="654" y="38" width="3.5" height="7" rx="3.5" fill="#e74c3c"/>
+<text x="848" y="30" font-size="10" fill="#7fa88c" text-anchor="end">0/13</text>
+<rect x="26.0" y="82" width="828.0" height="110" rx="6" fill="url(#tile)"/>
+<use class="sway" href="#g" x="36.0" y="92" width="13" height="13" style="--o:-2.5s"/>
+<use class="sway" href="#g" x="36.0" y="107" width="13" height="13" style="--o:-2.6s"/>
+<use href="#b2" x="36.0" y="122" width="13" height="13"><title>Tue 28 Oct 2025: 2 contributions</title></use>
+<use href="#b1" x="36.0" y="137" width="13" height="13"><title>Wed 29 Oct 2025: 1 contribution</title></use>
+<use class="sway" href="#g" x="36.0" y="152" width="13" height="13" style="--o:-2.7s"/>
+<use href="#b2" x="36.0" y="167" width="13" height="13"><title>Fri 31 Oct 2025: 3 contributions</title></use>
+<use class="sway" href="#g" x="36.0" y="182" width="13" height="13" style="--o:-0.8s"/>
+<use class="sway" href="#g" x="51.0" y="92" width="13" height="13" style="--o:-2.6s"/>
+<use href="#b1" x="51.0" y="107" width="13" height="13"><title>Mon 03 Nov 2025: 1 contribution</title></use>
+<use href="#b3" x="51.0" y="122" width="13" height="13"><title>Tue 04 Nov 2025: 4 contributions</title></use>
+<use class="sway" href="#g" x="51.0" y="137" width="13" height="13" style="--o:-0.8s"/>
+<use class="sway" href="#g" x="51.0" y="152" width="13" height="13" style="--o:-2.0s"/>
+<use class="sway" href="#g" x="51.0" y="167" width="13" height="13" style="--o:-3.2s"/>
+<use href="#b2" x="51.0" y="182" width="13" height="13"><title>Sat 08 Nov 2025: 2 contributions</title></use>
+<use href="#b4" x="66.0" y="92" width="13" height="13"><title>Sun 09 Nov 2025: 5 contributions</title></use>
+<use class="sway" href="#g" x="66.0" y="107" width="13" height="13" style="--o:-0.8s"/>
+<use class="sway" href="#g" x="66.0" y="122" width="13" height="13" style="--o:-3.7s"/>
+<rect class="ring" x="64.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="66.0" y="137" width="13" height="13"><title>Wed 12 Nov 2025: 3 contributions</title></use>
+<rect class="ring" x="64.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="66.0" y="152" width="13" height="13"><title>Thu 13 Nov 2025: 1 contribution</title></use>
+<rect class="ring" x="64.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="66.0" y="167" width="13" height="13"><title>Fri 14 Nov 2025: 1 contribution</title></use>
+<rect class="ring" x="64.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="66.0" y="182" width="13" height="13"><title>Sat 15 Nov 2025: 3 contributions</title></use>
+<rect class="ring" x="79.5" y="90.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="81.0" y="92" width="13" height="13"><title>Sun 16 Nov 2025: 1 contribution</title></use>
+<rect class="ring" x="79.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="81.0" y="107" width="13" height="13"><title>Mon 17 Nov 2025: 2 contributions</title></use>
+<rect class="ring" x="79.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="81.0" y="122" width="13" height="13"><title>Tue 18 Nov 2025: 12 contributions</title></use>
+<rect class="ring" x="79.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use class="wob" style="--o:-1.7s" href="#b4" x="81.0" y="137" width="13" height="13"><title>Wed 19 Nov 2025: 17 contributions</title></use>
+<rect class="ring" x="79.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="81.0" y="152" width="13" height="13"><title>Thu 20 Nov 2025: 12 contributions</title></use>
+<use class="sway" href="#g" x="81.0" y="167" width="13" height="13" style="--o:-2.2s"/>
+<use class="wob" style="--o:-2.7s" href="#b4" x="81.0" y="182" width="13" height="13"><title>Sat 22 Nov 2025: 18 contributions</title></use>
+<use class="sway" href="#g" x="96.0" y="92" width="13" height="13" style="--o:-1.7s"/>
+<use href="#b4" x="96.0" y="107" width="13" height="13"><title>Mon 24 Nov 2025: 16 contributions</title></use>
+<use href="#b4" x="96.0" y="122" width="13" height="13"><title>Tue 25 Nov 2025: 8 contributions</title></use>
+<use class="sway" href="#g" x="96.0" y="137" width="13" height="13" style="--o:-3.3s"/>
+<use href="#b1" x="96.0" y="152" width="13" height="13"><title>Thu 27 Nov 2025: 1 contribution</title></use>
+<use class="sway" href="#g" x="96.0" y="167" width="13" height="13" style="--o:-3.6s"/>
+<use href="#b1" x="96.0" y="182" width="13" height="13"><title>Sat 29 Nov 2025: 1 contribution</title></use>
+<use href="#b3" x="111.0" y="92" width="13" height="13"><title>Sun 30 Nov 2025: 4 contributions</title></use>
+<use class="wob" style="--o:-1.8s" href="#b4" x="111.0" y="107" width="13" height="13"><title>Mon 01 Dec 2025: 17 contributions</title></use>
+<use class="sway" href="#g" x="111.0" y="122" width="13" height="13" style="--o:-0.4s"/>
+<use href="#b4" x="111.0" y="137" width="13" height="13"><title>Wed 03 Dec 2025: 11 contributions</title></use>
+<use href="#b4" x="111.0" y="152" width="13" height="13"><title>Thu 04 Dec 2025: 17 contributions</title></use>
+<use href="#b2" x="111.0" y="167" width="13" height="13"><title>Fri 05 Dec 2025: 3 contributions</title></use>
+<use href="#b4" x="111.0" y="182" width="13" height="13"><title>Sat 06 Dec 2025: 7 contributions</title></use>
+<use href="#b1" x="126.0" y="92" width="13" height="13"><title>Sun 07 Dec 2025: 1 contribution</title></use>
+<use class="sway" href="#g" x="126.0" y="107" width="13" height="13" style="--o:-0.8s"/>
+<use href="#b3" x="126.0" y="122" width="13" height="13"><title>Tue 09 Dec 2025: 4 contributions</title></use>
+<use href="#b2" x="126.0" y="137" width="13" height="13"><title>Wed 10 Dec 2025: 2 contributions</title></use>
+<use href="#b4" x="126.0" y="152" width="13" height="13"><title>Thu 11 Dec 2025: 5 contributions</title></use>
+<use href="#b4" x="126.0" y="167" width="13" height="13"><title>Fri 12 Dec 2025: 17 contributions</title></use>
+<use class="sway" href="#g" x="126.0" y="182" width="13" height="13" style="--o:-3.5s"/>
+<use href="#b2" x="141.0" y="92" width="13" height="13"><title>Sun 14 Dec 2025: 3 contributions</title></use>
+<use class="sway" href="#g" x="141.0" y="107" width="13" height="13" style="--o:-2.4s"/>
+<use class="sway" href="#g" x="141.0" y="122" width="13" height="13" style="--o:-0.1s"/>
+<use class="sway" href="#g" x="141.0" y="137" width="13" height="13" style="--o:-1.1s"/>
+<use class="sway" href="#g" x="141.0" y="152" width="13" height="13" style="--o:-3.3s"/>
+<use href="#b1" x="141.0" y="167" width="13" height="13"><title>Fri 19 Dec 2025: 1 contribution</title></use>
+<use href="#b2" x="141.0" y="182" width="13" height="13"><title>Sat 20 Dec 2025: 2 contributions</title></use>
+<use href="#b2" x="156.0" y="92" width="13" height="13"><title>Sun 21 Dec 2025: 2 contributions</title></use>
+<use href="#b2" x="156.0" y="107" width="13" height="13"><title>Mon 22 Dec 2025: 2 contributions</title></use>
+<use class="sway" href="#g" x="156.0" y="122" width="13" height="13" style="--o:-0.6s"/>
+<use class="sway" href="#g" x="156.0" y="137" width="13" height="13" style="--o:-2.2s"/>
+<use href="#b2" x="156.0" y="152" width="13" height="13"><title>Thu 25 Dec 2025: 2 contributions</title></use>
+<use class="sway" href="#g" x="156.0" y="167" width="13" height="13" style="--o:-2.1s"/>
+<use href="#b2" x="156.0" y="182" width="13" height="13"><title>Sat 27 Dec 2025: 3 contributions</title></use>
+<use class="sway" href="#g" x="171.0" y="92" width="13" height="13" style="--o:-2.6s"/>
+<use class="sway" href="#g" x="171.0" y="107" width="13" height="13" style="--o:-2.4s"/>
+<use href="#b1" x="171.0" y="122" width="13" height="13"><title>Tue 30 Dec 2025: 1 contribution</title></use>
+<use class="sway" href="#g" x="171.0" y="137" width="13" height="13" style="--o:-2.9s"/>
+<use class="sway" href="#g" x="171.0" y="152" width="13" height="13" style="--o:-0.5s"/>
+<use class="sway" href="#g" x="171.0" y="167" width="13" height="13" style="--o:-0.7s"/>
+<use href="#b1" x="171.0" y="182" width="13" height="13"><title>Sat 03 Jan 2026: 1 contribution</title></use>
+<use href="#b4" x="186.0" y="92" width="13" height="13"><title>Sun 04 Jan 2026: 11 contributions</title></use>
+<use class="sway" href="#g" x="186.0" y="107" width="13" height="13" style="--o:-3.0s"/>
+<use href="#b4" x="186.0" y="122" width="13" height="13"><title>Tue 06 Jan 2026: 7 contributions</title></use>
+<use class="sway" href="#g" x="186.0" y="137" width="13" height="13" style="--o:-3.8s"/>
+<use class="sway" href="#g" x="186.0" y="152" width="13" height="13" style="--o:-1.4s"/>
+<rect class="ring" x="184.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="186.0" y="167" width="13" height="13"><title>Fri 09 Jan 2026: 1 contribution</title></use>
+<rect class="ring" x="184.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="186.0" y="182" width="13" height="13"><title>Sat 10 Jan 2026: 11 contributions</title></use>
+<rect class="ring" x="199.5" y="90.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b3" x="201.0" y="92" width="13" height="13"><title>Sun 11 Jan 2026: 4 contributions</title></use>
+<rect class="ring" x="199.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="201.0" y="107" width="13" height="13"><title>Mon 12 Jan 2026: 1 contribution</title></use>
+<rect class="ring" x="199.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="201.0" y="122" width="13" height="13"><title>Tue 13 Jan 2026: 2 contributions</title></use>
+<rect class="ring" x="199.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="201.0" y="137" width="13" height="13"><title>Wed 14 Jan 2026: 11 contributions</title></use>
+<rect class="ring" x="199.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="201.0" y="152" width="13" height="13"><title>Thu 15 Jan 2026: 9 contributions</title></use>
+<rect class="ring" x="199.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="201.0" y="167" width="13" height="13"><title>Fri 16 Jan 2026: 17 contributions</title></use>
+<use class="sway" href="#g" x="201.0" y="182" width="13" height="13" style="--o:-1.3s"/>
+<use href="#b4" x="216.0" y="92" width="13" height="13"><title>Sun 18 Jan 2026: 7 contributions</title></use>
+<use class="sway" href="#g" x="216.0" y="107" width="13" height="13" style="--o:-2.0s"/>
+<use class="sway" href="#g" x="216.0" y="122" width="13" height="13" style="--o:-3.4s"/>
+<use class="sway" href="#g" x="216.0" y="137" width="13" height="13" style="--o:-2.5s"/>
+<use class="sway" href="#g" x="216.0" y="152" width="13" height="13" style="--o:-3.9s"/>
+<use class="sway" href="#g" x="216.0" y="167" width="13" height="13" style="--o:-3.3s"/>
+<use class="sway" href="#g" x="216.0" y="182" width="13" height="13" style="--o:-2.4s"/>
+<use class="sway" href="#g" x="231.0" y="92" width="13" height="13" style="--o:-0.2s"/>
+<use class="sway" href="#g" x="231.0" y="107" width="13" height="13" style="--o:-1.9s"/>
+<use href="#b2" x="231.0" y="122" width="13" height="13"><title>Tue 27 Jan 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="231.0" y="137" width="13" height="13" style="--o:-3.3s"/>
+<use class="sway" href="#g" x="231.0" y="152" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="231.0" y="167" width="13" height="13" style="--o:-3.2s"/>
+<use href="#b1" x="231.0" y="182" width="13" height="13"><title>Sat 31 Jan 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="246.0" y="92" width="13" height="13" style="--o:-2.9s"/>
+<use href="#b2" x="246.0" y="107" width="13" height="13"><title>Mon 02 Feb 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="246.0" y="122" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="246.0" y="137" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="246.0" y="152" width="13" height="13" style="--o:-3.0s"/>
+<use href="#b3" x="246.0" y="167" width="13" height="13"><title>Fri 06 Feb 2026: 4 contributions</title></use>
+<use href="#b1" x="246.0" y="182" width="13" height="13"><title>Sat 07 Feb 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="261.0" y="92" width="13" height="13" style="--o:-3.3s"/>
+<use href="#b3" x="261.0" y="107" width="13" height="13"><title>Mon 09 Feb 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="261.0" y="122" width="13" height="13" style="--o:-2.3s"/>
+<use class="sway" href="#g" x="261.0" y="137" width="13" height="13" style="--o:-2.3s"/>
+<use class="sway" href="#g" x="261.0" y="152" width="13" height="13" style="--o:-3.9s"/>
+<use class="sway" href="#g" x="261.0" y="167" width="13" height="13" style="--o:-0.1s"/>
+<use class="sway" href="#g" x="261.0" y="182" width="13" height="13" style="--o:-2.5s"/>
+<use class="sway" href="#g" x="276.0" y="92" width="13" height="13" style="--o:-0.9s"/>
+<use class="sway" href="#g" x="276.0" y="107" width="13" height="13" style="--o:-1.6s"/>
+<use class="sway" href="#g" x="276.0" y="122" width="13" height="13" style="--o:-3.7s"/>
+<use class="sway" href="#g" x="276.0" y="137" width="13" height="13" style="--o:-0.5s"/>
+<use class="sway" href="#g" x="276.0" y="152" width="13" height="13" style="--o:-3.5s"/>
+<use href="#b3" x="276.0" y="167" width="13" height="13"><title>Fri 20 Feb 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="276.0" y="182" width="13" height="13" style="--o:-2.8s"/>
+<use href="#b2" x="291.0" y="92" width="13" height="13"><title>Sun 22 Feb 2026: 2 contributions</title></use>
+<use href="#b2" x="291.0" y="107" width="13" height="13"><title>Mon 23 Feb 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="291.0" y="122" width="13" height="13" style="--o:-2.7s"/>
+<use href="#b2" x="291.0" y="137" width="13" height="13"><title>Wed 25 Feb 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="291.0" y="152" width="13" height="13" style="--o:-3.3s"/>
+<use class="sway" href="#g" x="291.0" y="167" width="13" height="13" style="--o:-3.7s"/>
+<use class="sway" href="#g" x="291.0" y="182" width="13" height="13" style="--o:-0.3s"/>
+<use href="#b3" x="306.0" y="92" width="13" height="13"><title>Sun 01 Mar 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="306.0" y="107" width="13" height="13" style="--o:-0.6s"/>
+<use class="sway" href="#g" x="306.0" y="122" width="13" height="13" style="--o:-0.9s"/>
+<use href="#b2" x="306.0" y="137" width="13" height="13"><title>Wed 04 Mar 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="306.0" y="152" width="13" height="13" style="--o:-2.8s"/>
+<use class="sway" href="#g" x="306.0" y="167" width="13" height="13" style="--o:-2.3s"/>
+<use class="sway" href="#g" x="306.0" y="182" width="13" height="13" style="--o:-2.3s"/>
+<use class="sway" href="#g" x="321.0" y="92" width="13" height="13" style="--o:-2.8s"/>
+<use href="#b1" x="321.0" y="107" width="13" height="13"><title>Mon 09 Mar 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="321.0" y="122" width="13" height="13" style="--o:-2.6s"/>
+<use href="#b2" x="321.0" y="137" width="13" height="13"><title>Wed 11 Mar 2026: 2 contributions</title></use>
+<use href="#b1" x="321.0" y="152" width="13" height="13"><title>Thu 12 Mar 2026: 1 contribution</title></use>
+<use href="#b2" x="321.0" y="167" width="13" height="13"><title>Fri 13 Mar 2026: 2 contributions</title></use>
+<use href="#b3" x="321.0" y="182" width="13" height="13"><title>Sat 14 Mar 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="336.0" y="92" width="13" height="13" style="--o:-0.3s"/>
+<use class="sway" href="#g" x="336.0" y="107" width="13" height="13" style="--o:-1.4s"/>
+<use href="#b3" x="336.0" y="122" width="13" height="13"><title>Tue 17 Mar 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="336.0" y="137" width="13" height="13" style="--o:-1.5s"/>
+<use class="sway" href="#g" x="336.0" y="152" width="13" height="13" style="--o:-2.4s"/>
+<use href="#b3" x="336.0" y="167" width="13" height="13"><title>Fri 20 Mar 2026: 4 contributions</title></use>
+<use href="#b3" x="336.0" y="182" width="13" height="13"><title>Sat 21 Mar 2026: 4 contributions</title></use>
+<use href="#b1" x="351.0" y="92" width="13" height="13"><title>Sun 22 Mar 2026: 1 contribution</title></use>
+<use href="#b2" x="351.0" y="107" width="13" height="13"><title>Mon 23 Mar 2026: 3 contributions</title></use>
+<use href="#b1" x="351.0" y="122" width="13" height="13"><title>Tue 24 Mar 2026: 1 contribution</title></use>
+<use href="#b2" x="351.0" y="137" width="13" height="13"><title>Wed 25 Mar 2026: 3 contributions</title></use>
+<use href="#b1" x="351.0" y="152" width="13" height="13"><title>Thu 26 Mar 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="351.0" y="167" width="13" height="13" style="--o:-0.7s"/>
+<use class="sway" href="#g" x="351.0" y="182" width="13" height="13" style="--o:-0.4s"/>
+<use class="sway" href="#g" x="366.0" y="92" width="13" height="13" style="--o:-0.7s"/>
+<use href="#b2" x="366.0" y="107" width="13" height="13"><title>Mon 30 Mar 2026: 3 contributions</title></use>
+<use href="#b4" x="366.0" y="122" width="13" height="13"><title>Tue 31 Mar 2026: 7 contributions</title></use>
+<use href="#b1" x="366.0" y="137" width="13" height="13"><title>Wed 01 Apr 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="366.0" y="152" width="13" height="13" style="--o:-1.4s"/>
+<use class="sway" href="#g" x="366.0" y="167" width="13" height="13" style="--o:-0.9s"/>
+<use href="#b1" x="366.0" y="182" width="13" height="13"><title>Sat 04 Apr 2026: 1 contribution</title></use>
+<use href="#b4" x="381.0" y="92" width="13" height="13"><title>Sun 05 Apr 2026: 15 contributions</title></use>
+<use href="#b2" x="381.0" y="107" width="13" height="13"><title>Mon 06 Apr 2026: 3 contributions</title></use>
+<use href="#b4" x="381.0" y="122" width="13" height="13"><title>Tue 07 Apr 2026: 9 contributions</title></use>
+<use class="sway" href="#g" x="381.0" y="137" width="13" height="13" style="--o:-3.0s"/>
+<use href="#b2" x="381.0" y="152" width="13" height="13"><title>Thu 09 Apr 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="381.0" y="167" width="13" height="13" style="--o:-0.2s"/>
+<use href="#b4" x="381.0" y="182" width="13" height="13"><title>Sat 11 Apr 2026: 10 contributions</title></use>
+<use class="sway" href="#g" x="396.0" y="92" width="13" height="13" style="--o:-3.5s"/>
+<use href="#b1" x="396.0" y="107" width="13" height="13"><title>Mon 13 Apr 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="396.0" y="122" width="13" height="13" style="--o:-3.4s"/>
+<use href="#b2" x="396.0" y="137" width="13" height="13"><title>Wed 15 Apr 2026: 3 contributions</title></use>
+<use href="#b1" x="396.0" y="152" width="13" height="13"><title>Thu 16 Apr 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="396.0" y="167" width="13" height="13" style="--o:-3.2s"/>
+<use href="#b1" x="396.0" y="182" width="13" height="13"><title>Sat 18 Apr 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="411.0" y="92" width="13" height="13" style="--o:-2.3s"/>
+<use href="#b1" x="411.0" y="107" width="13" height="13"><title>Mon 20 Apr 2026: 1 contribution</title></use>
+<use href="#b2" x="411.0" y="122" width="13" height="13"><title>Tue 21 Apr 2026: 3 contributions</title></use>
+<use href="#b2" x="411.0" y="137" width="13" height="13"><title>Wed 22 Apr 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="411.0" y="152" width="13" height="13" style="--o:-3.2s"/>
+<use class="sway" href="#g" x="411.0" y="167" width="13" height="13" style="--o:-1.1s"/>
+<use class="sway" href="#g" x="411.0" y="182" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="426.0" y="92" width="13" height="13" style="--o:-1.7s"/>
+<use class="sway" href="#g" x="426.0" y="107" width="13" height="13" style="--o:-3.9s"/>
+<use class="sway" href="#g" x="426.0" y="122" width="13" height="13" style="--o:-0.0s"/>
+<use class="sway" href="#g" x="426.0" y="137" width="13" height="13" style="--o:-1.2s"/>
+<use href="#b2" x="426.0" y="152" width="13" height="13"><title>Thu 30 Apr 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="426.0" y="167" width="13" height="13" style="--o:-1.6s"/>
+<use class="sway" href="#g" x="426.0" y="182" width="13" height="13" style="--o:-1.4s"/>
+<use class="sway" href="#g" x="441.0" y="92" width="13" height="13" style="--o:-2.8s"/>
+<use class="sway" href="#g" x="441.0" y="107" width="13" height="13" style="--o:-3.1s"/>
+<use class="sway" href="#g" x="441.0" y="122" width="13" height="13" style="--o:-1.1s"/>
+<use class="sway" href="#g" x="441.0" y="137" width="13" height="13" style="--o:-1.3s"/>
+<use href="#b1" x="441.0" y="152" width="13" height="13"><title>Thu 07 May 2026: 1 contribution</title></use>
+<use href="#b3" x="441.0" y="167" width="13" height="13"><title>Fri 08 May 2026: 4 contributions</title></use>
+<use href="#b2" x="441.0" y="182" width="13" height="13"><title>Sat 09 May 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="456.0" y="92" width="13" height="13" style="--o:-3.8s"/>
+<rect class="ring" x="454.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="456.0" y="107" width="13" height="13"><title>Mon 11 May 2026: 2 contributions</title></use>
+<rect class="ring" x="454.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="456.0" y="122" width="13" height="13"><title>Tue 12 May 2026: 1 contribution</title></use>
+<rect class="ring" x="454.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="456.0" y="137" width="13" height="13"><title>Wed 13 May 2026: 7 contributions</title></use>
+<rect class="ring" x="454.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b3" x="456.0" y="152" width="13" height="13"><title>Thu 14 May 2026: 4 contributions</title></use>
+<rect class="ring" x="454.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="456.0" y="167" width="13" height="13"><title>Fri 15 May 2026: 2 contributions</title></use>
+<rect class="ring" x="454.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b3" x="456.0" y="182" width="13" height="13"><title>Sat 16 May 2026: 4 contributions</title></use>
+<rect class="ring" x="469.5" y="90.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b3" x="471.0" y="92" width="13" height="13"><title>Sun 17 May 2026: 4 contributions</title></use>
+<rect class="ring" x="469.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b1" x="471.0" y="107" width="13" height="13"><title>Mon 18 May 2026: 1 contribution</title></use>
+<rect class="ring" x="469.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="471.0" y="122" width="13" height="13"><title>Tue 19 May 2026: 8 contributions</title></use>
+<rect class="ring" x="469.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="471.0" y="137" width="13" height="13"><title>Wed 20 May 2026: 15 contributions</title></use>
+<rect class="ring" x="469.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="471.0" y="152" width="13" height="13"><title>Thu 21 May 2026: 6 contributions</title></use>
+<rect class="ring" x="469.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="471.0" y="167" width="13" height="13"><title>Fri 22 May 2026: 15 contributions</title></use>
+<rect class="ring" x="469.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b2" x="471.0" y="182" width="13" height="13"><title>Sat 23 May 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="486.0" y="92" width="13" height="13" style="--o:-1.9s"/>
+<use class="sway" href="#g" x="486.0" y="107" width="13" height="13" style="--o:-1.2s"/>
+<use href="#b1" x="486.0" y="122" width="13" height="13"><title>Tue 26 May 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="486.0" y="137" width="13" height="13" style="--o:-1.4s"/>
+<use class="sway" href="#g" x="486.0" y="152" width="13" height="13" style="--o:-1.0s"/>
+<use class="sway" href="#g" x="486.0" y="167" width="13" height="13" style="--o:-0.2s"/>
+<use class="sway" href="#g" x="486.0" y="182" width="13" height="13" style="--o:-2.0s"/>
+<use class="sway" href="#g" x="501.0" y="92" width="13" height="13" style="--o:-0.2s"/>
+<use class="sway" href="#g" x="501.0" y="107" width="13" height="13" style="--o:-2.6s"/>
+<use class="sway" href="#g" x="501.0" y="122" width="13" height="13" style="--o:-1.0s"/>
+<use class="sway" href="#g" x="501.0" y="137" width="13" height="13" style="--o:-3.6s"/>
+<use class="sway" href="#g" x="501.0" y="152" width="13" height="13" style="--o:-1.3s"/>
+<use class="sway" href="#g" x="501.0" y="167" width="13" height="13" style="--o:-0.6s"/>
+<use href="#b2" x="501.0" y="182" width="13" height="13"><title>Sat 06 Jun 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="516.0" y="92" width="13" height="13" style="--o:-3.6s"/>
+<use class="sway" href="#g" x="516.0" y="107" width="13" height="13" style="--o:-0.3s"/>
+<use href="#b2" x="516.0" y="122" width="13" height="13"><title>Tue 09 Jun 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="516.0" y="137" width="13" height="13" style="--o:-0.2s"/>
+<use class="sway" href="#g" x="516.0" y="152" width="13" height="13" style="--o:-2.7s"/>
+<use class="sway" href="#g" x="516.0" y="167" width="13" height="13" style="--o:-3.0s"/>
+<use class="sway" href="#g" x="516.0" y="182" width="13" height="13" style="--o:-3.9s"/>
+<use href="#b1" x="531.0" y="92" width="13" height="13"><title>Sun 14 Jun 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="531.0" y="107" width="13" height="13" style="--o:-3.4s"/>
+<use class="sway" href="#g" x="531.0" y="122" width="13" height="13" style="--o:-2.9s"/>
+<use href="#b2" x="531.0" y="137" width="13" height="13"><title>Wed 17 Jun 2026: 2 contributions</title></use>
+<use href="#b1" x="531.0" y="152" width="13" height="13"><title>Thu 18 Jun 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="531.0" y="167" width="13" height="13" style="--o:-1.8s"/>
+<use class="sway" href="#g" x="531.0" y="182" width="13" height="13" style="--o:-3.2s"/>
+<use href="#b1" x="546.0" y="92" width="13" height="13"><title>Sun 21 Jun 2026: 1 contribution</title></use>
+<use href="#b3" x="546.0" y="107" width="13" height="13"><title>Mon 22 Jun 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="546.0" y="122" width="13" height="13" style="--o:-3.2s"/>
+<use href="#b1" x="546.0" y="137" width="13" height="13"><title>Wed 24 Jun 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="546.0" y="152" width="13" height="13" style="--o:-3.8s"/>
+<use href="#b3" x="546.0" y="167" width="13" height="13"><title>Fri 26 Jun 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="546.0" y="182" width="13" height="13" style="--o:-3.1s"/>
+<use class="sway" href="#g" x="561.0" y="92" width="13" height="13" style="--o:-2.0s"/>
+<use class="sway" href="#g" x="561.0" y="107" width="13" height="13" style="--o:-0.1s"/>
+<use href="#b2" x="561.0" y="122" width="13" height="13"><title>Tue 30 Jun 2026: 3 contributions</title></use>
+<use href="#b2" x="561.0" y="137" width="13" height="13"><title>Wed 01 Jul 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="561.0" y="152" width="13" height="13" style="--o:-3.3s"/>
+<use href="#b1" x="561.0" y="167" width="13" height="13"><title>Fri 03 Jul 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="561.0" y="182" width="13" height="13" style="--o:-1.6s"/>
+<use class="sway" href="#g" x="576.0" y="92" width="13" height="13" style="--o:-3.0s"/>
+<use class="sway" href="#g" x="576.0" y="107" width="13" height="13" style="--o:-2.5s"/>
+<use class="sway" href="#g" x="576.0" y="122" width="13" height="13" style="--o:-2.8s"/>
+<use class="sway" href="#g" x="576.0" y="137" width="13" height="13" style="--o:-0.7s"/>
+<use class="sway" href="#g" x="576.0" y="152" width="13" height="13" style="--o:-1.4s"/>
+<use class="sway" href="#g" x="576.0" y="167" width="13" height="13" style="--o:-2.4s"/>
+<use href="#b1" x="576.0" y="182" width="13" height="13"><title>Sat 11 Jul 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="591.0" y="92" width="13" height="13" style="--o:-1.3s"/>
+<use class="sway" href="#g" x="591.0" y="107" width="13" height="13" style="--o:-2.9s"/>
+<use class="sway" href="#g" x="591.0" y="122" width="13" height="13" style="--o:-1.6s"/>
+<use class="sway" href="#g" x="591.0" y="137" width="13" height="13" style="--o:-2.0s"/>
+<use class="sway" href="#g" x="591.0" y="152" width="13" height="13" style="--o:-1.5s"/>
+<use class="sway" href="#g" x="591.0" y="167" width="13" height="13" style="--o:-1.5s"/>
+<use class="sway" href="#g" x="591.0" y="182" width="13" height="13" style="--o:-0.3s"/>
+<use class="sway" href="#g" x="606.0" y="92" width="13" height="13" style="--o:-2.9s"/>
+<use href="#b1" x="606.0" y="107" width="13" height="13"><title>Mon 20 Jul 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="606.0" y="122" width="13" height="13" style="--o:-2.9s"/>
+<use href="#b2" x="606.0" y="137" width="13" height="13"><title>Wed 22 Jul 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="606.0" y="152" width="13" height="13" style="--o:-1.8s"/>
+<use href="#b3" x="606.0" y="167" width="13" height="13"><title>Fri 24 Jul 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="606.0" y="182" width="13" height="13" style="--o:-1.4s"/>
+<use href="#b2" x="621.0" y="92" width="13" height="13"><title>Sun 26 Jul 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="621.0" y="107" width="13" height="13" style="--o:-0.3s"/>
+<use class="sway" href="#g" x="621.0" y="122" width="13" height="13" style="--o:-2.6s"/>
+<use href="#b2" x="621.0" y="137" width="13" height="13"><title>Wed 29 Jul 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="621.0" y="152" width="13" height="13" style="--o:-3.5s"/>
+<use class="sway" href="#g" x="621.0" y="167" width="13" height="13" style="--o:-0.2s"/>
+<use class="sway" href="#g" x="621.0" y="182" width="13" height="13" style="--o:-3.1s"/>
+<use href="#b2" x="636.0" y="92" width="13" height="13"><title>Sun 02 Aug 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="636.0" y="107" width="13" height="13" style="--o:-0.5s"/>
+<use class="sway" href="#g" x="636.0" y="122" width="13" height="13" style="--o:-0.8s"/>
+<use class="sway" href="#g" x="636.0" y="137" width="13" height="13" style="--o:-2.9s"/>
+<use class="sway" href="#g" x="636.0" y="152" width="13" height="13" style="--o:-3.0s"/>
+<use class="sway" href="#g" x="636.0" y="167" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="636.0" y="182" width="13" height="13" style="--o:-0.6s"/>
+<use class="sway" href="#g" x="651.0" y="92" width="13" height="13" style="--o:-1.5s"/>
+<use class="sway" href="#g" x="651.0" y="107" width="13" height="13" style="--o:-1.8s"/>
+<use class="sway" href="#g" x="651.0" y="122" width="13" height="13" style="--o:-3.4s"/>
+<use href="#b1" x="651.0" y="137" width="13" height="13"><title>Wed 12 Aug 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="651.0" y="152" width="13" height="13" style="--o:-0.3s"/>
+<use class="sway" href="#g" x="651.0" y="167" width="13" height="13" style="--o:-0.5s"/>
+<use class="sway" href="#g" x="651.0" y="182" width="13" height="13" style="--o:-2.2s"/>
+<use class="sway" href="#g" x="666.0" y="92" width="13" height="13" style="--o:-1.6s"/>
+<use class="sway" href="#g" x="666.0" y="107" width="13" height="13" style="--o:-2.8s"/>
+<use class="sway" href="#g" x="666.0" y="122" width="13" height="13" style="--o:-1.2s"/>
+<use class="sway" href="#g" x="666.0" y="137" width="13" height="13" style="--o:-3.5s"/>
+<use class="sway" href="#g" x="666.0" y="152" width="13" height="13" style="--o:-0.5s"/>
+<use class="sway" href="#g" x="666.0" y="167" width="13" height="13" style="--o:-0.8s"/>
+<use class="sway" href="#g" x="666.0" y="182" width="13" height="13" style="--o:-1.4s"/>
+<use class="sway" href="#g" x="681.0" y="92" width="13" height="13" style="--o:-3.2s"/>
+<use class="sway" href="#g" x="681.0" y="107" width="13" height="13" style="--o:-3.9s"/>
+<use class="sway" href="#g" x="681.0" y="122" width="13" height="13" style="--o:-1.3s"/>
+<use class="sway" href="#g" x="681.0" y="137" width="13" height="13" style="--o:-2.2s"/>
+<use class="sway" href="#g" x="681.0" y="152" width="13" height="13" style="--o:-0.5s"/>
+<use class="sway" href="#g" x="681.0" y="167" width="13" height="13" style="--o:-0.3s"/>
+<use href="#b3" x="681.0" y="182" width="13" height="13"><title>Sat 29 Aug 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="696.0" y="92" width="13" height="13" style="--o:-3.6s"/>
+<use class="sway" href="#g" x="696.0" y="107" width="13" height="13" style="--o:-3.6s"/>
+<use class="sway" href="#g" x="696.0" y="122" width="13" height="13" style="--o:-0.3s"/>
+<use class="sway" href="#g" x="696.0" y="137" width="13" height="13" style="--o:-1.1s"/>
+<use class="sway" href="#g" x="696.0" y="152" width="13" height="13" style="--o:-2.3s"/>
+<use class="sway" href="#g" x="696.0" y="167" width="13" height="13" style="--o:-2.1s"/>
+<use href="#b1" x="696.0" y="182" width="13" height="13"><title>Sat 05 Sep 2026: 1 contribution</title></use>
+<use href="#b2" x="711.0" y="92" width="13" height="13"><title>Sun 06 Sep 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="711.0" y="107" width="13" height="13" style="--o:-3.2s"/>
+<use class="sway" href="#g" x="711.0" y="122" width="13" height="13" style="--o:-1.9s"/>
+<use class="sway" href="#g" x="711.0" y="137" width="13" height="13" style="--o:-2.5s"/>
+<use href="#b3" x="711.0" y="152" width="13" height="13"><title>Thu 10 Sep 2026: 4 contributions</title></use>
+<use href="#b2" x="711.0" y="167" width="13" height="13"><title>Fri 11 Sep 2026: 2 contributions</title></use>
+<use href="#b3" x="711.0" y="182" width="13" height="13"><title>Sat 12 Sep 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="726.0" y="92" width="13" height="13" style="--o:-1.5s"/>
+<use class="sway" href="#g" x="726.0" y="107" width="13" height="13" style="--o:-0.7s"/>
+<use href="#b2" x="726.0" y="122" width="13" height="13"><title>Tue 15 Sep 2026: 3 contributions</title></use>
+<use href="#b4" x="726.0" y="137" width="13" height="13"><title>Wed 16 Sep 2026: 17 contributions</title></use>
+<use href="#b4" x="726.0" y="152" width="13" height="13"><title>Thu 17 Sep 2026: 11 contributions</title></use>
+<use class="sway" href="#g" x="726.0" y="167" width="13" height="13" style="--o:-2.5s"/>
+<use class="sway" href="#g" x="726.0" y="182" width="13" height="13" style="--o:-1.2s"/>
+<use href="#b4" x="741.0" y="92" width="13" height="13"><title>Sun 20 Sep 2026: 12 contributions</title></use>
+<use href="#b2" x="741.0" y="107" width="13" height="13"><title>Mon 21 Sep 2026: 2 contributions</title></use>
+<use href="#b3" x="741.0" y="122" width="13" height="13"><title>Tue 22 Sep 2026: 4 contributions</title></use>
+<use href="#b2" x="741.0" y="137" width="13" height="13"><title>Wed 23 Sep 2026: 3 contributions</title></use>
+<use href="#b1" x="741.0" y="152" width="13" height="13"><title>Thu 24 Sep 2026: 1 contribution</title></use>
+<use href="#b2" x="741.0" y="167" width="13" height="13"><title>Fri 25 Sep 2026: 3 contributions</title></use>
+<use href="#b4" x="741.0" y="182" width="13" height="13"><title>Sat 26 Sep 2026: 17 contributions</title></use>
+<use href="#b3" x="756.0" y="92" width="13" height="13"><title>Sun 27 Sep 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="756.0" y="107" width="13" height="13" style="--o:-0.6s"/>
+<use href="#b4" x="756.0" y="122" width="13" height="13"><title>Tue 29 Sep 2026: 5 contributions</title></use>
+<use href="#b4" x="756.0" y="137" width="13" height="13"><title>Wed 30 Sep 2026: 9 contributions</title></use>
+<use href="#b2" x="756.0" y="152" width="13" height="13"><title>Thu 01 Oct 2026: 2 contributions</title></use>
+<use href="#b2" x="756.0" y="167" width="13" height="13"><title>Fri 02 Oct 2026: 3 contributions</title></use>
+<use href="#b2" x="756.0" y="182" width="13" height="13"><title>Sat 03 Oct 2026: 3 contributions</title></use>
+<use href="#b1" x="771.0" y="92" width="13" height="13"><title>Sun 04 Oct 2026: 1 contribution</title></use>
+<use class="sway" href="#g" x="771.0" y="107" width="13" height="13" style="--o:-2.3s"/>
+<use class="sway" href="#g" x="771.0" y="122" width="13" height="13" style="--o:-3.9s"/>
+<use class="sway" href="#g" x="771.0" y="137" width="13" height="13" style="--o:-1.3s"/>
+<use class="sway" href="#g" x="771.0" y="152" width="13" height="13" style="--o:-2.3s"/>
+<use href="#b3" x="771.0" y="167" width="13" height="13"><title>Fri 09 Oct 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="771.0" y="182" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="786.0" y="92" width="13" height="13" style="--o:-1.3s"/>
+<use href="#b2" x="786.0" y="107" width="13" height="13"><title>Mon 12 Oct 2026: 3 contributions</title></use>
+<use href="#b3" x="786.0" y="122" width="13" height="13"><title>Tue 13 Oct 2026: 4 contributions</title></use>
+<use href="#b3" x="786.0" y="137" width="13" height="13"><title>Wed 14 Oct 2026: 4 contributions</title></use>
+<use class="sway" href="#g" x="786.0" y="152" width="13" height="13" style="--o:-3.8s"/>
+<use class="sway" href="#g" x="786.0" y="167" width="13" height="13" style="--o:-2.0s"/>
+<use href="#b2" x="786.0" y="182" width="13" height="13"><title>Sat 17 Oct 2026: 2 contributions</title></use>
+<use class="sway" href="#g" x="801.0" y="92" width="13" height="13" style="--o:-0.2s"/>
+<use class="sway" href="#g" x="801.0" y="107" width="13" height="13" style="--o:-3.8s"/>
+<use class="sway" href="#g" x="801.0" y="122" width="13" height="13" style="--o:-1.1s"/>
+<use class="sway" href="#g" x="801.0" y="137" width="13" height="13" style="--o:-1.9s"/>
+<use class="sway" href="#g" x="801.0" y="152" width="13" height="13" style="--o:-2.2s"/>
+<use href="#b2" x="801.0" y="167" width="13" height="13"><title>Fri 23 Oct 2026: 3 contributions</title></use>
+<use class="sway" href="#g" x="801.0" y="182" width="13" height="13" style="--o:-1.1s"/>
+<use class="sway" href="#g" x="816.0" y="92" width="13" height="13" style="--o:-1.5s"/>
+<use class="sway" href="#g" x="816.0" y="107" width="13" height="13" style="--o:-1.0s"/>
+<use class="sway" href="#g" x="816.0" y="122" width="13" height="13" style="--o:-2.1s"/>
+<use class="sway" href="#g" x="816.0" y="137" width="13" height="13" style="--o:-1.2s"/>
+<use class="sway" href="#g" x="816.0" y="152" width="13" height="13" style="--o:-3.4s"/>
+<use class="sway" href="#g" x="816.0" y="167" width="13" height="13" style="--o:-2.7s"/>
+<use class="sway" href="#g" x="816.0" y="182" width="13" height="13" style="--o:-1.3s"/>
+<use class="sway" href="#g" x="831.0" y="92" width="13" height="13" style="--o:-2.9s"/>
+<text x="26.0" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">grass = nothing yet</text>
+<use href="#b1" x="582" y="213" width="11" height="11"/>
+<text x="597" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">poké</text>
+<use href="#b2" x="644" y="213" width="11" height="11"/>
+<text x="659" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">great</text>
+<use href="#b3" x="706" y="213" width="11" height="11"/>
+<text x="721" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">ultra</text>
+<use href="#b4" x="768" y="213" width="11" height="11"/>
+<text x="783" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">master</text>
+<rect x="28" y="236" width="824" height="96" rx="8" fill="#f8f8e8" stroke="#383838" stroke-width="3"/>
+<rect x="34" y="242" width="812" height="84" rx="5" fill="none" stroke="#a8a8a0" stroke-width="1"/>
+<text x="50" y="264" font-size="13" fill="#383838">ayeshamashiat caught 690 wild contributions!</text>
+<text x="50" y="282" font-size="10.5" fill="#6b6b64" font-weight="400">160 days in the grass · shiny day 22 Nov (18!)</text>
+<path class="blink" d="M820 306 l9 0 l-4.5 7 z" fill="#383838"/>
+<text x="50" y="306" font-size="11" fill="#383838"><tspan fill="#c9970b">1</tspan> Refactorite</text>
+<text x="280" y="306" font-size="10" fill="#6b6b64" text-anchor="end">Lv.13</text>
+<rect x="50" y="313" width="230" height="7" rx="3.5" fill="#4a4f58"/><rect x="50" y="313" width="230.0" height="7" rx="3.5" fill="#58d68d"/>
+<text x="312" y="306" font-size="11" fill="#383838"><tspan fill="#c9970b">2</tspan> Stackoverflowl</text>
+<text x="542" y="306" font-size="10" fill="#6b6b64" text-anchor="end">Lv.9</text>
+<rect x="312" y="313" width="230" height="7" rx="3.5" fill="#4a4f58"/><rect x="312" y="313" width="159.2" height="7" rx="3.5" fill="#58d68d"/>
+<text x="574" y="306" font-size="11" fill="#383838"><tspan fill="#c9970b">3</tspan> Pushachu</text>
+<text x="804" y="306" font-size="10" fill="#6b6b64" text-anchor="end">Lv.8</text>
+<rect x="574" y="313" width="230" height="7" rx="3.5" fill="#4a4f58"/><rect x="574" y="313" width="141.5" height="7" rx="3.5" fill="#58d68d"/>
+</g>
+<rect x=".5" y=".5" width="879" height="351" rx="14" fill="none" stroke="#2e5a3d"/>
+</svg>

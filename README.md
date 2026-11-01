@@ -32,26 +32,23 @@ The backend part is going well. The AI part is a rabbit hole. There's a folder f
 
 <sub><code>01</code></sub>
 
-### [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint)
+### [Bouncer](https://github.com/ayeshamashiat/Bouncer)
 
-An AI-powered career assistant built around **RAG**.
+A security gate for AI agents. Before one installs a third-party skill, Bouncer checks it against a **threat graph** and answers `ALLOW`, `ASK` or `BLOCK`.
 
-`FastAPI` `ChromaDB` `Sentence Transformers` `Redis` `Docker`
+`FastAPI` `FalkorDB` `React` `Cytoscape.js` `MCP` `Claude Code hooks`
 
 </td>
 <td valign="top">
 
-The idea: give the AI useful information *before* asking it to answer.
+Blocklists only catch what's already known. So instead of listing bad skills, it maps how accounts, domains, IPs and payloads connect.
 
 ```text
-documents → embeddings → search → AI → answer
+skill → shared infrastructure → known malware
+2 hops = BLOCK · 3-4 hops = ASK
 ```
 
-And then, inevitably:
-
-> **Why did it retrieve *that*?**
-
-That's what got me interested in retrieval, embeddings and semantic search.
+Weakly connected components cluster reports into campaigns automatically. **92%** detection on hidden malware, versus **0%** for a plain blocklist. Suspicious instructions are read without ever being executed.
 
 </td>
 </tr>
@@ -60,22 +57,22 @@ That's what got me interested in retrieval, embeddings and semantic search.
 
 <sub><code>02</code></sub>
 
-### [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend)
+### [Touch Grass, Babu](https://github.com/ayeshamashiat/Touch-Grass-Babu)
 
-A job discovery backend. Mostly APIs, databases and NLP.
+An Android app where an AI mom roasts you for doomscrolling, then locks the app until you go outside.
 
-`FastAPI` `PostgreSQL` `SQLAlchemy` `Alembic` `spaCy`
+`Kotlin` `llama.cpp (NDK)` `LoRA` `GGUF` `ML Kit` `WorkManager`
 
 </td>
 <td valign="top">
 
-**Focus:** REST APIs · NLP · database design
+A fine-tuned **Qwen 3.5-4B**, quantized and running **fully offline** on the phone. The app has no internet permission.
 
-The sort of project that starts with:
+```text
+3,700-token prompt → distilled into the weights → 4B model → phone
+```
 
-> "This should be pretty straightforward."
-
-It wasn't.
+Roasts are pre-generated while charging, and on-device vision checks your photo for sky and grass.
 
 </td>
 </tr>
@@ -84,26 +81,48 @@ It wasn't.
 
 <sub><code>03</code></sub>
 
-### [PAMS Backend](https://github.com/ayeshamashiat/PAMS_Backend)
+### [PetniHunter](https://github.com/ayeshamashiat/PetniHunter)
 
-A **Postgraduate Academic Management System** backend for students, supervisors and thesis workflows.
+A hallucination guard for a **Bangla** language model. Ask about a writer who doesn't exist and it refuses.
 
-`Node.js` `Express` `MongoDB` `Mongoose` `JWT` `bcrypt` `Nodemailer`
+`Python` `Qwen3.5-4B` `Wikidata` `bn.wikipedia`
 
 </td>
 <td valign="top">
 
-The whole life of a thesis, as an API:
-
 ```text
-eligibility → supervisor request → proposal → progress → defense
+question → (entity, property) → spelling-tolerant search
+         → title similarity → Wikidata type check
+         → refuse · redirect · rescue
 ```
 
-With role-based access for `Admin` · `Student` · `Faculty` · `PGC`, so everyone can only do exactly what they're supposed to. In software, at least.
+**91.9 F-score** on 2,367 test items with **0.1%** false acceptances. It never silently swaps in a similar name, and it can tell "not found" from "network down".
+
+</td>
+</tr>
+<tr>
+<td width="38%" valign="top">
+
+<sub><code>04</code></sub>
+
+### [AgriSense](https://github.com/ayeshamashiat/CommittedToConflict_AgriSense)
+
+An autonomous farming advisor for smallholder farmers in Bangladesh.
+
+`FastAPI` `ChromaDB` `RAG` `Tool-calling agent` `React` `Web Speech API`
+
+</td>
+<td valign="top">
+
+An agent with a tool registry (weather, finance, irrigation, pest risk, marketplace, disease detection) and persistent farmer memory.
+
+**The LLM writes the words. The tools produce every number.** Weather alerts shift the real season plan, it works in Bengali by voice, and every estimate says how uncertain it is.
 
 </td>
 </tr>
 </table>
+
+<sub>Older work: [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint) (RAG career assistant) · [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend) (FastAPI, PostgreSQL, spaCy) · [PAMS](https://github.com/ayeshamashiat/PAMS_Backend) (Node, MongoDB, RBAC thesis workflow)</sub>
 
 ---
 
@@ -161,15 +180,15 @@ Very much a work in progress.
 
 ---
 
-# ✦ The night sky
+# ◓ The tall grass
 
 <p align="center">
-  <img src="assets/constellation.svg" width="100%" alt="Ayesha's GitHub contributions drawn as a night sky. Each star is a day with contributions, and streaks of three or more days are joined into named constellations.">
+  <img src="assets/pokeballs.svg" width="100%" alt="Ayesha's GitHub contributions as a patch of tall grass. Every day with contributions is a Pokéball, from Poké to Master Ball depending on how busy the day was. The three longest streaks are the party, each with a name, a level and an HP bar.">
 </p>
 
-Every star is a day I contributed something. Three days in a row and they join up into a constellation. The longest ones get names, which they have earned.
+Every day I contributed, I caught something. Busier days get fancier balls: Poké, Great, Ultra, and Master for the nights I should have been asleep. Empty days are just grass.
 
-It redraws itself every night, so it's either getting brighter or getting suspiciously quiet.
+Three days in a row recruits a party member, ringed in gold. Level is streak length, and the HP bar is how it compares to my best. It redraws every night.
 
 ---
 
