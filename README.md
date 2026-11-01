@@ -190,13 +190,10 @@ Okay.
 
 So either:
 
-**A)** something here caught your attention.
-
-**B)** you clicked by accident.
-
-**C)** you were intrigued by my profile pic.
-
-**D)** you also have too many tabs open.
+> **A)** something here caught your attention.  
+> **B)** you clicked by accident.  
+> **C)** you were intrigued by my profile pic.  
+> **D)** you also have too many tabs open.
 
 Honestly, all four are valid.
 
@@ -204,21 +201,18 @@ If you want to talk about something I'm building, something you're building, or 
 
 ## say hi.
 
-<p align="center">
-<a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="https://img.shields.io/badge/LinkedIn-connect-0f1114?style=for-the-badge&logo=linkedin&logoColor=7aa7b8&labelColor=0b0c0f" alt="LinkedIn"/></a>
-&nbsp;
-<a href="https://www.facebook.com/ayesha.mashiat"><img src="https://img.shields.io/badge/Facebook-find%20me-0f1114?style=for-the-badge&logo=facebook&logoColor=7aa7b8&labelColor=0b0c0f" alt="Facebook"/></a>
-&nbsp;
-<a href="https://instagram.com/_.ayshiat._"><img src="https://img.shields.io/badge/Instagram-__.ayshiat.__-0f1114?style=for-the-badge&logo=instagram&logoColor=7aa7b8&labelColor=0b0c0f" alt="Instagram"/></a>
+<p>
+<a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="https://img.shields.io/badge/LinkedIn-connect-14181d?style=flat-square&logo=linkedin&logoColor=7aa7b8&labelColor=0b0c0f" alt="LinkedIn"/></a>
+<a href="https://www.facebook.com/ayesha.mashiat"><img src="https://img.shields.io/badge/Facebook-find%20me-14181d?style=flat-square&logo=facebook&logoColor=7aa7b8&labelColor=0b0c0f" alt="Facebook"/></a>
+<a href="https://instagram.com/_.ayshiat._"><img src="https://img.shields.io/badge/Instagram-__.ayshiat.__-14181d?style=flat-square&logo=instagram&logoColor=7aa7b8&labelColor=0b0c0f" alt="Instagram"/></a>
 </p>
-
----
 
 ```text
 ❯ exit
 logout. the tabs stay open.
 ```
 
-### Thanks for snooping around.
-
-**You may now return to whatever you were supposed to be doing.**
+<p align="center">
+  <b>Thanks for snooping around.</b><br>
+  <sub>You may now return to whatever you were supposed to be doing.</sub>
+</p>
