@@ -163,6 +163,8 @@ If you want to talk about something I'm building, something you're building, or 
 <p align="center">
   <a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="assets/linkedin.svg?v=3" alt="LinkedIn: connect" height="44"></a>
   &nbsp;
+  <a href="https://dev.to/ayeshamashiat"><img src="assets/devto.svg" alt="DEV: ayeshamashiat" height="44"></a>
+  &nbsp;
   <a href="https://www.facebook.com/ayesha.mashiat"><img src="assets/facebook.svg?v=3" alt="Facebook: find me" height="44"></a>
   &nbsp;
   <a href="https://instagram.com/_.ayshiat._"><img src="assets/instagram.svg?v=3" alt="Instagram: __.ayshiat.__" height="44"></a>
