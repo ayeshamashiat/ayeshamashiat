@@ -88,11 +88,16 @@ def h01(*parts):
     return int(s[:8], 16) / 0xFFFFFFFF
 
 
-def levels(counts):
+def cuts(counts):
+    """Upper bounds of the Poké, Great and Ultra tiers (quartiles of non-zero days)."""
     nz = sorted(c for c in counts if c > 0)
     if not nz:
-        return lambda c: 0
-    q = [nz[int(len(nz) * f) - (1 if f == 1 else 0)] for f in (0.25, 0.5, 0.75)]
+        return [0, 0, 0]
+    return [nz[int(len(nz) * f)] if f < 1 else nz[-1] for f in (0.25, 0.5, 0.75)]
+
+
+def levels(counts):
+    q = cuts(counts)
     return lambda c: 0 if c == 0 else 1 if c <= q[0] else 2 if c <= q[1] else 3 if c <= q[2] else 4
 
 
@@ -237,13 +242,20 @@ def render(days, login):
         cls = ' class="wob" style="--o:%.1fs"' % (-h01(d, "w") * 2.8) if d in wobblers else ""
         a(f'<use{cls} href="#b{L}" x="{x:.1f}" y="{y}" width="{CELL}" height="{CELL}">{tip}</use>')
 
-    # legend
+    # legend: what each ball means, in contributions per day
+    q = cuts([n for _, n in days])
+    ranges = [f"{1 if i == 0 else q[i - 1] + 1}" + (f"-{q[i]}" if q[i] > (1 if i == 0 else q[i - 1] + 1) else "")
+              for i in range(3)] + [f"{q[2] + 1}+"]
     ly = GRID_Y0 + 7 * PITCH + 16
-    a(f'<text x="{x0 - 10:.1f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" font-weight="400">grass = nothing yet</text>')
-    lx = gx1 + 10 - 4 * 62 - 24
-    for k, nm in enumerate(["poké", "great", "ultra", "master"], 1):
-        a(f'<use href="#b{k}" x="{lx + (k - 1) * 62:.0f}" y="{ly}" width="11" height="11"/>')
-        a(f'<text x="{lx + (k - 1) * 62 + 15:.0f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" font-weight="400">{nm}</text>')
+    a(f'<text x="{x0 - 10:.1f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" font-weight="400">'
+      f'contributions a day:</text>')
+    lx = x0 + 128
+    for k, (nm, rg) in enumerate(zip(["poké", "great", "ultra", "master"], ranges), 1):
+        x = lx + (k - 1) * 112
+        a(f'<use href="#b{k}" x="{x:.0f}" y="{ly}" width="11" height="11"/>')
+        a(f'<text x="{x + 15:.0f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" font-weight="400">{nm} {rg}</text>')
+    a(f'<text x="{gx1 + 10:.1f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" text-anchor="end" font-weight="400">'
+      f'<tspan fill="#f4d03f">◯</tspan> party streak · wobble = top 3 days</text>')
 
     # dialogue box
     by = 236

@@ -433,15 +433,16 @@
 <use class="sway" href="#g" x="816.0" y="167" width="13" height="13" style="--o:-2.7s"/>
 <use class="sway" href="#g" x="816.0" y="182" width="13" height="13" style="--o:-1.3s"/>
 <use class="sway" href="#g" x="831.0" y="92" width="13" height="13" style="--o:-2.9s"/>
-<text x="26.0" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">grass = nothing yet</text>
-<use href="#b1" x="582" y="213" width="11" height="11"/>
-<text x="597" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">poké</text>
-<use href="#b2" x="644" y="213" width="11" height="11"/>
-<text x="659" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">great</text>
-<use href="#b3" x="706" y="213" width="11" height="11"/>
-<text x="721" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">ultra</text>
-<use href="#b4" x="768" y="213" width="11" height="11"/>
-<text x="783" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">master</text>
+<text x="26.0" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">contributions a day:</text>
+<use href="#b1" x="164" y="213" width="11" height="11"/>
+<text x="179" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">poké 1</text>
+<use href="#b2" x="276" y="213" width="11" height="11"/>
+<text x="291" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">great 2-3</text>
+<use href="#b3" x="388" y="213" width="11" height="11"/>
+<text x="403" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">ultra 4</text>
+<use href="#b4" x="500" y="213" width="11" height="11"/>
+<text x="515" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">master 5+</text>
+<text x="854.0" y="222" font-size="9.5" fill="#7fa88c" text-anchor="end" font-weight="400"><tspan fill="#f4d03f">◯</tspan> party streak · wobble = top 3 days</text>
 <rect x="28" y="236" width="824" height="96" rx="8" fill="#f8f8e8" stroke="#383838" stroke-width="3"/>
 <rect x="34" y="242" width="812" height="84" rx="5" fill="none" stroke="#a8a8a0" stroke-width="1"/>
 <text x="50" y="264" font-size="13" fill="#383838">ayeshamashiat caught 690 wild contributions!</text>
