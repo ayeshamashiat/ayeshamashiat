@@ -183,7 +183,7 @@ Very much a work in progress.
 # ◓ My contributions
 
 <p align="center">
-  <img src="assets/pokeballs.svg" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
+  <img src="assets/pokeballs.svg?v=2" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
 </p>
 
 One Pokéball for every day I pushed something. The busier the day, the fancier the ball. Empty grass is a day I didn't. It redraws every night.
