@@ -1,6 +1,10 @@
-# Hi, I'm Ayesha.
+# Hi.
 
-I build backend systems, and lately I've been working on how AI actually works. The backend part is going well. The AI part has its own folder.
+Oh.
+
+You're here.
+
+Give me a second. I was doing something.
 
 <p align="center">
   <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">
@@ -8,99 +12,136 @@ I build backend systems, and lately I've been working on how AI actually works. 
   </a>
 </p>
 
-<p align="center"><sub>the folders actually open, just not here. <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">here's the real one.</a></sub></p>
+<p align="center"><sub>the folders actually open. just not here, github won't let an image do anything fun. <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">here's the real one.</a></sub></p>
 
-<!--
-EXPERIENCE: fill this in, then delete the comment markers around it.
+### ⌁ Anyway.
 
-## Experience
+I'm **Ayesha**.
 
-**ROLE TITLE** · [Company](https://example.com)
-<sub>MONTH YEAR to MONTH YEAR</sub>
+I build software, mostly backend stuff, and lately I've been getting curious about **how AI actually works**.
 
-- What you built or owned, with the tech and a result if you have one.
-- A second concrete thing.
-- A third, if it's worth it.
+The backend part is going well. The AI part is a rabbit hole. There's a folder for it.
 
-`Tech` `Tech` `Tech`
--->
+---
 
-&nbsp;
+# ⟡ Things I've built
 
-## Selected work
+<sub><code>01</code></sub>
 
 ### [Bouncer](https://github.com/ayeshamashiat/Bouncer)
 
-A security gate for AI agents. Before one installs a third-party skill, Bouncer checks it against a threat graph and answers `ALLOW`, `ASK` or `BLOCK`.
-
-Instead of keeping a blocklist, it maps how accounts, domains, IPs and payloads connect, so a skill two hops from known malware gets blocked. Related reports are clustered into campaigns automatically, and suspicious instructions are read without ever being run. It caught **92%** of hidden malware. A plain blocklist caught **0%**.
+A security gate for AI agents. Before one installs a third-party skill, Bouncer checks it against a **threat graph** and answers `ALLOW`, `ASK` or `BLOCK`.
 
 `FastAPI` `FalkorDB` `React` `Cytoscape.js` `MCP` `Claude Code hooks`
 
-&nbsp;
+Blocklists only catch what's already known. So instead of listing bad skills, it maps how accounts, domains, IPs and payloads connect.
+
+```text
+skill → shared infrastructure → known malware
+2 hops = BLOCK · 3-4 hops = ASK
+```
+
+Weakly connected components cluster reports into campaigns automatically. **92%** detection on hidden malware, versus **0%** for a plain blocklist. Suspicious instructions are read without ever being executed.
+
+<sub><code>02</code></sub>
 
 ### [Touch Grass, Babu](https://github.com/ayeshamashiat/Touch-Grass-Babu)
 
 An Android app where an AI mom roasts you for doomscrolling, then locks the app until you go outside.
 
-A LoRA fine-tuned Qwen 3.5-4B, quantized and running **fully offline** on the phone through llama.cpp. The app has no internet permission. Roasts are generated while charging, and on-device vision checks that your photo contains sky and grass.
+`Kotlin` `llama.cpp (NDK)` `LoRA` `GGUF` `ML Kit` `WorkManager`
 
-`Kotlin` `llama.cpp` `LoRA` `GGUF` `ML Kit` `WorkManager`
+A fine-tuned **Qwen 3.5-4B**, quantized and running **fully offline** on the phone. The app has no internet permission.
 
-&nbsp;
+```text
+3,700-token prompt → distilled into the weights → 4B model → phone
+```
+
+Roasts are pre-generated while charging, and on-device vision checks your photo for sky and grass.
+
+<sub><code>03</code></sub>
 
 ### [PetniHunter](https://github.com/ayeshamashiat/PetniHunter)
 
-A hallucination guard for a Bangla language model. Ask it about a writer who doesn't exist and it refuses, redirects, or rescues you with a verified answer.
-
-Each question is parsed into an entity and a property, searched with spelling tolerance, then checked against Wikidata types. **91.9 F-score** on 2,367 test items, with **0.1%** false acceptances.
+A hallucination guard for a **Bangla** language model. Ask about a writer who doesn't exist and it refuses.
 
 `Python` `Qwen3.5-4B` `Wikidata` `bn.wikipedia`
 
-&nbsp;
+```text
+question → (entity, property) → spelling-tolerant search
+         → title similarity → Wikidata type check
+         → refuse · redirect · rescue
+```
+
+**91.9 F-score** on 2,367 test items with **0.1%** false acceptances. It never silently swaps in a similar name, and it can tell "not found" from "network down".
+
+<sub><code>04</code></sub>
 
 ### [AgriSense](https://github.com/ayeshamashiat/CommittedToConflict_AgriSense)
 
 An autonomous farming advisor for smallholder farmers in Bangladesh.
 
-A tool-calling agent with persistent farmer memory and RAG. The LLM writes the words and the tools produce every number. It works in Bengali by voice, and each estimate says how uncertain it is.
+`FastAPI` `ChromaDB` `RAG` `Tool-calling agent` `React` `Web Speech API`
 
-`FastAPI` `ChromaDB` `RAG` `React` `Web Speech API`
+An agent with a tool registry (weather, finance, irrigation, pest risk, marketplace, disease detection) and persistent farmer memory.
 
-<sub>Older work: [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint) (RAG career assistant) · [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend) (FastAPI, PostgreSQL, spaCy) · [PAMS](https://github.com/ayeshamashiat/PAMS_Backend) (Node, MongoDB, role-based thesis workflow)</sub>
+**The LLM writes the words. The tools produce every number.** Weather alerts shift the real season plan, it works in Bengali by voice, and every estimate says how uncertain it is.
 
-&nbsp;
+<sub>Older work: [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint) (RAG career assistant) · [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend) (FastAPI, PostgreSQL, spaCy) · [PAMS](https://github.com/ayeshamashiat/PAMS_Backend) (Node, MongoDB, RBAC thesis workflow)</sub>
 
-## Recognition
+---
 
-- **Top 100**, Solvio AI Hackathon 2025
-- **Finalist**, CodeSprint, Inter-IUT Hackathon
-- **Finalist**, SUST CSE Carnival Hackathon
-- **Finalist**, IUT 12th ICT Fest, Agentic AI Hackathon
+# ∴ The current rabbit hole
 
-Three finals, one Top 100, and a growing pile of certificates.
+## Machine learning
 
-&nbsp;
+I'm pretty new to it. Right now I'm learning the fundamentals and trying to understand what's actually happening, rather than immediately reaching for a library.
 
-## Stack
+For example:
 
-**Languages** Python · JavaScript · Kotlin · SQL  
-**Backend** FastAPI · Node.js · Express · REST · JWT · RBAC  
-**Data** PostgreSQL · MongoDB · FalkorDB · ChromaDB · Redis  
-**AI** LLM fine-tuning (LoRA) · RAG · embeddings · spaCy · scikit-learn  
-**Infra** Docker · AWS · Nginx · GitHub Actions
+```python
+model.fit(X, y)
+```
 
-&nbsp;
+I'd like to know what that line is actually doing.
 
-## Learning
+```text
+$ progress --honest
 
-Machine learning, from the fundamentals up. I'd like to know what `model.fit(X, y)` is actually doing before I trust it.
+linear regression    ▰▰▰▰▰▰▱▱▱▱   lines. I understand lines.
+gradient descent     ▰▰▰▰▰▱▱▱▱▱   rolling downhill, carefully
+classification       ▰▰▰▱▱▱▱▱▱▱   it's a cat. probably.
+neural networks      ▰▱▱▱▱▱▱▱▱▱   send help
+```
 
-Next up: LangChain, LangGraph, agents. Currently open: one extremely fast-paced thriller, which is going better than the other two.
+Very much a work in progress.
 
-&nbsp;
+**Next rabbit holes:** `RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
 
-## My contributions
+---
+
+# ⌘ My toolbox
+
+```text
+LANGUAGES    Python          backend · AI/ML · NLP
+             JavaScript      backend · web
+             SQL             database work
+
+BACKEND      FastAPI · Node.js · Express
+             REST APIs · auth · JWT · RBAC · business logic
+
+DATABASES    PostgreSQL · MongoDB · MySQL
+             schema design · queries · relationships · migrations
+
+AI / ML      NumPy · scikit-learn · spaCy · Sentence Transformers
+             exploring: RAG · embeddings · LLMs
+
+INFRA        Docker · AWS · Nginx · GitHub Actions
+```
+
+---
+
+# ◓ My contributions
 
 <p align="center">
   <img src="assets/pokeballs.svg?v=2" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
@@ -108,13 +149,62 @@ Next up: LangChain, LangGraph, agents. Currently open: one extremely fast-paced 
 
 One Pokéball for every day I pushed something. The busier the day, the fancier the ball. Empty grass is a day I didn't. It redraws every night.
 
-&nbsp;
+---
 
-## Say hi
+# ◇ STATUS REPORT
 
-If you're building something, or know a good niche historical fact, I'm around.
+**17+** repositories  ·  **3×** hackathon finals  ·  **1×** top 100
 
-<p>
+```text
+$ tail ACHIEVEMENTS.log
+
+[ TOP 100  ]   Solvio AI Hackathon 2025
+[ FINALIST ]   CodeSprint — Inter-IUT Hackathon
+[ FINALIST ]   SUST CSE Carnival Hackathon
+[ FINALIST ]   IUT 12th ICT Fest — Agentic AI Hackathon
+```
+
+Three finalist finishes.
+
+One Top 100 placement.
+
+And apparently a growing collection of certificates.
+
+---
+
+# ▧ Currently open
+
+1. Machine learning fundamentals
+2. RAG / LLM rabbit holes
+3. One extremely fast-paced thriller
+
+One of these is going significantly better than the others.
+
+I will not tell you which one.
+
+---
+
+# ∿ You're still here
+
+Okay.
+
+So either:
+
+**A)** something here caught your attention.
+
+**B)** you clicked by accident.
+
+**C)** you were intrigued by my profile pic.
+
+**D)** you also have too many tabs open.
+
+Honestly, all four are valid.
+
+If you want to talk about something I'm building, something you're building, or how I ended up reading some extremely niche historical fact at 2 AM—
+
+## say hi.
+
+<p align="center">
 <a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="https://img.shields.io/badge/LinkedIn-connect-0f1114?style=for-the-badge&logo=linkedin&logoColor=7aa7b8&labelColor=0b0c0f" alt="LinkedIn"/></a>
 &nbsp;
 <a href="https://www.facebook.com/ayesha.mashiat"><img src="https://img.shields.io/badge/Facebook-find%20me-0f1114?style=for-the-badge&logo=facebook&logoColor=7aa7b8&labelColor=0b0c0f" alt="Facebook"/></a>
@@ -122,4 +212,13 @@ If you're building something, or know a good niche historical fact, I'm around.
 <a href="https://instagram.com/_.ayshiat._"><img src="https://img.shields.io/badge/Instagram-__.ayshiat.__-0f1114?style=for-the-badge&logo=instagram&logoColor=7aa7b8&labelColor=0b0c0f" alt="Instagram"/></a>
 </p>
 
-<sub>the tabs stay open.</sub>
+---
+
+```text
+❯ exit
+logout. the tabs stay open.
+```
+
+### Thanks for snooping around.
+
+**You may now return to whatever you were supposed to be doing.**
