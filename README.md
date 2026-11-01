@@ -180,15 +180,13 @@ Very much a work in progress.
 
 ---
 
-# ◓ The tall grass
+# ◓ My contributions
 
 <p align="center">
-  <img src="assets/pokeballs.svg" width="100%" alt="Ayesha's GitHub contributions as a patch of tall grass. Every day with contributions is a Pokéball, from Poké to Master Ball depending on how busy the day was. The three longest streaks are the party, each with a name, a level and an HP bar.">
+  <img src="assets/pokeballs.svg" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
 </p>
 
-Every day I contributed, I caught something. Busier days get fancier balls: Poké, Great, Ultra, and Master for the nights I should have been asleep. Empty days are just grass.
-
-Three days in a row recruits a party member, ringed in gold. Level is streak length, and the HP bar is how it compares to my best. It redraws every night.
+One Pokéball for every day I pushed something. The busier the day, the fancier the ball. Empty grass is a day I didn't. It redraws every night.
 
 ---
 

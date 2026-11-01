@@ -1,15 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 352" width="880" height="352" role="img" aria-label="ayeshamashiat's contributions as Pokéballs in tall grass; 160 days caught, longest streak 13 days">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 262" width="880" height="262" role="img" aria-label="ayeshamashiat's GitHub contributions: 690 in the last year, longest streak 13 days">
 <style>
-  text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; font-weight: 700; }
-  .wob { transform-box: fill-box; transform-origin: 50% 100%; animation: wob 2.8s ease-in-out var(--o, 0s) infinite; }
-  @keyframes wob { 0%, 55%, 100% { transform: rotate(0); } 62% { transform: rotate(-16deg); } 72% { transform: rotate(14deg); }
-                   82% { transform: rotate(-8deg); } 90% { transform: rotate(0); } }
+  text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
   .sway { animation: sway 4s ease-in-out var(--o, 0s) infinite; }
   @keyframes sway { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
-  .blink { animation: blink 1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-  .ring { animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 50% { stroke-opacity: .35; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
 <defs>
@@ -19,17 +12,13 @@
 <symbol id="b3" viewBox="0 0 13 13" overflow="visible"><circle cx="6.5" cy="6.5" r="6.5" fill="#2b2b2b"/><path d="M0 6.5 A6.5 6.5 0 0 1 13 6.5 Z" fill="#f4c20d"/><rect x="0" y="5.5" width="13" height="2" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="2.3" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="1.2" fill="#f4c20d"/><circle cx="6.5" cy="6.5" r="6.2" fill="none" stroke="#1a1a1a" stroke-width=".7"/></symbol>
 <symbol id="b4" viewBox="0 0 13 13" overflow="visible"><circle cx="6.5" cy="6.5" r="6.5" fill="#9b59b6"/><path d="M0 6.5 A6.5 6.5 0 0 1 13 6.5 Z" fill="#9b59b6"/><rect x="0" y="5.5" width="13" height="2" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="2.3" fill="#f4f4f4"/><circle cx="6.5" cy="6.5" r="1.2" fill="#ff6fae"/><circle cx="6.5" cy="6.5" r="6.2" fill="none" stroke="#1a1a1a" stroke-width=".7"/></symbol>
 <pattern id="tile" width="30" height="30" patternUnits="userSpaceOnUse"><rect width="30" height="30" fill="#1d3b2a"/><rect width="15" height="15" fill="#21432f"/><rect x="15" y="15" width="15" height="15" fill="#21432f"/></pattern>
-<clipPath id="frame"><rect width="880" height="352" rx="14"/></clipPath>
+<clipPath id="frame"><rect width="880" height="262" rx="14"/></clipPath>
 </defs>
 <g clip-path="url(#frame)">
-<rect width="880" height="352" fill="#14261c"/>
+<rect width="880" height="262" fill="#14261c"/>
 <rect width="880" height="64" fill="#101a14"/><rect y="64" width="880" height="2" fill="#2e5a3d"/>
-<text x="32" y="30" font-size="14" fill="#f4f4f4"><tspan fill="#e74c3c">●</tspan> TRAINER AYESHAMASHIAT</text>
-<text x="32" y="50" font-size="10.5" fill="#7fa88c" font-weight="400">wild commits live in the tall grass. they get caught after midnight.</text>
-<text x="640" y="30" font-size="12" fill="#f4f4f4" text-anchor="end">Lv.58</text>
-<text x="654" y="30" font-size="10" fill="#f4d03f">STREAK</text>
-<rect x="654" y="38" width="194" height="7" rx="3.5" fill="#4a4f58"/><rect x="654" y="38" width="3.5" height="7" rx="3.5" fill="#e74c3c"/>
-<text x="848" y="30" font-size="10" fill="#7fa88c" text-anchor="end">0/13</text>
+<text x="32" y="30" font-size="14" font-weight="700" fill="#f4f4f4"><tspan fill="#e74c3c">●</tspan> my contributions</text>
+<text x="32" y="50" font-size="10.5" fill="#7fa88c">one ball for every day I pushed something. empty grass is a day I didn't.</text>
 <rect x="26.0" y="82" width="828.0" height="110" rx="6" fill="url(#tile)"/>
 <use class="sway" href="#g" x="36.0" y="92" width="13" height="13" style="--o:-2.5s"/>
 <use class="sway" href="#g" x="36.0" y="107" width="13" height="13" style="--o:-2.6s"/>
@@ -48,26 +37,17 @@
 <use href="#b4" x="66.0" y="92" width="13" height="13"><title>Sun 09 Nov 2025: 5 contributions</title></use>
 <use class="sway" href="#g" x="66.0" y="107" width="13" height="13" style="--o:-0.8s"/>
 <use class="sway" href="#g" x="66.0" y="122" width="13" height="13" style="--o:-3.7s"/>
-<rect class="ring" x="64.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="66.0" y="137" width="13" height="13"><title>Wed 12 Nov 2025: 3 contributions</title></use>
-<rect class="ring" x="64.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="66.0" y="152" width="13" height="13"><title>Thu 13 Nov 2025: 1 contribution</title></use>
-<rect class="ring" x="64.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="66.0" y="167" width="13" height="13"><title>Fri 14 Nov 2025: 1 contribution</title></use>
-<rect class="ring" x="64.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="66.0" y="182" width="13" height="13"><title>Sat 15 Nov 2025: 3 contributions</title></use>
-<rect class="ring" x="79.5" y="90.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="81.0" y="92" width="13" height="13"><title>Sun 16 Nov 2025: 1 contribution</title></use>
-<rect class="ring" x="79.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="81.0" y="107" width="13" height="13"><title>Mon 17 Nov 2025: 2 contributions</title></use>
-<rect class="ring" x="79.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="81.0" y="122" width="13" height="13"><title>Tue 18 Nov 2025: 12 contributions</title></use>
-<rect class="ring" x="79.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
-<use class="wob" style="--o:-1.7s" href="#b4" x="81.0" y="137" width="13" height="13"><title>Wed 19 Nov 2025: 17 contributions</title></use>
-<rect class="ring" x="79.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
+<use href="#b4" x="81.0" y="137" width="13" height="13"><title>Wed 19 Nov 2025: 17 contributions</title></use>
 <use href="#b4" x="81.0" y="152" width="13" height="13"><title>Thu 20 Nov 2025: 12 contributions</title></use>
 <use class="sway" href="#g" x="81.0" y="167" width="13" height="13" style="--o:-2.2s"/>
-<use class="wob" style="--o:-2.7s" href="#b4" x="81.0" y="182" width="13" height="13"><title>Sat 22 Nov 2025: 18 contributions</title></use>
+<use href="#b4" x="81.0" y="182" width="13" height="13"><title>Sat 22 Nov 2025: 18 contributions</title></use>
 <use class="sway" href="#g" x="96.0" y="92" width="13" height="13" style="--o:-1.7s"/>
 <use href="#b4" x="96.0" y="107" width="13" height="13"><title>Mon 24 Nov 2025: 16 contributions</title></use>
 <use href="#b4" x="96.0" y="122" width="13" height="13"><title>Tue 25 Nov 2025: 8 contributions</title></use>
@@ -76,7 +56,7 @@
 <use class="sway" href="#g" x="96.0" y="167" width="13" height="13" style="--o:-3.6s"/>
 <use href="#b1" x="96.0" y="182" width="13" height="13"><title>Sat 29 Nov 2025: 1 contribution</title></use>
 <use href="#b3" x="111.0" y="92" width="13" height="13"><title>Sun 30 Nov 2025: 4 contributions</title></use>
-<use class="wob" style="--o:-1.8s" href="#b4" x="111.0" y="107" width="13" height="13"><title>Mon 01 Dec 2025: 17 contributions</title></use>
+<use href="#b4" x="111.0" y="107" width="13" height="13"><title>Mon 01 Dec 2025: 17 contributions</title></use>
 <use class="sway" href="#g" x="111.0" y="122" width="13" height="13" style="--o:-0.4s"/>
 <use href="#b4" x="111.0" y="137" width="13" height="13"><title>Wed 03 Dec 2025: 11 contributions</title></use>
 <use href="#b4" x="111.0" y="152" width="13" height="13"><title>Thu 04 Dec 2025: 17 contributions</title></use>
@@ -115,21 +95,13 @@
 <use href="#b4" x="186.0" y="122" width="13" height="13"><title>Tue 06 Jan 2026: 7 contributions</title></use>
 <use class="sway" href="#g" x="186.0" y="137" width="13" height="13" style="--o:-3.8s"/>
 <use class="sway" href="#g" x="186.0" y="152" width="13" height="13" style="--o:-1.4s"/>
-<rect class="ring" x="184.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="186.0" y="167" width="13" height="13"><title>Fri 09 Jan 2026: 1 contribution</title></use>
-<rect class="ring" x="184.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="186.0" y="182" width="13" height="13"><title>Sat 10 Jan 2026: 11 contributions</title></use>
-<rect class="ring" x="199.5" y="90.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b3" x="201.0" y="92" width="13" height="13"><title>Sun 11 Jan 2026: 4 contributions</title></use>
-<rect class="ring" x="199.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="201.0" y="107" width="13" height="13"><title>Mon 12 Jan 2026: 1 contribution</title></use>
-<rect class="ring" x="199.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="201.0" y="122" width="13" height="13"><title>Tue 13 Jan 2026: 2 contributions</title></use>
-<rect class="ring" x="199.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="201.0" y="137" width="13" height="13"><title>Wed 14 Jan 2026: 11 contributions</title></use>
-<rect class="ring" x="199.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="201.0" y="152" width="13" height="13"><title>Thu 15 Jan 2026: 9 contributions</title></use>
-<rect class="ring" x="199.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="201.0" y="167" width="13" height="13"><title>Fri 16 Jan 2026: 17 contributions</title></use>
 <use class="sway" href="#g" x="201.0" y="182" width="13" height="13" style="--o:-1.3s"/>
 <use href="#b4" x="216.0" y="92" width="13" height="13"><title>Sun 18 Jan 2026: 7 contributions</title></use>
@@ -245,31 +217,18 @@
 <use href="#b3" x="441.0" y="167" width="13" height="13"><title>Fri 08 May 2026: 4 contributions</title></use>
 <use href="#b2" x="441.0" y="182" width="13" height="13"><title>Sat 09 May 2026: 3 contributions</title></use>
 <use class="sway" href="#g" x="456.0" y="92" width="13" height="13" style="--o:-3.8s"/>
-<rect class="ring" x="454.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="456.0" y="107" width="13" height="13"><title>Mon 11 May 2026: 2 contributions</title></use>
-<rect class="ring" x="454.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="456.0" y="122" width="13" height="13"><title>Tue 12 May 2026: 1 contribution</title></use>
-<rect class="ring" x="454.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="456.0" y="137" width="13" height="13"><title>Wed 13 May 2026: 7 contributions</title></use>
-<rect class="ring" x="454.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b3" x="456.0" y="152" width="13" height="13"><title>Thu 14 May 2026: 4 contributions</title></use>
-<rect class="ring" x="454.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="456.0" y="167" width="13" height="13"><title>Fri 15 May 2026: 2 contributions</title></use>
-<rect class="ring" x="454.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b3" x="456.0" y="182" width="13" height="13"><title>Sat 16 May 2026: 4 contributions</title></use>
-<rect class="ring" x="469.5" y="90.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b3" x="471.0" y="92" width="13" height="13"><title>Sun 17 May 2026: 4 contributions</title></use>
-<rect class="ring" x="469.5" y="105.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b1" x="471.0" y="107" width="13" height="13"><title>Mon 18 May 2026: 1 contribution</title></use>
-<rect class="ring" x="469.5" y="120.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="471.0" y="122" width="13" height="13"><title>Tue 19 May 2026: 8 contributions</title></use>
-<rect class="ring" x="469.5" y="135.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="471.0" y="137" width="13" height="13"><title>Wed 20 May 2026: 15 contributions</title></use>
-<rect class="ring" x="469.5" y="150.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="471.0" y="152" width="13" height="13"><title>Thu 21 May 2026: 6 contributions</title></use>
-<rect class="ring" x="469.5" y="165.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b4" x="471.0" y="167" width="13" height="13"><title>Fri 22 May 2026: 15 contributions</title></use>
-<rect class="ring" x="469.5" y="180.5" width="16" height="16" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>
 <use href="#b2" x="471.0" y="182" width="13" height="13"><title>Sat 23 May 2026: 2 contributions</title></use>
 <use class="sway" href="#g" x="486.0" y="92" width="13" height="13" style="--o:-1.9s"/>
 <use class="sway" href="#g" x="486.0" y="107" width="13" height="13" style="--o:-1.2s"/>
@@ -433,30 +392,17 @@
 <use class="sway" href="#g" x="816.0" y="167" width="13" height="13" style="--o:-2.7s"/>
 <use class="sway" href="#g" x="816.0" y="182" width="13" height="13" style="--o:-1.3s"/>
 <use class="sway" href="#g" x="831.0" y="92" width="13" height="13" style="--o:-2.9s"/>
-<text x="26.0" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">contributions a day:</text>
-<use href="#b1" x="164" y="213" width="11" height="11"/>
-<text x="179" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">poké 1</text>
-<use href="#b2" x="276" y="213" width="11" height="11"/>
-<text x="291" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">great 2-3</text>
-<use href="#b3" x="388" y="213" width="11" height="11"/>
-<text x="403" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">ultra 4</text>
-<use href="#b4" x="500" y="213" width="11" height="11"/>
-<text x="515" y="222" font-size="9.5" fill="#7fa88c" font-weight="400">master 5+</text>
-<text x="854.0" y="222" font-size="9.5" fill="#7fa88c" text-anchor="end" font-weight="400"><tspan fill="#f4d03f">◯</tspan> party streak · wobble = top 3 days</text>
-<rect x="28" y="236" width="824" height="96" rx="8" fill="#f8f8e8" stroke="#383838" stroke-width="3"/>
-<rect x="34" y="242" width="812" height="84" rx="5" fill="none" stroke="#a8a8a0" stroke-width="1"/>
-<text x="50" y="264" font-size="13" fill="#383838">ayeshamashiat caught 690 wild contributions!</text>
-<text x="50" y="282" font-size="10.5" fill="#6b6b64" font-weight="400">160 days in the grass · shiny day 22 Nov (18!)</text>
-<path class="blink" d="M820 306 l9 0 l-4.5 7 z" fill="#383838"/>
-<text x="50" y="306" font-size="11" fill="#383838"><tspan fill="#c9970b">1</tspan> Refactorite</text>
-<text x="280" y="306" font-size="10" fill="#6b6b64" text-anchor="end">Lv.13</text>
-<rect x="50" y="313" width="230" height="7" rx="3.5" fill="#4a4f58"/><rect x="50" y="313" width="230.0" height="7" rx="3.5" fill="#58d68d"/>
-<text x="312" y="306" font-size="11" fill="#383838"><tspan fill="#c9970b">2</tspan> Stackoverflowl</text>
-<text x="542" y="306" font-size="10" fill="#6b6b64" text-anchor="end">Lv.9</text>
-<rect x="312" y="313" width="230" height="7" rx="3.5" fill="#4a4f58"/><rect x="312" y="313" width="159.2" height="7" rx="3.5" fill="#58d68d"/>
-<text x="574" y="306" font-size="11" fill="#383838"><tspan fill="#c9970b">3</tspan> Pushachu</text>
-<text x="804" y="306" font-size="10" fill="#6b6b64" text-anchor="end">Lv.8</text>
-<rect x="574" y="313" width="230" height="7" rx="3.5" fill="#4a4f58"/><rect x="574" y="313" width="141.5" height="7" rx="3.5" fill="#58d68d"/>
+<text x="26.0" y="222" font-size="9.5" fill="#7fa88c">contributions in a day:</text>
+<use href="#b1" x="186" y="213" width="11" height="11"/>
+<text x="202" y="222" font-size="9.5" fill="#7fa88c">1</text>
+<use href="#b2" x="256" y="213" width="11" height="11"/>
+<text x="272" y="222" font-size="9.5" fill="#7fa88c">2-3</text>
+<use href="#b3" x="326" y="213" width="11" height="11"/>
+<text x="342" y="222" font-size="9.5" fill="#7fa88c">4</text>
+<use href="#b4" x="396" y="213" width="11" height="11"/>
+<text x="412" y="222" font-size="9.5" fill="#7fa88c">5+</text>
+<line x1="32" y1="218" x2="848" y2="218" stroke="#2e5a3d"/>
+<text x="32" y="242" font-size="11" fill="#7fa88c" xml:space="preserve"><tspan fill="#f4f4f4">690</tspan> contributions this year  ·  longest streak <tspan fill="#f4f4f4">13</tspan> days  ·  busiest day <tspan fill="#f4f4f4">22 Nov</tspan> (18)</text>
 </g>
-<rect x=".5" y=".5" width="879" height="351" rx="14" fill="none" stroke="#2e5a3d"/>
+<rect x=".5" y=".5" width="879" height="261" rx="14" fill="none" stroke="#2e5a3d"/>
 </svg>

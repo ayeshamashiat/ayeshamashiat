@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Turns a GitHub contribution calendar into a patch of tall grass.
+Turns a GitHub contribution calendar into Pokéballs in tall grass.
 
-Every day you contributed is a caught Pokéball (busier day = fancier ball:
-Poké < Great < Ultra < Master). Quiet days are just grass. Your three longest
-streaks become your party, each with a name, a level and an HP bar.
+Every day you contributed is a Pokéball; the busier the day, the fancier the ball.
+Days with nothing are just grass.
 
 Usage
   GITHUB_TOKEN=... python scripts/pokeballs.py ayeshamashiat
@@ -21,15 +20,9 @@ import os
 import random
 import urllib.request
 
-W, H = 880, 352
+W, H = 880, 262
 CELL, PITCH = 13, 15
 GRID_Y0 = 92
-
-PARTY_NAMES = [
-    "Mergechu", "Segfaultle", "Bugasaur", "Refactorite", "Lintbat",
-    "Rubberduckett", "Stackoverflowl", "Nullpointer", "Gitgud", "Hotfixeon",
-    "Pushachu", "Cronjobbuffet", "Regexeggutor", "Dockerodile",
-]
 
 QUERY = """
 query($login: String!) {
@@ -127,16 +120,6 @@ def current_streak(days):
     return n
 
 
-def hp_color(frac):
-    return "#58d68d" if frac > 0.5 else "#f4d03f" if frac > 0.2 else "#e74c3c"
-
-
-def hp_bar(x, y, w, frac):
-    frac = max(0.0, min(1.0, frac))
-    return (f'<rect x="{x}" y="{y}" width="{w}" height="7" rx="3.5" fill="#4a4f58"/>'
-            f'<rect x="{x}" y="{y}" width="{max(w * frac, 3.5):.1f}" height="7" rx="3.5" fill="{hp_color(frac)}"/>')
-
-
 # ---------------------------------------------------------------- render
 BALLS = {  # level -> (top, bottom, band, button)
     1: ("#e74c3c", "#f4f4f4", "#2b2b2b", "#f4f4f4"),
@@ -166,36 +149,23 @@ def render(days, login):
     offset = (first.weekday() + 1) % 7  # GitHub weeks start on Sunday
     nweeks = (len(days) + offset + 6) // 7
     x0 = (W - nweeks * PITCH + (PITCH - CELL)) / 2
+    gx1 = x0 + nweeks * PITCH - (PITCH - CELL)
     lvl = levels([n for _, n in days])
 
     total = sum(n for _, n in days)
-    st = streaks(days)
-    top = sorted(st, key=lambda s: (-len(s), s[0]))[:3]
-    longest = max((len(s) for s in st), default=1)
+    longest = max((len(s) for s in streaks(days)), default=max((1 for _, n in days if n), default=0))
     cs = current_streak(days)
     bright_d, bright_n = max(days, key=lambda x: x[1])
-    caught = sum(1 for _, n in days if n)
-    trainer_lvl = min(99, 1 + total // 12)
 
-    party_rank = {d: i + 1 for i, s in enumerate(top) for d in s}
-    wobblers = {d for d, n in sorted(days, key=lambda x: -x[1])[:3] if n > 0}
-
-    o, a = [], None
+    o = []
     a = o.append
     a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
-      f'role="img" aria-label="{html.escape(login)}\'s contributions as Pokéballs in tall grass; '
-      f'{caught} days caught, longest streak {longest} days">')
+      f'role="img" aria-label="{html.escape(login)}\'s GitHub contributions: {total:,} in the last year, '
+      f'longest streak {longest} days">')
     a("""<style>
-  text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; font-weight: 700; }
-  .wob { transform-box: fill-box; transform-origin: 50% 100%; animation: wob 2.8s ease-in-out var(--o, 0s) infinite; }
-  @keyframes wob { 0%, 55%, 100% { transform: rotate(0); } 62% { transform: rotate(-16deg); } 72% { transform: rotate(14deg); }
-                   82% { transform: rotate(-8deg); } 90% { transform: rotate(0); } }
+  text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
   .sway { animation: sway 4s ease-in-out var(--o, 0s) infinite; }
   @keyframes sway { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
-  .blink { animation: blink 1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-  .ring { animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 50% { stroke-opacity: .35; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>""")
     a("<defs>")
@@ -207,24 +177,19 @@ def render(days, login):
     a('<pattern id="tile" width="30" height="30" patternUnits="userSpaceOnUse">'
       '<rect width="30" height="30" fill="#1d3b2a"/><rect width="15" height="15" fill="#21432f"/>'
       '<rect x="15" y="15" width="15" height="15" fill="#21432f"/></pattern>')
-    a('<clipPath id="frame"><rect width="880" height="352" rx="14"/></clipPath>')
+    a(f'<clipPath id="frame"><rect width="{W}" height="{H}" rx="14"/></clipPath>')
     a("</defs>")
     a('<g clip-path="url(#frame)">')
     a(f'<rect width="{W}" height="{H}" fill="#14261c"/>')
 
-    # top bar: trainer card
+    # header
     a(f'<rect width="{W}" height="64" fill="#101a14"/><rect y="64" width="{W}" height="2" fill="#2e5a3d"/>')
-    a(f'<text x="32" y="30" font-size="14" fill="#f4f4f4"><tspan fill="#e74c3c">●</tspan> TRAINER '
-      f'{html.escape(login.upper())}</text>')
-    a('<text x="32" y="50" font-size="10.5" fill="#7fa88c" font-weight="400">wild commits live in the tall grass. '
-      'they get caught after midnight.</text>')
-    a(f'<text x="640" y="30" font-size="12" fill="#f4f4f4" text-anchor="end">Lv.{trainer_lvl}</text>')
-    a('<text x="654" y="30" font-size="10" fill="#f4d03f">STREAK</text>')
-    a(hp_bar(654, 38, 194, cs / longest if longest else 0))
-    a(f'<text x="848" y="30" font-size="10" fill="#7fa88c" text-anchor="end">{cs}/{longest}</text>')
+    a('<text x="32" y="30" font-size="14" font-weight="700" fill="#f4f4f4">'
+      '<tspan fill="#e74c3c">●</tspan> my contributions</text>')
+    a('<text x="32" y="50" font-size="10.5" fill="#7fa88c">one ball for every day I pushed something. '
+      'empty grass is a day I didn\'t.</text>')
 
     # the grass field
-    gx1 = x0 + nweeks * PITCH - (PITCH - CELL)
     a(f'<rect x="{x0 - 10:.1f}" y="{GRID_Y0 - 10}" width="{gx1 - x0 + 20:.1f}" height="{7 * PITCH + 5}" '
       f'rx="6" fill="url(#tile)"/>')
     for i, (d, n) in enumerate(days):
@@ -236,51 +201,29 @@ def render(days, login):
               f'style="--o:{-h01(d, "s") * 4:.1f}s"/>')
             continue
         tip = f"<title>{d.strftime('%a %d %b %Y')}: {n} contribution{'s' if n != 1 else ''}</title>"
-        if d in party_rank:
-            a(f'<rect class="ring" x="{x - 1.5:.1f}" y="{y - 1.5}" width="{CELL + 3}" height="{CELL + 3}" rx="7" '
-              f'fill="none" stroke="#f4d03f" stroke-width="1.2"/>')
-        cls = ' class="wob" style="--o:%.1fs"' % (-h01(d, "w") * 2.8) if d in wobblers else ""
-        a(f'<use{cls} href="#b{L}" x="{x:.1f}" y="{y}" width="{CELL}" height="{CELL}">{tip}</use>')
+        a(f'<use href="#b{L}" x="{x:.1f}" y="{y}" width="{CELL}" height="{CELL}">{tip}</use>')
 
-    # legend: what each ball means, in contributions per day
+    # legend: fewer -> more, with the actual counts
     q = cuts([n for _, n in days])
-    ranges = [f"{1 if i == 0 else q[i - 1] + 1}" + (f"-{q[i]}" if q[i] > (1 if i == 0 else q[i - 1] + 1) else "")
-              for i in range(3)] + [f"{q[2] + 1}+"]
+    lo = [1, q[0] + 1, q[1] + 1, q[2] + 1]
+    hi = [q[0], q[1], q[2]]
+    ranges = [f"{lo[i]}" if lo[i] >= hi[i] else f"{lo[i]}-{hi[i]}" for i in range(3)] + [f"{lo[3]}+"]
     ly = GRID_Y0 + 7 * PITCH + 16
-    a(f'<text x="{x0 - 10:.1f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" font-weight="400">'
-      f'contributions a day:</text>')
-    lx = x0 + 128
-    for k, (nm, rg) in enumerate(zip(["poké", "great", "ultra", "master"], ranges), 1):
-        x = lx + (k - 1) * 112
+    a(f'<text x="{x0 - 10:.1f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c">contributions in a day:</text>')
+    for k, rg in enumerate(ranges, 1):
+        x = x0 + 150 + (k - 1) * 70
         a(f'<use href="#b{k}" x="{x:.0f}" y="{ly}" width="11" height="11"/>')
-        a(f'<text x="{x + 15:.0f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" font-weight="400">{nm} {rg}</text>')
-    a(f'<text x="{gx1 + 10:.1f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c" text-anchor="end" font-weight="400">'
-      f'<tspan fill="#f4d03f">◯</tspan> party streak · wobble = top 3 days</text>')
+        a(f'<text x="{x + 16:.0f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c">{rg}</text>')
 
-    # dialogue box
-    by = 236
-    a(f'<rect x="28" y="{by}" width="824" height="96" rx="8" fill="#f8f8e8" stroke="#383838" stroke-width="3"/>')
-    a(f'<rect x="34" y="{by + 6}" width="812" height="84" rx="5" fill="none" stroke="#a8a8a0" stroke-width="1"/>')
-    a(f'<text x="50" y="{by + 28}" font-size="13" fill="#383838">'
-      f'{html.escape(login)} caught {total:,} wild contributions!</text>')
-    a(f'<text x="50" y="{by + 46}" font-size="10.5" fill="#6b6b64" font-weight="400">'
-      f'{caught} days in the grass · shiny day {bright_d.strftime("%d %b")} ({bright_n}!)</text>')
-    a(f'<path class="blink" d="M820 {by + 70} l9 0 l-4.5 7 z" fill="#383838"/>')
-
-    if top:
-        for i, s in enumerate(top):
-            px = 50 + i * 262
-            name = PARTY_NAMES[int(h01(s[0], "name") * len(PARTY_NAMES))]
-            # step along until the three names are different
-            while any(name == PARTY_NAMES[int(h01(t[0], "name") * len(PARTY_NAMES))] for t in top[:i]):
-                name = PARTY_NAMES[(PARTY_NAMES.index(name) + 1) % len(PARTY_NAMES)]
-            a(f'<text x="{px}" y="{by + 70}" font-size="11" fill="#383838">'
-              f'<tspan fill="#c9970b">{i + 1}</tspan> {name}</text>')
-            a(f'<text x="{px + 230}" y="{by + 70}" font-size="10" fill="#6b6b64" text-anchor="end">Lv.{len(s)}</text>')
-            a(hp_bar(px, by + 77, 230, len(s) / longest))
-    else:
-        a(f'<text x="50" y="{by + 72}" font-size="11" fill="#6b6b64" font-weight="400">'
-          f'your party is empty. push 3 days in a row to recruit one.</text>')
+    # footer
+    fy = H - 20
+    a(f'<line x1="32" y1="{fy - 24}" x2="{W - 32}" y2="{fy - 24}" stroke="#2e5a3d"/>')
+    stats = (f'<tspan fill="#f4f4f4">{total:,}</tspan> contributions this year  ·  '
+             f'longest streak <tspan fill="#f4f4f4">{longest}</tspan> days  ·  '
+             f'busiest day <tspan fill="#f4f4f4">{bright_d.strftime("%d %b")}</tspan> ({bright_n})')
+    if cs:
+        stats += f'  ·  current streak <tspan fill="#f4f4f4">{cs}</tspan>'
+    a(f'<text x="32" y="{fy}" font-size="11" fill="#7fa88c" xml:space="preserve">{stats}</text>')
 
     a("</g>")
     a(f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="none" stroke="#2e5a3d"/>')
