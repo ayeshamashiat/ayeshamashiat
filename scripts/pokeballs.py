@@ -20,9 +20,9 @@ import os
 import random
 import urllib.request
 
-W, H = 880, 262
+W, H = 880, 284
 CELL, PITCH = 13, 15
-GRID_Y0 = 92
+GRID_Y0 = 106
 
 QUERY = """
 query($login: String!) {
@@ -156,6 +156,8 @@ def render(days, login):
     longest = max((len(s) for s in streaks(days)), default=max((1 for _, n in days if n), default=0))
     cs = current_streak(days)
     bright_d, bright_n = max(days, key=lambda x: x[1])
+    top = sorted(streaks(days), key=lambda s: (-len(s), s[0]))[:3]
+    in_streak = {d for s in top for d in s}
 
     o = []
     a = o.append
@@ -166,6 +168,8 @@ def render(days, login):
   text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
   .sway { animation: sway 4s ease-in-out var(--o, 0s) infinite; }
   @keyframes sway { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
+  .ring { animation: glow 2.4s ease-in-out infinite; }
+  @keyframes glow { 50% { stroke-opacity: .45; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>""")
     a("<defs>")
@@ -189,6 +193,14 @@ def render(days, login):
     a('<text x="32" y="50" font-size="10.5" fill="#7fa88c">one ball for every day I pushed something. '
       'empty grass is a day I didn\'t.</text>')
 
+    # month labels: one above the first column of each month
+    last_col, last_month = -9, None
+    for i, (d, _) in enumerate(days):
+        col = (i + offset) // 7
+        if d.month != last_month and col - last_col >= 3 and (i + offset) % 7 < 3:
+            a(f'<text x="{x0 + col * PITCH:.1f}" y="{GRID_Y0 - 16}" font-size="9.5" fill="#7fa88c">{d.strftime("%b")}</text>')
+            last_col, last_month = col, d.month
+
     # the grass field
     a(f'<rect x="{x0 - 10:.1f}" y="{GRID_Y0 - 10}" width="{gx1 - x0 + 20:.1f}" height="{7 * PITCH + 5}" '
       f'rx="6" fill="url(#tile)"/>')
@@ -200,6 +212,11 @@ def render(days, login):
             a(f'<use class="sway" href="#g" x="{x:.1f}" y="{y}" width="{CELL}" height="{CELL}" '
               f'style="--o:{-h01(d, "s") * 4:.1f}s"/>')
             continue
+        if d in in_streak:
+            a(f'<rect x="{x - 3:.1f}" y="{y - 3}" width="{CELL + 6}" height="{CELL + 6}" rx="8" fill="none" '
+              f'stroke="#f4d03f" stroke-opacity=".18" stroke-width="3"/>'
+              f'<rect class="ring" x="{x - 1.5:.1f}" y="{y - 1.5}" width="{CELL + 3}" height="{CELL + 3}" rx="7" '
+              f'fill="none" stroke="#f4d03f" stroke-width="1.2"/>')
         tip = f"<title>{d.strftime('%a %d %b %Y')}: {n} contribution{'s' if n != 1 else ''}</title>"
         a(f'<use href="#b{L}" x="{x:.1f}" y="{y}" width="{CELL}" height="{CELL}">{tip}</use>')
 
@@ -215,9 +232,12 @@ def render(days, login):
         a(f'<use href="#b{k}" x="{x:.0f}" y="{ly}" width="11" height="11"/>')
         a(f'<text x="{x + 16:.0f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c">{rg}</text>')
 
+    gx = x0 + 150 + 4 * 70 + 20
+    a(f'<rect x="{gx:.0f}" y="{ly - 1}" width="13" height="13" rx="7" fill="none" stroke="#f4d03f" stroke-width="1.2"/>')
+    a(f'<text x="{gx + 20:.0f}" y="{ly + 9}" font-size="9.5" fill="#7fa88c">my 3 longest streaks</text>')
+
     # footer
     fy = H - 20
-    a(f'<line x1="32" y1="{fy - 24}" x2="{W - 32}" y2="{fy - 24}" stroke="#2e5a3d"/>')
     stats = (f'<tspan fill="#f4f4f4">{total:,}</tspan> contributions this year  ·  '
              f'longest streak <tspan fill="#f4f4f4">{longest}</tspan> days  ·  '
              f'busiest day <tspan fill="#f4f4f4">{bright_d.strftime("%d %b")}</tspan> ({bright_n})')
