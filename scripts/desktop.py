@@ -55,15 +55,15 @@ LIT_TABS = {1: 10.4, 2: 2.4, 3: 18.4, 5: 10.4, 7: 2.4, 8: 18.4, 9: 2.4, 11: 10.4
 # window: key -> (x, y, w, h, rotation)
 LAYOUT = {
     "coding": (24, 50, 330, 214, -1.0),
-    "reading": (368, 58, 236, 228, 1.3),
+    "reading": (368, 42, 236, 250, 1.3),
     "cha": (618, 46, 238, 218, 2.2),
     "ml": (24, 284, 300, 232, -0.8),
-    "nuclear": (338, 292, 290, 232, 0.9),
+    "nuclear": (338, 298, 290, 232, 0.9),
     "decisions": (642, 278, 214, 232, -1.8),
 }
 ORDER = ["coding", "reading", "cha", "ml", "nuclear", "decisions"]
 SPOT = {k: 2.4 + 4 * i for i, k in enumerate(ORDER)}  # seconds, one 4s turn each in a 24s loop
-CURSOR = [(322, 206), (572, 238), (824, 214), (262, 466), (598, 500), (822, 404)]
+CURSOR = [(322, 206), (590, 196), (824, 214), (262, 466), (598, 500), (822, 404)]
 
 
 def esc(s):
@@ -117,11 +117,12 @@ def coding():
 BOOKS = [  # (title, author and genre, one-line take)
     ("As Long As the Lemon Trees Grow", "Zoulfa Katouh · war fiction, Syria", ["incredible."]),
     ("Mornings in Jenin", "Susan Abulhawa · historical fiction", ["Palestine, pre-Nakba to the 2000s.", "heart-wrenching."]),
+    ("Poisoner in Chief", "Stephen Kinzer · nonfiction", ["a glimpse into the CIA's shady world."]),
 ]
 
 
 def reading():
-    o, x, base, k = [], 18, 76, 0.5
+    o, x, base, k = [], 18, 66, 0.4
     for i, (w, h, col) in enumerate(SPINES):
         h = h * k
         if i == len(SPINES) - 1:  # the last one leans
@@ -133,14 +134,14 @@ def reading():
         x += w + 3
     o.append(f'<line x1="12" y1="{base + .5}" x2="224" y2="{base + .5}" stroke="{EDGE}" stroke-width="2"/>')
     o.append(f'<path d="M206 29 v26 l8 -6 l8 6 v-26 z" fill="{AMBER}"/>')  # bookmark ribbon
-    o.append(f'<text x="18" y="98" font-size="9.5" letter-spacing="1.4" fill="{MUTED}">READ &amp; LOVED</text>')
-    y = 116
+    o.append(f'<text x="18" y="88" font-size="9.5" letter-spacing="1.4" fill="{MUTED}">READ &amp; LOVED</text>')
+    y = 106
     for title, by, take in BOOKS:
         o.append(f'<text x="18" y="{y}" font-size="10.5" font-weight="700" fill="{TEXT}">{esc(title)}</text>')
         o.append(f'<text x="18" y="{y + 14}" font-size="9" fill="{MUTED}">{esc(by)}</text>')
         for j, line in enumerate(take):
             o.append(f'<text x="18" y="{y + 27 + 13 * j}" font-size="9" font-style="italic" fill="{AMBER}">{esc(line)}</text>')
-        y += 14 + 13 * len(take) + 24
+        y += 14 + 13 * len(take) + 20
     return window("reading", "shelf.md", "".join(o))
 
 
@@ -269,7 +270,7 @@ def css():
 
 def main():
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
-         f'aria-label="Ayesha\'s messy desktop. A code editor with a dev server open. A bookshelf: read and loved As Long As the Lemon Trees Grow by Zoulfa Katouh, war fiction set in Syria, and Mornings in Jenin by Susan Abulhawa, historical fiction about Palestine from before the Nakba to the 2000s. '
+         f'aria-label="Ayesha\'s messy desktop. A code editor with a dev server open. A bookshelf: read and loved As Long As the Lemon Trees Grow by Zoulfa Katouh, war fiction set in Syria, Mornings in Jenin by Susan Abulhawa, historical fiction about Palestine from before the Nakba to the 2000s, and Poisoner in Chief by Stephen Kinzer, nonfiction about the CIA. '
          f'A recipe for lebu-cha: 1 cup water, 1 and a half spoons sugar or honey, 1 cardamom, a pinch of cinnamon, a handful of mint, some squeezed lime. '
          f'A machine learning notebook with a loss curve. A log of nuclear accidents: Chernobyl, Fukushima, Kyshtym, Three Mile Island, Windscale, Goiania, Tokaimura. '
          f'A to-do list of questionable decisions. 17 browser tabs open, 4 important, she doesn\'t know which 4.">',
