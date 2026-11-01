@@ -102,12 +102,10 @@ model.fit(X, y)
 I'd like to know what that line is actually doing.
 
 ```text
-$ progress --honest
-
-linear regression    ▰▰▰▰▰▰▱▱▱▱   lines. I understand lines.
-gradient descent     ▰▰▰▰▰▱▱▱▱▱   rolling downhill, carefully
-classification       ▰▰▰▱▱▱▱▱▱▱   it's a cat. probably.
-neural networks      ▰▱▱▱▱▱▱▱▱▱   send help
+linear regression    ▰▰▰▰▰▰▱▱▱▱
+gradient descent     ▰▰▰▰▰▱▱▱▱▱
+classification       ▰▰▰▱▱▱▱▱▱▱
+neural networks      ▰▱▱▱▱▱▱▱▱▱
 ```
 
 Very much a work in progress.
