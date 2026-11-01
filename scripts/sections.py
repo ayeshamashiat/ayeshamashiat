@@ -34,11 +34,20 @@ def card(x, y, w, h, r=12):
 
 
 def header(i, title):
-    body = (card(0, 0, W, 52)
-            + f'<text class="m" x="24" y="31" font-size="12" font-weight="700" fill="{AMBER}">{i:02d}</text>'
-            + f'<line x1="52" y1="18" x2="52" y2="34" stroke="{EDGE}"/>'
-            + f'<text class="s" x="68" y="33" font-size="19" font-weight="700" fill="{TEXT}">{html.escape(title)}</text>')
-    return svg(W, 52, body, title)
+    h = 84
+    body = (
+        '<defs><linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">'
+        f'<stop offset="0" stop-color="{AMBER}" stop-opacity=".16"/><stop offset=".55" stop-color="{AMBER}" stop-opacity="0"/>'
+        '</linearGradient></defs>'
+        + card(0, 0, W, h, 14)
+        + f'<rect x="1" y="1" width="{W - 2}" height="{h - 2}" rx="13" fill="url(#glow)"/>'
+        + f'<rect x="0" y="22" width="5" height="{h - 44}" rx="2.5" fill="{AMBER}"/>'
+        + f'<text class="m" x="{W - 28}" y="{h - 16}" font-size="64" font-weight="700" fill="{TEXT}" fill-opacity=".07" '
+          f'text-anchor="end">{i:02d}</text>'
+        + f'<text class="m" x="36" y="30" font-size="11" letter-spacing="2.4" font-weight="700" fill="{AMBER}">{i:02d}</text>'
+        + f'<text class="s" x="36" y="64" font-size="34" font-weight="800" letter-spacing="-.6" fill="#ffffff">{html.escape(title)}</text>'
+    )
+    return svg(W, h, body, title)
 
 
 def rows(items, y0, row_h, label=None):
@@ -48,7 +57,7 @@ def rows(items, y0, row_h, label=None):
     o = [card(0, y0, W, h)]
     if label:
         o.append(f'<text class="m" x="24" y="{y0 + 21}" font-size="10" letter-spacing="1.6" fill="{MUTED}">{label}</text>')
-    for k, (tag, text, accent) in enumerate(items):
+    for k, (tag, text, accent, *extra) in enumerate(items):
         cy = y0 + top + k * row_h + row_h / 2
         if k:
             o.append(f'<line x1="24" y1="{cy - row_h / 2:.0f}" x2="{W - 24}" y2="{cy - row_h / 2:.0f}" stroke="{EDGE}"/>')
@@ -58,6 +67,8 @@ def rows(items, y0, row_h, label=None):
         else:
             o.append(f'<rect x="24" y="{cy - 11:.0f}" width="84" height="22" rx="11" fill="none" stroke="{EDGE}"/>')
             o.append(f'<text class="m" x="66" y="{cy + 4:.0f}" font-size="10.5" font-weight="700" fill="{MUTED}" text-anchor="middle">{tag}</text>')
+        if extra:
+            o.append(f'<text class="m" x="{W - 24}" y="{cy + 4:.0f}" font-size="12" fill="{AMBER}" text-anchor="end">{html.escape(extra[0])}</text>')
         o.append(f'<text class="s" x="132" y="{cy + 5:.0f}" font-size="15" fill="{TEXT}">{html.escape(text)}</text>')
     return "".join(o), h
 
@@ -72,9 +83,9 @@ def status():
         o.append(f'<text class="s" x="{x + 24:.0f}" y="52" font-size="36" font-weight="700" fill="{TEXT}">{n}</text>')
         o.append(f'<text class="m" x="{x + 24:.0f}" y="76" font-size="10" letter-spacing="1.6" fill="{MUTED}">{lab}</text>')
     items = [("TOP 100", "Solvio AI Hackathon 2025", True),
-             ("FINALIST", "CodeSprint — Inter-IUT Hackathon", False),
-             ("FINALIST", "SUST CSE Carnival Hackathon", False),
-             ("FINALIST", "IUT 12th ICT Fest — Agentic AI Hackathon", False)]
+             ("FINALIST", "CodeSprint — Inter-IUT Hackathon", False, "top 14 among top 50"),
+             ("FINALIST", "SUST CSE Carnival Hackathon", False, "top 50 among 450+ submissions"),
+             ("FINALIST", "IUT 12th ICT Fest — Agentic AI Hackathon", False, "top 20 among 700+ submissions")]
     body, h = rows(items, 108, 40, "ACHIEVEMENTS.LOG")
     return svg(W, 108 + h + 2, "".join(o) + body, "Status report: 17+ repositories, 3 hackathon finals, 1 top 100")
 

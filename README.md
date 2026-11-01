@@ -143,7 +143,7 @@ One Pokéball for every day I pushed something. The busier the day, the fancier 
 
 <img src="assets/h-status.svg" width="100%" alt="Status report">
 
-<img src="assets/status.svg" width="100%" alt="17+ repositories. 3 hackathon finals. 1 top 100. Top 100: Solvio AI Hackathon 2025. Finalist: CodeSprint, Inter-IUT Hackathon. Finalist: SUST CSE Carnival Hackathon. Finalist: IUT 12th ICT Fest, Agentic AI Hackathon.">
+<img src="assets/status.svg" width="100%" alt="17+ repositories. 3 hackathon finals. 1 top 100. Top 100: Solvio AI Hackathon 2025. Finalist: CodeSprint, Inter-IUT Hackathon, top 14 among top 50. Finalist: SUST CSE Carnival Hackathon, top 50 among 450+ submissions. Finalist: IUT 12th ICT Fest, Agentic AI Hackathon, top 20 among 700+ submissions.">
 
 Three finalist finishes.
 
