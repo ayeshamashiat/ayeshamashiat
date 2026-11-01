@@ -22,9 +22,7 @@ I build software, mostly backend stuff, and lately I've been getting curious abo
 
 The backend part is going well. The AI part is a rabbit hole. There's a folder for it.
 
----
-
-# ⟡ Things I've built
+<img src="assets/h-built.svg" width="100%" alt="Things I've built">
 
 <sub><code>01</code></sub>
 
@@ -89,9 +87,7 @@ An agent with a tool registry (weather, finance, irrigation, pest risk, marketpl
 
 <sub>Older work: [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint) (RAG career assistant) · [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend) (FastAPI, PostgreSQL, spaCy) · [PAMS](https://github.com/ayeshamashiat/PAMS_Backend) (Node, MongoDB, RBAC thesis workflow)</sub>
 
----
-
-# ∴ The current rabbit hole
+<img src="assets/h-rabbit-hole.svg" width="100%" alt="The current rabbit hole">
 
 ## Machine learning
 
@@ -118,9 +114,7 @@ Very much a work in progress.
 
 **Next rabbit holes:** `RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
 
----
-
-# ⌘ My toolbox
+<img src="assets/h-toolbox.svg" width="100%" alt="My toolbox">
 
 ```text
 LANGUAGES    Python          backend · AI/ML · NLP
@@ -139,9 +133,7 @@ AI / ML      NumPy · scikit-learn · spaCy · Sentence Transformers
 INFRA        Docker · AWS · Nginx · GitHub Actions
 ```
 
----
-
-# ◓ My contributions
+<img src="assets/h-contributions.svg" width="100%" alt="My contributions">
 
 <p align="center">
   <img src="assets/pokeballs.svg?v=2" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
@@ -149,20 +141,9 @@ INFRA        Docker · AWS · Nginx · GitHub Actions
 
 One Pokéball for every day I pushed something. The busier the day, the fancier the ball. Empty grass is a day I didn't. It redraws every night.
 
----
+<img src="assets/h-status.svg" width="100%" alt="Status report">
 
-# ◇ STATUS REPORT
-
-**17+** repositories  ·  **3×** hackathon finals  ·  **1×** top 100
-
-```text
-$ tail ACHIEVEMENTS.log
-
-[ TOP 100  ]   Solvio AI Hackathon 2025
-[ FINALIST ]   CodeSprint — Inter-IUT Hackathon
-[ FINALIST ]   SUST CSE Carnival Hackathon
-[ FINALIST ]   IUT 12th ICT Fest — Agentic AI Hackathon
-```
+<img src="assets/status.svg" width="100%" alt="17+ repositories. 3 hackathon finals. 1 top 100. Top 100: Solvio AI Hackathon 2025. Finalist: CodeSprint, Inter-IUT Hackathon. Finalist: SUST CSE Carnival Hackathon. Finalist: IUT 12th ICT Fest, Agentic AI Hackathon.">
 
 Three finalist finishes.
 
@@ -170,21 +151,15 @@ One Top 100 placement.
 
 And apparently a growing collection of certificates.
 
----
+<img src="assets/h-open.svg" width="100%" alt="Currently open">
 
-# ▧ Currently open
-
-1. Machine learning fundamentals
-2. RAG / LLM rabbit holes
-3. One extremely fast-paced thriller
+<img src="assets/open.svg" width="100%" alt="Machine learning fundamentals. RAG / LLM rabbit holes. One extremely fast-paced thriller.">
 
 One of these is going significantly better than the others.
 
 I will not tell you which one.
 
----
-
-# ∿ You're still here
+<img src="assets/h-still-here.svg" width="100%" alt="You're still here">
 
 Okay.
 
