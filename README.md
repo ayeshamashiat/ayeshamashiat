@@ -190,27 +190,25 @@ Okay.
 
 So either:
 
-> **A)** something here caught your attention.  
-> **B)** you clicked by accident.  
-> **C)** you were intrigued by my profile pic.  
-> **D)** you also have too many tabs open.
+<p align="center">
+  <img src="assets/options.svg" width="100%" alt="A) something here caught your attention. B) you clicked by accident. C) you were intrigued by my profile pic. D) you also have too many tabs open.">
+</p>
 
 Honestly, all four are valid.
 
 If you want to talk about something I'm building, something you're building, or how I ended up reading some extremely niche historical fact at 2 AM—
 
-## say hi.
+<h2 align="center">say hi.</h2>
 
-<p>
-<a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="https://img.shields.io/badge/LinkedIn-connect-14181d?style=flat-square&logo=linkedin&logoColor=7aa7b8&labelColor=0b0c0f" alt="LinkedIn"/></a>
-<a href="https://www.facebook.com/ayesha.mashiat"><img src="https://img.shields.io/badge/Facebook-find%20me-14181d?style=flat-square&logo=facebook&logoColor=7aa7b8&labelColor=0b0c0f" alt="Facebook"/></a>
-<a href="https://instagram.com/_.ayshiat._"><img src="https://img.shields.io/badge/Instagram-__.ayshiat.__-14181d?style=flat-square&logo=instagram&logoColor=7aa7b8&labelColor=0b0c0f" alt="Instagram"/></a>
+<p align="center">
+  <a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="assets/linkedin.svg" alt="LinkedIn: connect" height="44"></a>
+  &nbsp;
+  <a href="https://www.facebook.com/ayesha.mashiat"><img src="assets/facebook.svg" alt="Facebook: find me" height="44"></a>
+  &nbsp;
+  <a href="https://instagram.com/_.ayshiat._"><img src="assets/instagram.svg" alt="Instagram: __.ayshiat.__" height="44"></a>
 </p>
 
-```text
-❯ exit
-logout. the tabs stay open.
-```
+<br>
 
 <p align="center">
   <b>Thanks for snooping around.</b><br>
