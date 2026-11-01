@@ -22,7 +22,7 @@ I build software, mostly backend stuff, and lately I've been getting curious abo
 
 The backend part is going well. The AI part is a rabbit hole. There's a folder for it.
 
-<img src="assets/h-built.svg" width="100%" alt="Things I've built">
+<img src="assets/h-built.svg?v=3" width="100%" alt="Things I've built">
 
 <sub><code>01</code></sub>
 
@@ -87,7 +87,7 @@ An agent with a tool registry (weather, finance, irrigation, pest risk, marketpl
 
 <sub>Older work: [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint) (RAG career assistant) · [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend) (FastAPI, PostgreSQL, spaCy) · [PAMS](https://github.com/ayeshamashiat/PAMS_Backend) (Node, MongoDB, RBAC thesis workflow)</sub>
 
-<img src="assets/h-rabbit-hole.svg" width="100%" alt="The current rabbit hole">
+<img src="assets/h-rabbit-hole.svg?v=3" width="100%" alt="The current rabbit hole">
 
 ## Machine learning
 
@@ -114,7 +114,7 @@ Very much a work in progress.
 
 **Next rabbit holes:** `RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
 
-<img src="assets/h-toolbox.svg" width="100%" alt="My toolbox">
+<img src="assets/h-toolbox.svg?v=3" width="100%" alt="My toolbox">
 
 ```text
 LANGUAGES    Python          backend · AI/ML · NLP
@@ -133,7 +133,7 @@ AI / ML      NumPy · scikit-learn · spaCy · Sentence Transformers
 INFRA        Docker · AWS · Nginx · GitHub Actions
 ```
 
-<img src="assets/h-contributions.svg" width="100%" alt="My contributions">
+<img src="assets/h-contributions.svg?v=3" width="100%" alt="My contributions">
 
 <p align="center">
   <img src="assets/pokeballs.svg?v=2" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
@@ -141,9 +141,9 @@ INFRA        Docker · AWS · Nginx · GitHub Actions
 
 One Pokéball for every day I pushed something. The busier the day, the fancier the ball. Empty grass is a day I didn't. It redraws every night.
 
-<img src="assets/h-status.svg" width="100%" alt="Status report">
+<img src="assets/h-status.svg?v=3" width="100%" alt="Status report">
 
-<img src="assets/status.svg" width="100%" alt="17+ repositories. 3 hackathon finals. 1 top 100. Top 100: Solvio AI Hackathon 2025. Finalist: CodeSprint, Inter-IUT Hackathon, top 14 among top 50. Finalist: SUST CSE Carnival Hackathon, top 50 among 450+ submissions. Finalist: IUT 12th ICT Fest, Agentic AI Hackathon, top 20 among 700+ submissions.">
+<img src="assets/status.svg?v=3" width="100%" alt="17+ repositories. 3 hackathon finals. 1 top 100. Top 100: Solvio AI Hackathon 2025. Finalist: CodeSprint, Inter-IUT Hackathon, top 14 among top 50. Finalist: SUST CSE Carnival Hackathon, top 50 among 450+ submissions. Finalist: IUT 12th ICT Fest, Agentic AI Hackathon, top 20 among 700+ submissions.">
 
 Three finalist finishes.
 
@@ -151,22 +151,22 @@ One Top 100 placement.
 
 And apparently a growing collection of certificates.
 
-<img src="assets/h-open.svg" width="100%" alt="Currently open">
+<img src="assets/h-open.svg?v=3" width="100%" alt="Currently open">
 
-<img src="assets/open.svg" width="100%" alt="Machine learning fundamentals. RAG / LLM rabbit holes. One extremely fast-paced thriller.">
+<img src="assets/open.svg?v=3" width="100%" alt="Machine learning fundamentals. RAG / LLM rabbit holes. One extremely fast-paced thriller.">
 
 One of these is going significantly better than the others.
 
 I will not tell you which one.
 
-<img src="assets/h-still-here.svg" width="100%" alt="You're still here">
+<img src="assets/h-still-here.svg?v=3" width="100%" alt="You're still here">
 
 Okay.
 
 So either:
 
 <p align="center">
-  <img src="assets/options.svg" width="100%" alt="A) something here caught your attention. B) you clicked by accident. C) you were intrigued by my profile pic. D) you also have too many tabs open.">
+  <img src="assets/options.svg?v=3" width="100%" alt="A) something here caught your attention. B) you clicked by accident. C) you were intrigued by my profile pic. D) you also have too many tabs open.">
 </p>
 
 Honestly, all four are valid.
@@ -176,11 +176,11 @@ If you want to talk about something I'm building, something you're building, or 
 <h2 align="center">say hi.</h2>
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="assets/linkedin.svg" alt="LinkedIn: connect" height="44"></a>
+  <a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="assets/linkedin.svg?v=3" alt="LinkedIn: connect" height="44"></a>
   &nbsp;
-  <a href="https://www.facebook.com/ayesha.mashiat"><img src="assets/facebook.svg" alt="Facebook: find me" height="44"></a>
+  <a href="https://www.facebook.com/ayesha.mashiat"><img src="assets/facebook.svg?v=3" alt="Facebook: find me" height="44"></a>
   &nbsp;
-  <a href="https://instagram.com/_.ayshiat._"><img src="assets/instagram.svg" alt="Instagram: __.ayshiat.__" height="44"></a>
+  <a href="https://instagram.com/_.ayshiat._"><img src="assets/instagram.svg?v=3" alt="Instagram: __.ayshiat.__" height="44"></a>
 </p>
 
 <br>
