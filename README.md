@@ -4,36 +4,15 @@ Oh.
 
 You're here.
 
-Give me a second.
+Give me a second. I was doing something.
 
-I was doing something.
+<p align="center">
+  <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">
+    <img src="assets/desktop.svg" width="100%" alt="Ayesha's desktop: a terminal with six folders: coding, reading, making cha, ML rabbit hole, nuclear accidents and questionable decisions. 17 tabs are open. 4 of them are important. She doesn't know which 4.">
+  </a>
+</p>
 
-<br>
-
-<table>
-<tr>
-<td>
-
-```text
-╭─────────────────────────────────────────────────────────────╮
-│  AYESHA'S DESKTOP                              ● ● ●        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  >_ coding        ▣ reading        ~ making cha             │
-│                                                             │
-│  ◌ ML rabbit hole     ☢ nuclear accidents                  │
-│  ▧ Goodreads          ? questionable decisions              │
-│                                                             │
-│        17 tabs currently open.                              │
-│        4 of them are important.                              │
-│        I don't know which 4.                                 │
-│                                                             │
-╰─────────────────────────────────────────────────────────────╯
-```
-
-</td>
-</tr>
-</table>
+<p align="center"><sub>the folders actually open. just not here, github won't let an image do anything fun. <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">here's the real one.</a></sub></p>
 
 ### ⌁ Anyway.
 
@@ -41,98 +20,86 @@ I'm **Ayesha**.
 
 I build software, mostly backend stuff, and lately I've been getting curious about **how AI actually works**.
 
+The backend part is going well. The AI part is a rabbit hole. There's a folder for it.
+
 ---
 
 # ⟡ Things I've built
 
 <table>
 <tr>
-<td width="33%" valign="top">
+<td width="38%" valign="top">
 
-### `01`
+<sub><code>01</code></sub>
 
-## [CareerPilot](YOUR_CAREERPILOT_REPO_LINK)
+### [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint)
 
 An AI-powered career assistant built around **RAG**.
 
-The idea:
+`FastAPI` `ChromaDB` `Sentence Transformers` `Redis` `Docker`
 
-> Give the AI useful information before asking it to answer.
+</td>
+<td valign="top">
+
+The idea: give the AI useful information *before* asking it to answer.
 
 ```text
-documents
-    ↓
-embeddings
-    ↓
-search
-    ↓
-AI
-    ↓
-answer
+documents → embeddings → search → AI → answer
 ```
 
-And then:
+And then, inevitably:
 
-> **Why did it retrieve THAT?**
+> **Why did it retrieve *that*?**
 
 That's what got me interested in retrieval, embeddings and semantic search.
 
-**Built with**
+</td>
+</tr>
+<tr>
+<td width="38%" valign="top">
 
-`FastAPI` · `ChromaDB`
-`Sentence Transformers` · `Redis` · `Docker`
+<sub><code>02</code></sub>
+
+### [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend)
+
+A job discovery backend. Mostly APIs, databases and NLP.
+
+`FastAPI` `PostgreSQL` `SQLAlchemy` `Alembic` `spaCy`
 
 </td>
+<td valign="top">
 
-<td width="33%" valign="top">
-
-### `02`
-
-## [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend)
-
-A job discovery backend.
-
-Mostly APIs, databases and NLP.
+**Focus:** REST APIs · NLP · database design
 
 The sort of project that starts with:
 
-> “This should be pretty straightforward.”
+> "This should be pretty straightforward."
 
 It wasn't.
 
-**Built with**
+</td>
+</tr>
+<tr>
+<td width="38%" valign="top">
 
-`FastAPI` · `PostgreSQL`
-`SQLAlchemy` · `Alembic` · `spaCy`
+<sub><code>03</code></sub>
 
-**Focus**
+### [PAMS Backend](https://github.com/ayeshamashiat/PAMS_Backend)
 
-REST APIs · NLP · database design
+A **Postgraduate Academic Management System** backend for students, supervisors and thesis workflows.
+
+`Node.js` `Express` `MongoDB` `Mongoose` `JWT` `bcrypt` `Nodemailer`
 
 </td>
+<td valign="top">
 
-<td width="33%" valign="top">
+The whole life of a thesis, as an API:
 
-### `03`
+```text
+eligibility → supervisor request → proposal → progress → defense
+```
 
-## [PAMS Backend](https://github.com/ayeshamashiat/PAMS_Backend)
-
-A **Postgraduate Academic Management System** backend.
-
-Built to manage postgraduate students, supervisors and thesis workflows.
-
-**Handles**
-
-Student eligibility · supervisor requests · thesis proposals · progress tracking · defense workflows · role-based access
-
-**Roles**
-
-`Admin` · `Student` · `Faculty` · `PGC`
-
-**Built with**
-
-`Node.js` · `Express` · `MongoDB`
-`Mongoose` · `JWT` · `bcrypt` · `Nodemailer`
+With role-based access for `Admin` · `Student` · `Faculty` · `PGC`, so everyone can only do exactly what they're supposed to. In software, at least.
 
 </td>
 </tr>
@@ -144,9 +111,7 @@ Student eligibility · supervisor requests · thesis proposals · progress track
 
 ## Machine learning
 
-I'm pretty new to it.
-
-Right now I'm learning the fundamentals and trying to understand what's actually happening rather than immediately reaching for a library.
+I'm pretty new to it. Right now I'm learning the fundamentals and trying to understand what's actually happening, rather than immediately reaching for a library.
 
 For example:
 
@@ -156,93 +121,55 @@ model.fit(X, y)
 
 I'd like to know what that line is actually doing.
 
-Currently working through:
+```text
+$ progress --honest
 
-`Linear Regression` · `Gradient Descent` · `Classification` · `Neural Networks`
+linear regression    ▰▰▰▰▰▰▱▱▱▱   lines. I understand lines.
+gradient descent     ▰▰▰▰▰▱▱▱▱▱   rolling downhill, carefully
+classification       ▰▰▰▱▱▱▱▱▱▱   it's a cat. probably.
+neural networks      ▰▱▱▱▱▱▱▱▱▱   send help
+```
 
 Very much a work in progress.
 
-### Next rabbit holes
-
-`RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
+**Next rabbit holes:** `RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
 
 ---
 
 # ⌘ My toolbox
 
-<table>
-<tr>
-<td width="50%" valign="top">
+```text
+┌─ ~/.toolbox ───────────────────────────────────────────────
 
-### Languages
+  LANGUAGES    Python          backend · AI/ML · NLP
+               JavaScript      backend · web
+               SQL             database work
 
-| Language       | Mostly used for       |
-| -------------- | --------------------- |
-| **Python**     | Backend · AI/ML · NLP |
-| **JavaScript** | Backend · Web         |
-| **SQL**        | Database work         |
+  BACKEND      FastAPI · Node.js · Express
+               REST APIs · auth · JWT · RBAC · business logic
 
-</td>
+  DATABASES    PostgreSQL · MongoDB · MySQL
+               schema design · queries · relationships · migrations
 
-<td width="50%" valign="top">
+  AI / ML      NumPy · scikit-learn · spaCy · Sentence Transformers
+               exploring: RAG · embeddings · LLMs
 
-### Backend
+  INFRA        Docker · AWS · Nginx · GitHub Actions
 
-`FastAPI` · `Node.js` · `Express`
+└────────────────────────────────────────────────────────────
+```
 
-REST APIs · Authentication · JWT · RBAC · Business Logic
+---
 
-</td>
-</tr>
+# ✦ The night sky
 
-<tr>
-<td width="50%" valign="top">
+<p align="center">
+  <img src="assets/constellation.svg" width="100%" alt="Ayesha's GitHub contributions drawn as a night sky. Each star is a day with contributions, and streaks of three or more days are joined into named constellations.">
+</p>
 
-### Databases
+Every star is a day I contributed something. Three days in a row and they join up into a constellation. The longest ones get names, which they have earned.
 
-`PostgreSQL` · `MongoDB` · `MySQL`
-
-Schema design · Queries · Relationships · Migrations
-
-</td>
-
-<td width="50%" valign="top">
-
-### AI / ML
-
-`NumPy` · `scikit-learn`
-`spaCy` · `Sentence Transformers`
-
-Exploring:
-
-`RAG` · `Embeddings` · `LLMs`
-
-</td>
-</tr>
-
-<tr>
-<td width="50%" valign="top">
-
-### Infrastructure
-
-`Docker` · `AWS` · `Nginx`
-`GitHub Actions`
-
-</td>
-
-<td width="50%" valign="top">
-
-### Currently learning
-
-`Machine Learning`
-
-### Next
-
-`LangChain` · `LangGraph`
-
-</td>
-</tr>
-</table>
+It redraws itself every night, so it's either getting brighter or getting suspiciously quiet.
 
 ---
 
@@ -250,31 +177,23 @@ Exploring:
 
 <table>
 <tr>
-<td align="center">
+<td align="center" width="33%">
 
 <samp>REPOSITORIES</samp>
-
-<br>
 
 # `17+`
 
 </td>
-
-<td align="center">
+<td align="center" width="33%">
 
 <samp>HACKATHON FINALS</samp>
-
-<br>
 
 # `3×`
 
 </td>
-
-<td align="center">
+<td align="center" width="33%">
 
 <samp>TOP 100</samp>
-
-<br>
 
 # `1×`
 
@@ -282,103 +201,14 @@ Exploring:
 </tr>
 </table>
 
-<br>
-
-<table>
-<tr>
-<td>
-
 ```text
-┌─ WHAT I USE ──────────────────────────┐
+$ tail ACHIEVEMENTS.log
 
-  PYTHON          Backend · AI/ML · NLP
-  JAVASCRIPT      Backend · Web
-  SQL             Databases
-
-  FASTAPI         APIs
-  NODE.JS         APIs
-  EXPRESS         APIs
-
-  POSTGRESQL      Relational data
-  MONGODB         Document data
-
-  DOCKER          Development / deployment
-
-└───────────────────────────────────────┘
+[ TOP 100  ]   Solvio AI Hackathon 2025
+[ FINALIST ]   CodeSprint — Inter-IUT Hackathon
+[ FINALIST ]   SUST CSE Carnival Hackathon
+[ FINALIST ]   IUT 12th ICT Fest — Agentic AI Hackathon
 ```
-
-</td>
-
-<td>
-
-```text
-┌─ WHERE I'M HEADED ────────────────────┐
-
-  CURRENT
-
-  Machine Learning
-  Fundamentals
-
-  NEXT
-
-  RAG
-  LangChain
-  LangGraph
-  LLM workflows
-  Agents
-
-└───────────────────────────────────────┘
-```
-
-</td>
-</tr>
-</table>
-
----
-
-# [ ACHIEVEMENTS.log ]
-
-<table>
-<tr>
-<td>
-
-### `TOP 100`
-
-**Solvio AI Hackathon 2025**
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-### `FINALIST`
-
-**CodeSprint — Inter-IUT Hackathon**
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-### `FINALIST`
-
-**SUST CSE Carnival Hackathon**
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-### `FINALIST`
-
-**IUT 12th ICT Fest — Agentic AI Hackathon**
-
-</td>
-</tr>
-</table>
 
 Three finalist finishes.
 
@@ -391,11 +221,11 @@ And apparently a growing collection of certificates.
 # ▧ Currently open
 
 ```text
-┌─ CURRENTLY OPEN ───────────────────────────────┐
+┌─ CURRENTLY OPEN ────────────────────────────────┐
 │                                                │
 │  [01]  Machine learning fundamentals           │
-│  [02]  RAG / LLM rabbit holes                 │
-│  [03]  One extremely fast paced thriller       │
+│  [02]  RAG / LLM rabbit holes                  │
+│  [03]  One extremely fast-paced thriller       │
 │                                                │
 └────────────────────────────────────────────────┘
 ```
@@ -406,7 +236,7 @@ I will not tell you which one.
 
 ---
 
-# ∿ You're Still Here
+# ∿ You're still here
 
 Okay.
 
@@ -426,25 +256,20 @@ If you want to talk about something I'm building, something you're building, or 
 
 ## say hi.
 
----
-
-# Let's connect
-
 <p align="center">
-<a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/">
-<img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-</a>
+<a href="https://www.linkedin.com/in/ayesha-mashiat-89915429a/"><img src="https://img.shields.io/badge/LinkedIn-connect-0f1114?style=for-the-badge&logo=linkedin&logoColor=7aa7b8&labelColor=0b0c0f" alt="LinkedIn"/></a>
 &nbsp;
-<a href="https://www.facebook.com/ayesha.mashiat">
-<img src="https://img.shields.io/badge/Facebook-Find%20me-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
-</a>
+<a href="https://www.facebook.com/ayesha.mashiat"><img src="https://img.shields.io/badge/Facebook-find%20me-0f1114?style=for-the-badge&logo=facebook&logoColor=7aa7b8&labelColor=0b0c0f" alt="Facebook"/></a>
 &nbsp;
-<a href="https://instagram.com/_.ayshiat._">
-<img src="https://img.shields.io/badge/Instagram-_.ayshiat._-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"/>
-</a>
+<a href="https://instagram.com/_.ayshiat._"><img src="https://img.shields.io/badge/Instagram-__.ayshiat.__-0f1114?style=for-the-badge&logo=instagram&logoColor=7aa7b8&labelColor=0b0c0f" alt="Instagram"/></a>
 </p>
 
-<br>
+---
+
+```text
+❯ exit
+logout. the tabs stay open.
+```
 
 ### Thanks for snooping around.
 
