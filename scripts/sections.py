@@ -98,12 +98,50 @@ def current():
     return svg(W, h + 2, body, "Currently open: machine learning fundamentals, RAG / LLM rabbit holes, one extremely fast-paced thriller")
 
 
+TOOLBOX = [  # (label, chips, small line under the chips)
+    ("LANGUAGES", ["Python", "JavaScript", "SQL"],
+     "python: backend · AI/ML · NLP   ·   javascript: backend · web   ·   sql: database work"),
+    ("BACKEND", ["FastAPI", "Node.js", "Express"], "REST APIs · auth · JWT · RBAC · business logic"),
+    ("DATABASES", ["PostgreSQL", "MongoDB", "MySQL"], "schema design · queries · relationships · migrations"),
+    ("AI / ML", ["NumPy", "scikit-learn", "spaCy", "Sentence Transformers"], "exploring: RAG · embeddings · LLMs"),
+    ("INFRA", ["Docker", "AWS", "Nginx", "GitHub Actions"], None),
+]
+
+
+def toolbox():
+    o, y = [], 0
+    heights = [64 if sub else 46 for _, _, sub in TOOLBOX]
+    total = sum(heights) + 12
+    o.append(card(0, 0, W, total))
+    y = 6
+    for k, ((label, chips, sub), h) in enumerate(zip(TOOLBOX, heights)):
+        if k:
+            o.append(f'<line x1="24" y1="{y}" x2="{W - 24}" y2="{y}" stroke="{EDGE}"/>')
+        o.append(f'<text class="m" x="24" y="{y + 28}" font-size="10.5" font-weight="700" letter-spacing="1.8" fill="{AMBER}">{label}</text>')
+        x = 168
+        for c in chips:
+            w = len(c) * 7.2 + 26
+            o.append(f'<rect x="{x}" y="{y + 11}" width="{w:.0f}" height="26" rx="13" fill="#14181d" stroke="{EDGE}"/>')
+            o.append(f'<text class="m" x="{x + w / 2:.0f}" y="{y + 28}" font-size="12" fill="{TEXT}" text-anchor="middle">{html.escape(c)}</text>')
+            x += w + 10
+        if sub:
+            o.append(f'<text class="m" x="168" y="{y + 56}" font-size="10.5" fill="{MUTED}">{html.escape(sub)}</text>')
+        y += h
+    return svg(W, total + 2, "".join(o), "Toolbox. Languages: Python (backend, AI/ML, NLP), JavaScript (backend, web), SQL (database work). "
+               "Backend: FastAPI, Node.js, Express; REST APIs, auth, JWT, RBAC, business logic. "
+               "Databases: PostgreSQL, MongoDB, MySQL; schema design, queries, relationships, migrations. "
+               "AI/ML: NumPy, scikit-learn, spaCy, Sentence Transformers; exploring RAG, embeddings, LLMs. "
+               "Infra: Docker, AWS, Nginx, GitHub Actions.")
+
+
 def main():
     for i, (slug, title) in enumerate(HEADERS, 1):
         with open(f"assets/h-{slug}.svg", "w", encoding="utf-8") as f:
             f.write(header(i, title))
     with open("assets/status.svg", "w", encoding="utf-8") as f:
         f.write(status())
+    with open("assets/toolbox.svg", "w", encoding="utf-8") as f:
+        f.write(toolbox())
     with open("assets/open.svg", "w", encoding="utf-8") as f:
         f.write(current())
     print("wrote section assets")

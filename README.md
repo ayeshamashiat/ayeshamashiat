@@ -116,22 +116,7 @@ Very much a work in progress.
 
 <img src="assets/h-toolbox.svg?v=3" width="100%" alt="My toolbox">
 
-```text
-LANGUAGES    Python          backend · AI/ML · NLP
-             JavaScript      backend · web
-             SQL             database work
-
-BACKEND      FastAPI · Node.js · Express
-             REST APIs · auth · JWT · RBAC · business logic
-
-DATABASES    PostgreSQL · MongoDB · MySQL
-             schema design · queries · relationships · migrations
-
-AI / ML      NumPy · scikit-learn · spaCy · Sentence Transformers
-             exploring: RAG · embeddings · LLMs
-
-INFRA        Docker · AWS · Nginx · GitHub Actions
-```
+<img src="assets/toolbox.svg" width="100%" alt="Toolbox: Python, JavaScript, SQL; FastAPI, Node.js, Express; PostgreSQL, MongoDB, MySQL; NumPy, scikit-learn, spaCy, Sentence Transformers; Docker, AWS, Nginx, GitHub Actions.">
 
 <img src="assets/h-contributions.svg?v=3" width="100%" alt="My contributions">
 
