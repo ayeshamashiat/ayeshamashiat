@@ -403,6 +403,9 @@ class Street(unittest.TestCase):
         import street
         lvl = street.levels([3])
         self.assertIn('fill="#e0a552"', street.building(0, DAY, 3, lvl(3), False))
+        self.assertIn('fill="#e4f2ea"', street.building(0, DAY, 3, lvl(3), False, "pharmacy"))
+        for kind in ("biryani", "pharmacy", "library", "garage", "store", "sweets", "cng", "tailor"):
+            self.assertIn('fill="#252a32"', street.building(0, DAY, 0, 0, False, kind), kind)  # shut is shut
         closed = street.building(0, DAY, 0, 0, False)
         self.assertNotIn('fill="#e0a552"', closed)
         self.assertIn('fill="#252a32"', closed)

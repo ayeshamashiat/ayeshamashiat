@@ -32,17 +32,18 @@ BANGLA = "'Noto Sans Bengali', 'Hind Siliguri', 'Nirmala UI', 'Bangla Sangam MN'
 
 # Left to right along the street: (Bangla sign, English name for the alt text, buildings it
 # spans, board colour, letter colour). The spans must add up to NIGHTS, and roughly follow the
-# length of each name so no sign gets squashed. "cha" marks the stall.
+# length of each name so no sign gets squashed. The last field picks the shop's character:
+# what you see inside when it's open, and what it leaves out on the pavement.
 SHOPS = [
-    ("আল্লাহর দান বিরিয়ানি হাউস", "Allah'r Daan Biryani House", 6, "#1f6b45", "#ffe7a0"),
+    ("আল্লাহর দান বিরিয়ানি হাউস", "Allah'r Daan Biryani House", 6, "#1f6b45", "#ffe7a0", "biryani"),
     ("মামার চা স্টল", "Mamar Cha Stall", 4, "#2a1d12", "#f0b44c", "cha"),
-    ("ভাই ভাই ফার্মেসী", "Bhai Bhai Pharmacy", 4, "#eef0e8", "#1d6b3f"),
-    ("প্রিয় লাইব্রেরি এন্ড স্টেশনারি", "Priyo Library & Stationery", 6, "#a8321f", "#ffe08a"),
-    ("বিসমিল্লাহ অটো রিপেয়ার্স", "Bismillah Auto Repairs", 6, "#23508f", "#ffffff"),
-    ("মায়ের দোয়া স্টোর", "Mayer Doa Store", 4, "#b8336a", "#fff1f6"),
-    ("মদিনা সুইটস", "Madina Sweets", 3, "#d0682a", "#fff6e0"),
-    ("আব্বাস অটো রিপেয়ার", "Abbas Auto Repair", 5, "#d9a521", "#3a1a0a"),
-    ("নিউ মডার্ন টেইলার্স", "New Modern Tailors", 4, "#1e3a6e", "#cfe6ff"),
+    ("ভাই ভাই ফার্মেসী", "Bhai Bhai Pharmacy", 4, "#eef0e8", "#1d6b3f", "pharmacy"),
+    ("প্রিয় লাইব্রেরি এন্ড স্টেশনারি", "Priyo Library & Stationery", 6, "#a8321f", "#ffe08a", "library"),
+    ("বিসমিল্লাহ অটো রিপেয়ার্স", "Bismillah Auto Repairs", 6, "#23508f", "#ffffff", "garage"),
+    ("মায়ের দোয়া স্টোর", "Mayer Doa Store", 4, "#b8336a", "#fff1f6", "store"),
+    ("মদিনা সুইটস", "Madina Sweets", 3, "#d0682a", "#fff6e0", "sweets"),
+    ("আব্বাস অটো রিপেয়ার", "Abbas Auto Repair", 5, "#d9a521", "#3a1a0a", "cng"),
+    ("নিউ মডার্ন টেইলার্স", "New Modern Tailors", 4, "#1e3a6e", "#cfe6ff", "tailor"),
 ]
 WIRES = [(18, 40), (27, 34), (11, 54)]  # (height at the poles, sag in the middle)
 WARM = ["#f6c56b", "#f0b44c", "#ffd98a", "#f3b95f"]
@@ -78,14 +79,14 @@ def longest_run(counts):
     return best
 
 
-def building(x, d, n, level, released, cha=False):
+def building(x, d, n, level, released, kind="store", slot=0):
     floors = 3 + int(_h(d, "floors") * 5)                    # 3-7 floors of flats over the shops
     top = BASE - GF - floors * FLOOR - 6
     shade = ["#1a1f28", "#1d222b", "#181c24", "#1f2530"][int(_h(d, "shade") * 4)]
     o = []
     if level:  # warm spill on the street and a soft halo behind
-        o.append(f'<ellipse cx="{x + BW / 2:.1f}" cy="{BASE + 4}" rx="{BW * 1.1:.1f}" ry="7" fill="{AMBER}" '
-                 f'fill-opacity="{0.05 + 0.05 * level:.2f}"/>')
+        o.append(f'<ellipse cx="{x + BW / 2:.1f}" cy="{BASE + 2}" rx="{BW * 0.8:.1f}" ry="3" fill="{AMBER}" '
+                 f'fill-opacity="{0.04 + 0.03 * level:.2f}" filter="url(#halo)"/>')
         o.append(f'<rect x="{x - 2}" y="{top - 2}" width="{BW + 4}" height="{BASE - top + 2}" rx="3" '
                  f'fill="{AMBER}" fill-opacity="{0.02 + 0.025 * level:.3f}" filter="url(#halo)"/>')
     o.append(f'<rect x="{x}" y="{top}" width="{BW}" height="{BASE - top}" fill="{shade}"/>')
@@ -102,8 +103,8 @@ def building(x, d, n, level, released, cha=False):
             o.append(f'<rect x="{x + 2 + k * 4}" y="{top - 6}" width="3" height="{3 + int(_h(d, "len", k) * 3)}" '
                      f'fill="{CLOTH[int(_h(d, "col", k) * len(CLOTH))]}" fill-opacity=".7"/>')
 
-    if not cha:  # the stall draws its own front
-        o.append(shopfront(x, level))
+    if kind != "cha":  # the stall draws its own front
+        o.append(shopfront(x, level, kind, slot))
     windows = [(x + 3 + c * 6, BASE - GF - (f + 1) * FLOOR + 3) for f in range(floors) for c in range(2)]
     lit = math.ceil(len(windows) * level / 4)
     order = sorted(range(len(windows)), key=lambda i: _h(d, "w", i))
@@ -123,17 +124,139 @@ def building(x, d, n, level, released, cha=False):
     return "".join(o)
 
 
-def shopfront(x, level):
-    """One building's shop: open and lit on a night with commits, shutter down in a blackout."""
-    y = BASE - FRONT
-    if level:
-        return (f'<rect x="{x + 2}" y="{y}" width="{BW - 4}" height="{FRONT}" fill="#e0a552" fill-opacity=".6"/>'
-                f'<rect x="{x + 3}" y="{y + 6}" width="{BW - 6}" height="1.3" fill="#7a4a1c" fill-opacity=".8"/>'
-                f'<rect x="{x + 3}" y="{y + 12}" width="{BW - 6}" height="1.3" fill="#7a4a1c" fill-opacity=".8"/>'
-                f'<circle cx="{x + BW / 2:.1f}" cy="{y + 2.5}" r="1" fill="#fff3c4"/>')
-    return (f'<rect x="{x + 2}" y="{y}" width="{BW - 4}" height="{FRONT}" fill="#252a32"/>'
-            + "".join(f'<line x1="{x + 2}" y1="{y + 2 + k * 2.5}" x2="{x + BW - 2}" y2="{y + 2 + k * 2.5}" '
-                      f'stroke="#1b1f26" stroke-width=".7"/>' for k in range(7)))
+def shopfront(x, level, kind="store", slot=0):
+    """One building's shop. Open on a night with commits, and every kind of shop looks like
+    itself inside; shutter down in a blackout, whatever it sells. `slot` is which of the shop's
+    fronts this is, so a long shop doesn't repeat itself."""
+    y, ix, iw = BASE - FRONT, x + 2, BW - 4
+    if not level:
+        return (f'<rect x="{ix}" y="{y}" width="{iw}" height="{FRONT}" fill="#252a32"/>'
+                + "".join(f'<line x1="{ix}" y1="{y + 2 + k * 2.5}" x2="{ix + iw}" y2="{y + 2 + k * 2.5}" '
+                          f'stroke="#1b1f26" stroke-width=".7"/>' for k in range(7)))
+    light, glow = INSIDE.get(kind, ("#e0a552", ".6"))
+    o = [f'<rect x="{ix}" y="{y}" width="{iw}" height="{FRONT}" fill="{light}" fill-opacity="{glow}"/>',
+         f'<circle cx="{x + BW / 2:.1f}" cy="{y + 2}" r="1" fill="#fff3c4"/>']
+    cx = x + BW / 2
+    if kind == "biryani":            # a big deg on the counter, and diners
+        if slot % 2 == 0:
+            o.append(f'<path d="M{cx - 5} {BASE - 9} Q{cx - 6} {BASE - 2} {cx} {BASE - 2} Q{cx + 6} {BASE - 2} {cx + 5} {BASE - 9} Z" fill="#9a6a33"/>'
+                     f'<ellipse cx="{cx}" cy="{BASE - 9}" rx="5.5" ry="1.6" fill="#c08a4a"/>'
+                     f'<rect x="{cx - 1}" y="{BASE - 11.5}" width="2" height="1.6" rx=".8" fill="#c08a4a"/>')
+        else:
+            o.append(f'<rect x="{ix + 1}" y="{BASE - 6}" width="{iw - 2}" height="1.4" fill="#8a2b2b"/>'   # a table, plates, a jug
+                     f'<line x1="{ix + 2}" y1="{BASE - 4.6}" x2="{ix + 2}" y2="{BASE}" stroke="#5a3a1a"/>'
+                     f'<line x1="{ix + iw - 2}" y1="{BASE - 4.6}" x2="{ix + iw - 2}" y2="{BASE}" stroke="#5a3a1a"/>'
+                     f'<ellipse cx="{ix + 3.5}" cy="{BASE - 6.6}" rx="2.2" ry=".8" fill="#f2efe6"/>'
+                     f'<ellipse cx="{ix + iw - 5}" cy="{BASE - 6.6}" rx="2.2" ry=".8" fill="#f2efe6"/>'
+                     f'<rect x="{ix + iw - 2.6}" y="{BASE - 10}" width="1.8" height="3.4" rx=".6" fill="#9fb3c8"/>')
+    elif kind == "pharmacy":         # cool tube light, shelves of little boxes
+        for r in range(3):
+            sy = y + 6 + r * 5
+            o.append(f'<rect x="{ix + 1}" y="{sy}" width="{iw - 2}" height=".9" fill="#6f8a7c"/>')
+            for b in range(3):
+                o.append(f'<rect x="{ix + 1.5 + b * 3.6:.1f}" y="{sy - 2.4}" width="2.6" height="2.4" '
+                         f'fill="{["#d64545", "#3a7bd5", "#f2c94c", "#2f9e6a", "#ffffff"][(r * 3 + b + slot) % 5]}"/>')
+        if slot == 0:
+            o.append(f'<rect x="{ix + iw - 5}" y="{y + 1}" width="5" height="5" fill="#1f9e5a"/>'
+                     f'<path d="M{ix + iw - 2.5} {y + 1.8} V{y + 5.2} M{ix + iw - 4.2} {y + 3.5} H{ix + iw - 0.8}" stroke="#fff" stroke-width="1"/>')
+    elif kind == "library":          # shelves of book spines
+        for r in range(3):
+            sy = y + 7 + r * 5.5
+            o.append(f'<rect x="{ix + 1}" y="{sy}" width="{iw - 2}" height=".9" fill="#5a3a1a"/>')
+            bx = ix + 1.3
+            for b in range(5):
+                h = 2.6 + 1.6 * _h(slot, r, b)
+                o.append(f'<rect x="{bx:.1f}" y="{sy - h:.1f}" width="1.7" height="{h:.1f}" '
+                         f'fill="{["#b4442a", "#3456a8", "#2f7d4f", "#c08a1e", "#7a4fa3", "#e8e2d0"][int(_h(slot, r, b, "c") * 6)]}"/>')
+                bx += 2.1
+    elif kind in ("garage", "cng"):  # a pegboard of tools and a tyre on the wall
+        o.append(f'<circle cx="{ix + 4}" cy="{y + 7}" r="3" fill="none" stroke="#2a2a2a" stroke-width="1.6"/>'
+                 f'<path d="M{ix + 8} {y + 4} V{y + 11} M{ix + 10.5} {y + 4} V{y + 10} M{ix + 7} {y + 4.5} H{ix + 9}" '
+                 f'stroke="#4a4f57" stroke-width="1"/>'
+                 f'<rect x="{ix + 1}" y="{BASE - 5}" width="{iw - 2}" height="5" fill="#3b3f46"/>'
+                 f'<rect x="{ix + 2}" y="{BASE - 7}" width="3" height="2" fill="#c0392b"/>')
+    elif kind == "store":            # chips packets hanging in strips, sacks below
+        for c in range(3):
+            for r in range(3):
+                o.append(f'<rect x="{ix + 1 + c * 4}" y="{y + 1 + r * 3.4:.1f}" width="3" height="3" '
+                         f'fill="{["#e63946", "#f4a261", "#2a9d8f", "#e9c46a", "#457b9d"][(c + r * 2 + slot) % 5]}"/>')
+        o.append(f'<path d="M{ix + 1} {BASE} V{BASE - 5} Q{ix + 3.5} {BASE - 7} {ix + 6} {BASE - 5} V{BASE} Z" fill="#cdb48a"/>'
+                 f'<path d="M{ix + 7} {BASE} V{BASE - 5} Q{ix + 9.5} {BASE - 7} {ix + 12} {BASE - 5} V{BASE} Z" fill="#b89a6a"/>')
+    elif kind == "sweets":           # a glass case of rosogolla and kalojam
+        o.append(f'<rect x="{ix + 0.5}" y="{BASE - 9}" width="{iw - 1}" height="9" fill="#cfe3ec" fill-opacity=".35" '
+                 f'stroke="#e8f4f8" stroke-opacity=".6" stroke-width=".5"/>')
+        for r in range(2):
+            for c in range(4):
+                o.append(f'<circle cx="{ix + 2 + c * 3:.1f}" cy="{BASE - 6.5 + r * 3.5}" r="1.2" '
+                         f'fill="{"#fbf6ea" if (c + r) % 2 else "#5a2a14"}"/>')
+    elif kind == "tailor":           # bolts of cloth, a mannequin, a sewing machine
+        if slot % 2 == 0:
+            for k in range(3):
+                o.append(f'<rect x="{ix + 1 + k * 2.4:.1f}" y="{y + 3}" width="2" height="{FRONT - 4}" '
+                         f'fill="{CLOTH[(k + slot) % len(CLOTH)]}"/>')
+            o.append(f'<circle cx="{ix + iw - 3}" cy="{y + 5}" r="1.5" fill="#d9c7a8"/>'
+                     f'<path d="M{ix + iw - 5.5} {y + 7} H{ix + iw - 0.5} L{ix + iw - 1.5} {y + 14} H{ix + iw - 4.5} Z" fill="#3456a8"/>'
+                     f'<line x1="{ix + iw - 3}" y1="{y + 14}" x2="{ix + iw - 3}" y2="{BASE}" stroke="#3a2a1a"/>')
+        else:
+            o.append(f'<rect x="{ix + 1}" y="{BASE - 6}" width="{iw - 2}" height="1.3" fill="#5a3a1a"/>'
+                     f'<path d="M{ix + 3} {BASE - 6} V{BASE - 11} H{ix + 9} V{BASE - 9.5} H{ix + 5} V{BASE - 6}" fill="#1f1f1f"/>'
+                     f'<circle cx="{ix + 9.5}" cy="{BASE - 8}" r="1" fill="#b0b0b0"/>')
+    return "".join(o)
+
+
+# how each shop is lit inside: warm bulbs mostly, a tube light at the pharmacy
+INSIDE = {"pharmacy": ("#e4f2ea", ".8"), "sweets": ("#f3c99a", ".7"), "garage": ("#c98c3e", ".5"),
+          "cng": ("#c98c3e", ".5"), "library": ("#e7b665", ".6")}
+
+
+def pavement(xs, w, kind, d):
+    """What each shop leaves out on the pavement, lit or not."""
+    y = BASE + 1
+    if kind == "biryani":   # the deg on its own stove, steaming
+        cx = xs + w - 18
+        return (f'<rect x="{cx - 8}" y="{y + 6}" width="16" height="4" rx="1" fill="#4a2c1c"/>'
+                f'<rect x="{cx - 6}" y="{y + 7}" width="12" height="1.6" fill="#ff7a2f" class="ember"/>'
+                f'<path d="M{cx - 7} {y + 6} Q{cx - 8} {y - 2} {cx} {y - 2} Q{cx + 8} {y - 2} {cx + 7} {y + 6} Z" fill="#9a6a33"/>'
+                f'<ellipse cx="{cx}" cy="{y - 1.5}" rx="7.5" ry="2" fill="#c08a4a"/>'
+                + "".join(f'<path class="steam" style="animation-delay:{-k * 1.1}s" d="M{cx - 2 + k * 4} {y - 4} q-2 -2 0 -4" '
+                          f'fill="none" stroke="#cfd6e4" stroke-opacity=".55" stroke-width=".8"/>' for k in range(2)))
+    if kind == "pharmacy":  # a green cross on a stand
+        cx = xs + w - 10
+        return (f'<line x1="{cx}" y1="{y + 2}" x2="{cx}" y2="{y + 10}" stroke="#4a505b" stroke-width="1"/>'
+                f'<rect x="{cx - 4.5}" y="{y - 7}" width="9" height="9" rx="1" fill="#1f9e5a" filter="url(#neon)"/>'
+                f'<path d="M{cx} {y - 5.5} V{y + 0.5} M{cx - 3} {y - 2.5} H{cx + 3}" stroke="#fff" stroke-width="1.6"/>')
+    if kind == "library":   # a newspaper rack
+        x = xs + w - 20
+        return (f'<rect x="{x}" y="{y}" width="14" height="10" fill="none" stroke="#5a5f68" stroke-width=".8"/>'
+                + "".join(f'<rect x="{x + 1.5 + k * 4}" y="{y + 1 + (k % 2)}" width="3" height="6" fill="{c}"/>'
+                          for k, c in enumerate(["#e8e2d0", "#b4442a", "#e8e2d0"])))
+    if kind == "garage":    # a stack of tyres
+        x = xs + w - 16
+        return "".join(f'<ellipse cx="{x + 6}" cy="{y + 9 - k * 3.2:.1f}" rx="6" ry="2" fill="#1a1a1a" stroke="#4a4f57" stroke-width=".8"/>'
+                       for k in range(3))
+    if kind == "store":     # rice and dal in open sacks
+        x = xs + w - 26
+        return "".join(f'<path d="M{x + k * 9} {y + 10} V{y + 3} Q{x + k * 9 + 4} {y + 1} {x + k * 9 + 8} {y + 3} V{y + 10} Z" fill="#cdb48a"/>'
+                       f'<ellipse cx="{x + k * 9 + 4}" cy="{y + 3}" rx="4" ry="1.3" fill="{c}"/>'
+                       for k, c in enumerate(["#f4efe2", "#e2a93b", "#c47a3a"]))
+    if kind == "sweets":    # clay pots of mishti doi
+        x = xs + w - 18
+        return "".join(f'<path d="M{x + k * 6} {y + 4} Q{x + k * 6} {y + 10} {x + k * 6 + 2.5} {y + 10} '
+                       f'Q{x + k * 6 + 5} {y + 10} {x + k * 6 + 5} {y + 4} Z" fill="#a8532a"/>'
+                       f'<ellipse cx="{x + k * 6 + 2.5}" cy="{y + 4}" rx="2.6" ry=".9" fill="#f4ead2"/>' for k in range(3))
+    if kind == "cng":       # a green CNG waiting for Abbas bhai
+        x = xs + w - 34
+        return (f'<path d="M{x} {y + 9} V{y + 1} Q{x} {y - 6} {x + 10} {y - 6} H{x + 20} Q{x + 26} {y - 6} {x + 26} {y + 2} V{y + 9} Z" fill="#2e8b57"/>'
+                f'<path d="M{x + 1} {y - 2.5} Q{x + 2} {y - 7} {x + 10} {y - 7} H{x + 20} Q{x + 25} {y - 7} {x + 25.5} {y - 2.5}" fill="none" stroke="#111" stroke-width="1.6"/>'
+                f'<path d="M{x + 12} {y - 5} V{y + 6} M{x + 16} {y - 5} V{y + 6} M{x + 20} {y - 5} V{y + 6}" stroke="#1a3a28" stroke-width=".8"/>'
+                f'<rect x="{x + 2}" y="{y - 3}" width="7" height="5" rx="1" fill="#9fd3c0" fill-opacity=".5"/>'
+                f'<circle cx="{x + 5}" cy="{y + 10}" r="2.6" fill="#111"/><circle cx="{x + 22}" cy="{y + 10}" r="2.6" fill="#111"/>')
+    if kind == "tailor":    # a shirt on a hanger outside, for show
+        x = xs + w - 12
+        return (f'<line x1="{x}" y1="{y - 1}" x2="{x}" y2="{y + 10}" stroke="#4a505b" stroke-width=".8"/>'
+                f'<path d="M{x - 5} {y + 1} L{x - 2} {y - 1} H{x + 2} L{x + 5} {y + 1} L{x + 4} {y + 3} L{x + 3} {y + 2.5} V{y + 8} H{x - 3} V{y + 2.5} L{x - 4} {y + 3} Z" '
+                f'fill="{CLOTH[int(_h(d, "shirt") * len(CLOTH))]}"/>')
+    return ""
 
 
 def signboard(x, w, bangla, bg, fg, lit, size=10):
@@ -254,14 +377,14 @@ def cha_stall(xs, w):
     for k, dx in enumerate((0, 3)):                                                       # steam
         o.append(f'<path class="steam" style="animation-delay:{-k * 1.3}s" d="M{kx + 8 + dx} {BASE - 16} q-2 -2 0 -4" '
                  f'fill="none" stroke="#cfd6e4" stroke-opacity=".55" stroke-width=".8" stroke-linecap="round"/>')
-    o.append(f'<rect x="{xs + 6}" y="{BASE + 6}" width="40" height="2.5" rx="1" fill="#4a3420"/>'   # bench
-             f'<line x1="{xs + 9}" y1="{BASE + 8.5}" x2="{xs + 9}" y2="{BASE + 14}" stroke="#4a3420" stroke-width="1.8"/>'
-             f'<line x1="{xs + 43}" y1="{BASE + 8.5}" x2="{xs + 43}" y2="{BASE + 14}" stroke="#4a3420" stroke-width="1.8"/>')
+    o.append(f'<rect x="{xs + 6}" y="{BASE + 6}" width="40" height="2.5" rx="1" fill="#7a5532"/>'   # bench
+             f'<line x1="{xs + 9}" y1="{BASE + 8.5}" x2="{xs + 9}" y2="{BASE + 14}" stroke="#7a5532" stroke-width="1.8"/>'
+             f'<line x1="{xs + 43}" y1="{BASE + 8.5}" x2="{xs + 43}" y2="{BASE + 14}" stroke="#7a5532" stroke-width="1.8"/>')
     dx = xs + 66                                                                          # a dog, asleep
-    o.append(f'<ellipse cx="{dx}" cy="{BASE + 15}" rx="7" ry="3.2" fill="#4b4036"/>'
-             f'<circle cx="{dx + 6}" cy="{BASE + 13}" r="2.5" fill="#4b4036"/>'
-             f'<path d="M{dx + 6.5} {BASE + 10.8} L{dx + 8.3} {BASE + 9.5} L{dx + 7.8} {BASE + 12.2} Z" fill="#3a3129"/>'
-             f'<path d="M{dx - 7} {BASE + 15} Q{dx - 10} {BASE + 13} {dx - 8} {BASE + 11}" fill="none" stroke="#4b4036" '
+    o.append(f'<ellipse cx="{dx}" cy="{BASE + 15}" rx="7" ry="3.2" fill="#7d6a57"/>'
+             f'<circle cx="{dx + 6}" cy="{BASE + 13}" r="2.5" fill="#7d6a57"/>'
+             f'<path d="M{dx + 6.5} {BASE + 10.8} L{dx + 8.3} {BASE + 9.5} L{dx + 7.8} {BASE + 12.2} Z" fill="#5e4f40"/>'
+             f'<path d="M{dx - 7} {BASE + 15} Q{dx - 10} {BASE + 13} {dx - 8} {BASE + 11}" fill="none" stroke="#7d6a57" '
              f'stroke-width="1.3" stroke-linecap="round"/>')
     return "".join(o)
 
@@ -278,7 +401,7 @@ def draw(per_day, release_days, day):
         spans.append((k, k + shop[2], shop))
         k += shop[2]
     assert k == NIGHTS, "shop spans must cover every building"
-    cha_cols = {c for a, b, shop in spans if shop[5:] == ("cha",) for c in range(a, b)}
+    kind_of = {c: (shop[5], c - a) for a, b, shop in spans for c in range(a, b)}
 
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="__ALT__">',
          f"""<style>
@@ -306,27 +429,38 @@ def draw(per_day, release_days, day):
          f'<rect y="{BASE}" width="{W}" height="{H - BASE}" fill="{CARD}"/>',
          sky(), mosque(640)]
 
-    for k, (d, n) in enumerate(zip(nights, counts)):
-        o.append(building(col_x(k), d, n, lvl(n), d in release_days, cha=k in cha_cols))
-    for a, b, (bangla, _, _, bg, fg, *kind) in spans:
-        xs, w = col_x(a), (b - a) * (BW + GAP) - GAP
-        if kind:
-            o.append(cha_stall(xs, w))
-        o.append(signboard(xs, w, bangla, bg, fg, lit=bool(kind) or any(counts[c] for c in range(a, b)),
-                           size=12 if kind else 10))  # the stall's name is short; bigger letters fill its board
-
-    # the street
+    # the street first, so the stall's bench and dog sit on top of it
     o.append(f'<rect y="{BASE}" width="{W}" height="22" fill="#0c0f14"/>')
     o.append(f'<line x1="0" y1="{BASE + 11}" x2="{W}" y2="{BASE + 11}" stroke="#2a2f38" stroke-dasharray="10 12"/>')
-    stall = next((col_x(a) - 50, col_x(b) + 10) for a, b, shop in spans if shop[5:] == ("cha",))
-    spots = [x for x in range(30, W - 60, 10) if not stall[0] < x < stall[1]]  # not over the bench and the dog
-    o.append(rickshaw(spots[int(_h(day, "rickshaw") * len(spots))]))
+    for k, (d, n) in enumerate(zip(nights, counts)):
+        o.append(building(col_x(k), d, n, lvl(n), d in release_days, *kind_of[k]))
+    props = []
+    for a, b, (bangla, _, _, bg, fg, kind) in spans:
+        xs, w = col_x(a), (b - a) * (BW + GAP) - GAP
+        cha = kind == "cha"
+        if cha:
+            o.append(cha_stall(xs, w))
+            props.append((xs - 50, xs + w + 10))
+        else:
+            out = pavement(xs, w, kind, day)
+            if out:
+                o.append(out)
+                props.append((xs + w - 40, xs + w + 4))
+        o.append(signboard(xs, w, bangla, bg, fg, lit=cha or any(counts[c] for c in range(a, b)),
+                           size=12 if cha else 10))  # the stall's name is short; bigger letters fill its board
+
+    spots = [x for x in range(20, W - 60, 4)
+             if not any(lo - 36 < x < hi for lo, hi in props)]  # never parked on top of a shop's things
+    if spots:
+        o.append(rickshaw(spots[int(_h(day, "rickshaw") * len(spots))]))
     o.append(crows(day))
 
     for k in range(NIGHTS - 1, -1, -7):  # a date under every seventh night, counting back from yesterday
         x = col_x(k) + BW / 2
         label = "yesterday" if k == NIGHTS - 1 else nights[k].strftime("%b %-d")
-        o.append(f'<text class="m" x="{x:.0f}" y="{BASE + 38}" font-size="9.5" fill="{MUTED}" text-anchor="middle">{label}</text>')
+        anchor = "end" if k == NIGHTS - 1 else "middle"  # "yesterday" would run off the edge
+        x = col_x(k) + BW if k == NIGHTS - 1 else x
+        o.append(f'<text class="m" x="{x:.0f}" y="{BASE + 38}" font-size="9.5" fill="{MUTED}" text-anchor="{anchor}">{label}</text>')
 
     on = sum(c > 0 for c in counts)
     run = longest_run(counts)
@@ -355,6 +489,8 @@ def draw(per_day, release_days, day):
            + (f", {shipped} release night{'s' if shipped != 1 else ''} with fireworks" if shipped else "")
            + ". Every building has a shop on the ground floor and flats above; in a blackout the shutter is down. "
            "The shops have Bangla signboards: " + ", ".join(shop[1] for shop in SHOPS) + ". "
+           "Each shop looks like itself: a biryani deg steaming out front, a pharmacy's green cross, a newspaper rack, "
+           "stacked tyres, sacks of rice and dal, clay pots of mishti doi, a green CNG at Abbas's, a shirt outside the tailor's. "
            "The cha stall never closes; it runs on a hurricane lantern. Also: crows on the electric wires, "
            "laundry drying on the roofs, a mosque behind, and a rickshaw with a painted hood.")
     return "\n".join(o).replace("__ALT__", html.escape(alt)), alt
