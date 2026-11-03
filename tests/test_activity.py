@@ -46,9 +46,16 @@ def release(when, tag="v1.0.0", name="Bouncer 1.0", draft=False, bot=False, targ
 class FakeGitHub:
     """Serves fixture pages by path; any path in `fail` raises like a real HTTP error."""
 
-    def __init__(self, repos, commits=None, releases=None, fail=()):
+    def __init__(self, repos, commits=None, releases=None, fail=(), calendar=None):
         self.repos, self.commits, self.releases = repos, commits or {}, releases or {}
         self.fail, self.calls = set(fail), []
+        self.cal = calendar if calendar is not None else year_calendar()
+
+    def calendar(self, login):
+        self.calls.append("calendar")
+        if "calendar" in self.fail:
+            raise A.DataError("GET https://github.com/users/x/contributions failed: HTTP 502 Bad Gateway")
+        return self.cal
 
     def pages(self, path, params=None):
         self.calls.append(path)
@@ -63,6 +70,13 @@ class FakeGitHub:
             yield self.releases.get(path.split("/")[3], [])
         else:
             raise AssertionError(path)
+
+
+def year_calendar(**counts):
+    """A year of graph ending today (Nov 3), with year_calendar(**{"2026-11-01": 4}) style counts."""
+    out = {dt.date(2026, 11, 3) - dt.timedelta(days=k): 0 for k in range(371)}
+    out.update({dt.date.fromisoformat(d): n for d, n in counts.items()})
+    return out
 
 
 def ev(repo_name, when, text="Real work", kind="commit", label="abc1234", sha=""):
@@ -115,9 +129,11 @@ class DhakaDays(unittest.TestCase):
         self.assertEqual(ev("R", "2026-11-01T18:30:00Z").day, dt.date(2026, 11, 2))  # 00:30 Dhaka
         self.assertEqual(ev("R", "2026-11-01T17:59:00Z").day, dt.date(2026, 11, 1))  # 23:59 Dhaka
 
-    def test_late_utc_commit_is_not_quiet(self):
-        gh = FakeGitHub([repo("Bouncer")], {"Bouncer": [commit("2026-11-01T19:00:00Z")]})
-        per_day, _, _ = A.collect(gh, LOGIN, NOW)
+    def test_activity_comes_from_the_contribution_calendar(self):
+        cal = year_calendar(**{"2026-11-02": 3, "2026-10-05": 2})   # e.g. issues elsewhere, private work
+        per_day, _, _ = A.collect(FakeGitHub([repo("Bouncer")], calendar=cal), LOGIN, NOW)
+        self.assertEqual(per_day[DAY], 3)
+        self.assertEqual(per_day[dt.date(2026, 10, 5)], 2)
         self.assertEqual(A.bucket_for(per_day, [], DAY), "steady")
 
 
@@ -175,9 +191,8 @@ class Filtering(unittest.TestCase):
             commit("2026-11-01T13:00:00Z", "Teammate change", login="teammate"),
             commit("2026-11-01T14:00:00Z", "update"),
         ]})
-        per_day, commits, _ = A.collect(gh, LOGIN, NOW)
+        _, commits, _ = A.collect(gh, LOGIN, NOW)
         self.assertEqual([c.text for c in commits], ["Add MCP hook", "update"])
-        self.assertEqual(per_day, {dt.date(2026, 11, 1): 2})  # low-signal still counts as activity
         self.assertEqual([e.text for e in A.ship_log(commits, [], NOW)], ["Add MCP hook"])
 
     def test_private_fork_foreign_and_profile_excluded(self):
@@ -192,8 +207,8 @@ class Filtering(unittest.TestCase):
         touched = " ".join(gh.calls)
         for name in ("Secret", "Forked", "Shared"):
             self.assertNotIn(name, touched, "never even ask about it")
-        self.assertEqual(per_day[dt.date(2026, 11, 1)], 2)  # profile repo commits are still activity
         self.assertNotIn(f"/repos/{LOGIN}/{LOGIN}/releases", gh.calls)
+        self.assertNotIn(f"/repos/{LOGIN}/{LOGIN}/commits", gh.calls)
 
     def test_bot_and_draft_releases_ignored(self):
         gh = FakeGitHub([repo("Bouncer")], {}, {"Bouncer": [
@@ -326,7 +341,8 @@ class EndToEnd(unittest.TestCase):
 
     def gh(self, **kw):
         return FakeGitHub([repo("Bouncer"), repo("Empty")],
-                          {"Bouncer": [commit("2026-11-01T10:00:00Z", "Add MCP hook")]}, **kw)
+                          {"Bouncer": [commit("2026-11-01T10:00:00Z", "Add MCP hook")]},
+                          calendar=year_calendar(**{"2026-11-01": 1}), **kw)
 
     def test_writes_section_and_history(self):
         gh = self.gh()
@@ -350,7 +366,7 @@ class EndToEnd(unittest.TestCase):
         self.assertFalse(self.svg.exists())
 
     def test_api_failure_leaves_readme_untouched(self):
-        for fail in ("/users/", "Bouncer/commits", "Bouncer/releases"):
+        for fail in ("/users/", "Bouncer/commits", "Bouncer/releases", "calendar"):
             self.assertEqual(A.main(self.args, gh=self.gh(fail={fail})), 1, fail)
             self.assertEqual(self.readme.read_text(), self.original)
             self.assertFalse(self.history.exists())
@@ -377,7 +393,7 @@ class Street(unittest.TestCase):
         svg, _, root = self.draw(days((0, 3), (5, 12)))
         tips = [t.text for t in root.iter("{http://www.w3.org/2000/svg}title")]
         self.assertEqual(len(tips), street.NIGHTS)
-        self.assertEqual(tips[-1], "Mon 02 Nov: 3 commits")
+        self.assertEqual(tips[-1], "Mon 02 Nov: 3 contributions")
         self.assertEqual(tips[0], "Tue 22 Sep: load shedding")
 
     def test_blackout_has_no_lit_windows(self):
@@ -443,6 +459,50 @@ class Street(unittest.TestCase):
         self.assertIn("চা", svg)
 
 
+class Calendar(unittest.TestCase):
+    def html(self, n_days=371, tip="{n} contributions on {d}."):
+        cells, tips = [], []
+        for k in range(n_days):
+            d = (dt.date(2026, 11, 3) - dt.timedelta(days=k)).isoformat()
+            n = 23 if d == "2026-11-01" else 1 if d == "2026-11-02" else 0
+            cells.append(f'<td tabindex="0" data-ix="{k}" data-date="{d}" id="contribution-day-component-{k}" data-level="1" class="ContributionCalendar-day"></td>')
+            text = "No contributions on {d}." if n == 0 else ("1 contribution on {d}." if n == 1 else tip)
+            tips.append(f'<tool-tip id="t{k}" for="contribution-day-component-{k}" popover="manual">{text.format(n=n, d=d)}</tool-tip>')
+        return "<table>" + "".join(cells) + "</table>" + "".join(tips)
+
+    def test_reads_the_public_graph(self):
+        days = A.calendar_from_html(self.html())
+        self.assertEqual(days[dt.date(2026, 11, 1)], 23)
+        self.assertEqual(days[dt.date(2026, 11, 2)], 1)
+        self.assertEqual(days[dt.date(2026, 10, 1)], 0)
+
+    def test_thousands_separator(self):
+        days = A.calendar_from_html(self.html(tip="1,204 contributions on {d}."))
+        self.assertEqual(days[dt.date(2026, 11, 1)], 1204)
+
+    def test_a_page_that_isnt_the_graph_fails(self):
+        with self.assertRaises(A.DataError):
+            A.calendar_from_html("<html>rate limited</html>")
+        with self.assertRaises(A.DataError):
+            A.calendar_from_html(self.html(n_days=40))
+        with self.assertRaises(A.DataError):
+            A.calendar_from_html(self.html().replace("contributions on", "commits on"))
+
+    def test_graphql(self):
+        weeks = [{"contributionDays": [{"date": (dt.date(2026, 11, 3) - dt.timedelta(days=w * 7 + k)).isoformat(),
+                                         "contributionCount": 2} for k in range(7)]} for w in range(53)]
+        data = {"data": {"user": {"contributionsCollection": {"contributionCalendar": {"weeks": weeks}}}}}
+        self.assertEqual(A.calendar_from_graphql(data)[DAY], 2)
+        for bad in ({"errors": [{"message": "nope"}]}, {"data": {"user": None}}):
+            with self.assertRaises(A.DataError):
+                A.calendar_from_graphql(bad)
+
+    def test_stale_calendar_is_bad_data_not_inactivity(self):
+        old = {d: n for d, n in year_calendar().items() if d < dt.date(2026, 10, 20)}
+        with self.assertRaises(A.DataError):
+            A.collect(FakeGitHub([repo("Bouncer")], calendar=old), LOGIN, NOW)
+
+
 class EmptyRepo(unittest.TestCase):
     def test_409_means_no_commits(self):
         class G(FakeGitHub):
@@ -450,8 +510,8 @@ class EmptyRepo(unittest.TestCase):
                 if path.endswith("Empty/commits"):
                     raise A.DataError(f"GET {path} failed: HTTP 409 Conflict")
                 yield from super().pages(path, params)
-        per_day, commits, _ = A.collect(G([repo("Empty")]), LOGIN, NOW)
-        self.assertEqual((per_day, commits), ({}, []))
+        _, commits, _ = A.collect(G([repo("Empty")]), LOGIN, NOW)
+        self.assertEqual(commits, [])
 
 
 if __name__ == "__main__":

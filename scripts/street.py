@@ -3,7 +3,7 @@
 Draws assets/street.svg: a Dhaka street at night during load shedding.
 
 One building per night for the last six weeks, Dhaka style: shops on the ground floor, flats
-above. A night I committed has its flats lit, more of them the busier the day. A night I didn't is
+above. A night I contributed on GitHub has its flats lit, more of them the busier the day. A night I didn't is
 a blackout upstairs. Release nights get fireworks.
 
 The shops run along the street under Bangla signboards, each sign and storefront spanning a few
@@ -114,7 +114,7 @@ def building(x, d, n, level, released):
             o.append(f'<rect{cls} x="{wx}" y="{wy}" width="5" height="6" fill="{WARM[int(_h(d, "c", i) * 4)]}"/>')
         else:
             o.append(f'<rect x="{wx}" y="{wy}" width="5" height="6" fill="{DARK_WINDOW}"/>')
-    tip = (f"{d.strftime('%a %d %b')}: {n} commit{'s' if n != 1 else ''}" if n else f"{d.strftime('%a %d %b')}: load shedding") \
+    tip = (f"{d.strftime('%a %d %b')}: {n} contribution{'s' if n != 1 else ''}" if n else f"{d.strftime('%a %d %b')}: load shedding") \
         + (" · release night" if released else "")
     o.append(f'<rect x="{x}" y="{top - 10}" width="{BW}" height="{BASE - top + 10}" fill="transparent"><title>{tip}</title></rect>')
     if released:
@@ -546,7 +546,7 @@ def draw(per_day, release_days, day):
         stats += f'  ·  brightest <tspan fill="{TEXT}">{busiest[1].strftime("%b %-d")}</tspan> ({busiest[0]})'
     o.append(f'<text class="m" x="24" y="{H - 18}" font-size="10.5" fill="{MUTED}" xml:space="preserve">{stats}</text>')
     lx = W - 24
-    legend = [("fireworks: a release", "#ff8fb3"), ("lit: commits", WARM[0]), ("dark: load shedding", DARK_WINDOW)]
+    legend = [("release", "#ff8fb3"), ("contributed", WARM[0]), ("load shedding", DARK_WINDOW)]  # short, so it never meets the stats
     for text, color in legend:
         tw = len(text) * 6.2
         o.append(f'<text class="m" x="{lx:.0f}" y="{H - 18}" font-size="9.5" fill="{MUTED}" text-anchor="end">{text}</text>')
@@ -557,9 +557,9 @@ def draw(per_day, release_days, day):
     o.append("</svg>")
 
     alt = (f"Load-shedding street: one building for each of the last {NIGHTS} nights in Dhaka. "
-           f"Lit windows mean I committed that day; dark buildings mean I didn't. "
+           f"Lit windows mean I contributed on GitHub that day; dark flats mean I didn't. "
            f"Lights on {on} of {NIGHTS} nights, longest run {run}"
-           + (f", brightest night {busiest[1].strftime('%d %b')} with {busiest[0]} commits" if busiest else "")
+           + (f", brightest night {busiest[1].strftime('%d %b')} with {busiest[0]} contributions" if busiest else "")
            + (f", {shipped} release night{'s' if shipped != 1 else ''} with fireworks" if shipped else "")
            + ". Shops run along the ground floor with flats above, open and lit on IPS through the load shedding. "
            "The shops have Bangla signboards: " + ", ".join(shop[1] for shop in SHOPS) + ". "

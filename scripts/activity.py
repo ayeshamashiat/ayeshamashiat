@@ -9,7 +9,10 @@ Mom and the ship log are plain Markdown, so the text stays searchable.
   GITHUB_TOKEN=... python scripts/activity.py --dry-run      # print it, write nothing
   python scripts/activity.py --demo --preview /tmp/street.svg  # fake data, no network
 
-Only public, non-fork repos owned by the user are read. Days are counted in Asia/Dhaka.
+How busy each day was comes from the user's GitHub contribution calendar, the same numbers as
+the graph on their profile (private contributions only as anonymous counts, if they show them
+there). The ship log reads only public, non-fork repos owned by the user. Yesterday is judged
+in Asia/Dhaka; which date a contribution lands on is GitHub's call, as on the graph.
 Mom's lines live in data/mom-lines.json; nothing here ever runs a model.
 If any request fails, nothing is written and the script exits non-zero, so a broken API
 never turns into a "you did nothing" roast. Standard library only.
@@ -48,7 +51,7 @@ SUBJECT_MAX = 80
 NO_REPEAT_DAYS = 14
 LINE_MAX = 140
 
-BUSY_COMMITS = 10
+BUSY_COMMITS = 10      # contributions in a day, as the graph counts them
 STREAK_DAYS = 7
 QUIET_LONG, QUIET_EXTREME = 4, 14
 BUCKETS = ["shipped", "busy", "streak", "quiet_short", "quiet_long", "quiet_extreme", "steady"]
@@ -111,6 +114,70 @@ class GitHub:
             yield data
             m = re.search(r'<([^>]+)>;\s*rel="next"', link)
             url = m.group(1) if m else None
+
+    def calendar(self, login):
+        """{date: contributions} for the last year, exactly as the profile graph shows it.
+        With a token, from the GraphQL API; without one, from the public graph itself."""
+        if self.token:
+            return calendar_from_graphql(self._graphql(CALENDAR_QUERY, {"login": login}))
+        url = f"https://github.com/users/{urllib.parse.quote(login)}/contributions"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (profile-activity)"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return calendar_from_html(r.read().decode("utf-8", "replace"))
+        except urllib.error.HTTPError as e:
+            raise DataError(f"GET {url} failed: HTTP {e.code} {e.reason}") from e
+        except (urllib.error.URLError, TimeoutError) as e:
+            raise DataError(f"GET {url} failed: {e}") from e
+
+    def _graphql(self, query, variables):
+        req = urllib.request.Request(f"{self.API}/graphql", json.dumps({"query": query, "variables": variables}).encode(),
+                                     {"Authorization": f"Bearer {self.token}", "Content-Type": "application/json",
+                                      "User-Agent": "ayeshamashiat-profile-activity"})
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            raise DataError(f"GraphQL failed: HTTP {e.code} {e.reason}") from e
+        except (urllib.error.URLError, TimeoutError, ValueError) as e:
+            raise DataError(f"GraphQL failed: {e}") from e
+
+
+CALENDAR_QUERY = """
+query($login: String!) {
+  user(login: $login) {
+    contributionsCollection { contributionCalendar { weeks { contributionDays { date contributionCount } } } }
+  }
+}"""
+MIN_CALENDAR_DAYS = 300  # a year's graph has ~365; fewer means GitHub sent something else
+
+
+def calendar_from_graphql(data):
+    if data.get("errors") or not (data.get("data") or {}).get("user"):
+        raise DataError(f"GraphQL calendar failed: {data.get('errors') or 'no such user'}")
+    weeks = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
+    days = {dt.date.fromisoformat(d["date"]): int(d["contributionCount"]) for w in weeks for d in w["contributionDays"]}
+    if len(days) < MIN_CALENDAR_DAYS:
+        raise DataError(f"contribution calendar has only {len(days)} days")
+    return days
+
+
+def calendar_from_html(page):
+    """The graph's cells carry their date and an id; a tooltip per id says the count."""
+    ids = re.findall(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?\bid="([^"]+)"', page)
+    tips = dict(re.findall(r'<tool-tip[^>]*?\bfor="([^"]+)"[^>]*>\s*([^<]*?)\s*</tool-tip>', page))
+    days = {}
+    for date, cell in ids:
+        tip = tips.get(cell)
+        if tip is None:
+            raise DataError(f"contribution graph cell {date} has no count")
+        m = re.match(r"([\d,]+) contributions?\b", tip)
+        if not m and not tip.startswith("No contributions"):
+            raise DataError(f"can't read contribution count {tip!r}")
+        days[dt.date.fromisoformat(date)] = int(m.group(1).replace(",", "")) if m else 0
+    if len(days) < MIN_CALENDAR_DAYS:
+        raise DataError(f"contribution graph has only {len(days)} days; GitHub may have changed the page")
+    return days
 
 
 @dataclass
@@ -182,28 +249,28 @@ def fetch_commits(gh, repo, login, since):
 
 
 def collect(gh, login, now):
-    """Everything the section needs, from public data only."""
+    """Everything the section needs: how busy each day was (the contribution calendar), and
+    commits and releases for the ship log (public repos only)."""
     since = now - dt.timedelta(days=LOOKBACK_DAYS)
+    per_day = gh.calendar(login)
+    if max(per_day) < last_completed_day(now) - dt.timedelta(days=1):
+        raise DataError(f"contribution calendar stops at {max(per_day)}; refusing to call that inactivity")
     repos = [r for page in gh.pages(f"/users/{login}/repos", {"type": "owner", "per_page": 100}) for r in page]
     repos = [r for r in repos if eligible_repo(r, login)]
     if not repos:
         raise DataError(f"no public repos found for {login}; refusing to call that inactivity")
 
-    per_day, seen = {}, set()
-    commits, releases = [], []
+    seen, commits, releases = set(), [], []
     for repo in repos:
-        name, profile = repo["name"], repo["name"].lower() == login.lower()
+        name = repo["name"]
+        if name.lower() == login.lower():  # the profile repo never goes in the ship log
+            continue
         for c in fetch_commits(gh, repo, login, since):
             if not own_commit(c, login) or is_merge(c) or c["sha"] in seen:
                 continue
             seen.add(c["sha"])
-            ev = Event(name, parse_time(c["commit"]["author"]["date"]), subject_of(c["commit"]["message"]),
-                       c["sha"][:7], c["html_url"], "commit", c["sha"])
-            per_day[ev.day] = per_day.get(ev.day, 0) + 1  # every real commit is activity
-            if not profile:
-                commits.append(ev)
-        if profile:
-            continue
+            commits.append(Event(name, parse_time(c["commit"]["author"]["date"]), subject_of(c["commit"]["message"]),
+                                 c["sha"][:7], c["html_url"], "commit", c["sha"]))
         for r in next(gh.pages(f"/repos/{repo['full_name']}/releases", {"per_page": 100}), []):
             if r.get("draft") or is_bot(r.get("author")):
                 continue
