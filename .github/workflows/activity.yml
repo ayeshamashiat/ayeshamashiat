@@ -19,18 +19,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Test
         run: python -m unittest discover -s tests
-      - name: Rebuild mom's line and the ship log
+      - name: Rebuild the street, mom's line and the ship log
         run: python scripts/activity.py ${{ github.repository_owner }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit if the README changed
+      - name: Commit if anything changed
         run: |
-          if git diff --quiet -- README.md; then
-            echo "README unchanged, nothing to commit"
+          if [ -z "$(git status --porcelain -- README.md assets/street.svg data/mom-history.json)" ]; then
+            echo "nothing changed, nothing to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md data/mom-history.json
+          git add README.md assets/street.svg data/mom-history.json
           git commit -m "chore(activity): refresh mom's line and ship log"
           git push

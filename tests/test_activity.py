@@ -7,6 +7,7 @@ import json
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
@@ -255,13 +256,19 @@ class Markdown(unittest.TestCase):
 
     def test_caption_only_when_every_line_is_model(self):
         line = {"text": "hi babu"}
-        self.assertNotIn("on-device", A.render(line, False, []))
-        self.assertIn("on-device", A.render(line, True, []))
+        self.assertNotIn("on-device", A.render(line, False, [], "s.svg", "alt"))
+        self.assertIn("on-device", A.render(line, True, [], "s.svg", "alt"))
 
-    def test_single_blockquote(self):
-        body = A.render({"text": "Two days, babu."}, False, [ev("Bouncer", "2026-11-01T08:00:00Z")])
+    def test_image_then_mom_then_ship_log_in_details(self):
+        body = A.render({"text": "Two days, babu."}, False, [ev("Bouncer", "2026-11-01T08:00:00Z")],
+                        "assets/street.svg?v=2026-11-02", 'say "hi" & <go>')
         self.assertEqual(sum(ln.startswith(">") for ln in body.splitlines()), 1)
-        self.assertLess(body.index("> **Mom:**"), body.index("**Ship log**"))
+        self.assertIn('alt="say &quot;hi&quot; &amp; &lt;go&gt;"', body)
+        self.assertLess(body.index("<img"), body.index("> **Mom:**"))
+        self.assertLess(body.index("> **Mom:**"), body.index("<details>"))
+        self.assertLess(body.index("<details>"), body.index("- `2026-11-01`"))
+        self.assertLess(body.index("- `2026-11-01`"), body.index("</details>"))
+        self.assertIn("</summary>\n\n", body)  # GitHub needs the blank line to render Markdown inside
 
     def test_marker_replacement(self):
         readme = f"top\n{A.START}\nold stuff\n{A.END}\nbottom\n"
@@ -307,11 +314,12 @@ class EndToEnd(unittest.TestCase):
         self.dir = tempfile.TemporaryDirectory()
         d = Path(self.dir.name)
         self.readme, self.lines, self.history = d / "README.md", d / "lines.json", d / "history.json"
+        self.svg = d / "street.svg"
         self.original = f"# hi\n\n{A.START}\nold\n{A.END}\n\nkeep me\n"
         self.readme.write_text(self.original)
         self.lines.write_text(json.dumps({"lines": LINES}))
         self.args = ["--readme", str(self.readme), "--lines", str(self.lines), "--history", str(self.history),
-                     "--now", NOW.isoformat()]
+                     "--svg", str(self.svg), "--now", NOW.isoformat()]
 
     def tearDown(self):
         self.dir.cleanup()
@@ -328,6 +336,9 @@ class EndToEnd(unittest.TestCase):
         self.assertIn(r"> **Mom:** quiet\_short line", text)
         self.assertIn("**Bouncer** — Add MCP hook", text)
         self.assertEqual(json.loads(self.history.read_text())[0]["date"], "2026-11-02")
+        self.assertIn("street.svg?v=2026-11-02", text)
+        self.assertIn("load shedding", self.svg.read_text())
+        self.assertIn(r"> **Mom:** quiet\_short line", text)
         # second run, same day: identical output, nothing rewritten
         self.assertEqual(A.main(self.args, gh=gh), 0)
         self.assertEqual(self.readme.read_text(), text)
@@ -336,12 +347,14 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(A.main(self.args + ["--dry-run"], gh=self.gh()), 0)
         self.assertEqual(self.readme.read_text(), self.original)
         self.assertFalse(self.history.exists())
+        self.assertFalse(self.svg.exists())
 
     def test_api_failure_leaves_readme_untouched(self):
         for fail in ("/users/", "Bouncer/commits", "Bouncer/releases"):
             self.assertEqual(A.main(self.args, gh=self.gh(fail={fail})), 1, fail)
             self.assertEqual(self.readme.read_text(), self.original)
             self.assertFalse(self.history.exists())
+            self.assertFalse(self.svg.exists())
 
     def test_no_repos_is_treated_as_bad_data_not_inactivity(self):
         self.assertEqual(A.main(self.args, gh=FakeGitHub([])), 1)
@@ -351,6 +364,73 @@ class EndToEnd(unittest.TestCase):
         self.lines.write_text(json.dumps({"lines": LINES[:5]}))
         self.assertEqual(A.main(self.args, gh=self.gh()), 1)
         self.assertEqual(self.readme.read_text(), self.original)
+
+
+class Street(unittest.TestCase):
+    def draw(self, per_day=None, releases=()):
+        import street
+        svg, alt = street.draw(per_day or {}, set(releases), DAY)
+        return svg, alt, ET.fromstring(svg)
+
+    def test_well_formed_with_one_building_per_night(self):
+        import street
+        svg, _, root = self.draw(days((0, 3), (5, 12)))
+        tips = [t.text for t in root.iter("{http://www.w3.org/2000/svg}title")]
+        self.assertEqual(len(tips), street.NIGHTS)
+        self.assertEqual(tips[-1], "Mon 02 Nov: 3 commits")
+        self.assertEqual(tips[0], "Tue 22 Sep: load shedding")
+
+    def test_blackout_has_no_lit_windows(self):
+        import street
+        svg, alt, _ = self.draw({})
+        for warm in street.WARM:
+            self.assertNotIn(f'width="5" height="6" fill="{warm}"', svg)  # no lit windows (the legend may use it)
+        self.assertIn("Lights on 0 of 42 nights", alt)
+
+    def test_busier_nights_light_more_windows(self):
+        import street
+        lit = lambda n: sum(street.building(0, DAY, n, street.levels([1, 2, 5, 9])(n), False).count(w)
+                            for w in street.WARM)
+        self.assertLess(lit(1), lit(9))
+
+    def test_release_night_gets_fireworks(self):
+        self.assertNotIn('class="burst"', self.draw(days((0, 1)))[0])
+        svg, alt, _ = self.draw(days((0, 1)), {DAY})
+        self.assertIn('class="burst"', svg)
+        self.assertIn("1 release night with fireworks", alt)
+
+    def test_shops_open_on_lit_nights_and_shutter_in_blackouts(self):
+        import street
+        lvl = street.levels([3])
+        self.assertIn('fill="#e0a552"', street.building(0, DAY, 3, lvl(3), False))
+        closed = street.building(0, DAY, 0, 0, False)
+        self.assertNotIn('fill="#e0a552"', closed)
+        self.assertIn('fill="#252a32"', closed)
+
+    def test_ground_floor_is_a_shop_not_flats(self):
+        import street
+        svg = street.building(0, DAY, 9, 4, False)
+        ys = [float(r.split('y="')[1].split('"')[0]) for r in svg.split("<rect") if 'width="5" height="6"' in r]
+        self.assertTrue(ys and max(ys) < street.BASE - street.GF)
+
+    def test_shop_row_covers_every_building_with_bangla_signs(self):
+        import street
+        self.assertEqual(sum(shop[2] for shop in street.SHOPS), street.NIGHTS)
+        svg, alt, _ = self.draw(days((0, 2)))
+        for bangla, english, *_ in street.SHOPS:
+            self.assertIn(bangla, svg)
+            self.assertIn(english, alt)
+
+    def test_signboard_dims_when_every_shop_under_it_is_shut(self):
+        import street
+        self.assertIn('opacity="0.32"', street.signboard(0, 60, "মদিনা সুইটস", "#000", "#fff", lit=False))
+        self.assertIn('opacity="1"', street.signboard(0, 60, "মদিনা সুইটস", "#000", "#fff", lit=True))
+
+    def test_no_mom_sign_in_the_picture(self):
+        svg, alt, _ = self.draw()
+        self.assertNotIn("AMMU SAYS", svg)
+        self.assertNotIn("Ammu says", alt)
+        self.assertIn("চা", svg)
 
 
 class EmptyRepo(unittest.TestCase):
