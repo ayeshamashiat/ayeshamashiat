@@ -189,6 +189,14 @@ If you want to talk about something I'm building, something you're building, or 
   <a href="https://instagram.com/_.ayshiat._"><img src="assets/instagram.svg?v=3" alt="Instagram: __.ayshiat.__" height="44"></a>
 </p>
 
+<p align="center">
+  <a href="mailto:ayesha.mashiat019@gmail.com"><img src="assets/email.svg" alt="Email: ayesha.mashiat019@gmail.com" height="44"></a>
+  &nbsp;
+  <a href="https://ayeshamashiatportfolio.onrender.com/"><img src="assets/portfolio.svg" alt="Portfolio: see my work" height="44"></a>
+</p>
+
+<p align="center"><sub><a href="mailto:ayesha.mashiat019@gmail.com">ayesha.mashiat019@gmail.com</a> · <a href="https://ayeshamashiatportfolio.onrender.com/">ayeshamashiatportfolio.onrender.com</a></sub></p>
+
 <br>
 
 <p align="center">
