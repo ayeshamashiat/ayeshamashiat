@@ -399,14 +399,15 @@ class Street(unittest.TestCase):
         self.assertIn('class="burst"', svg)
         self.assertIn("1 release night with fireworks", alt)
 
-    def test_one_shutter_per_night_up_when_lit_down_in_blackout(self):
+    def test_every_storefront_is_open_and_continuous(self):
         import street
         for kind in ("biryani", "pharmacy", "library", "garage", "store", "sweets", "cng", "tailor"):
-            front = street.storefront(0, 77, kind, [True, False, False, True])
-            self.assertEqual(front.count('fill="#2a2f37"'), 2, kind)       # two shutters down
-            self.assertEqual(front.count('fill="#f4fbff"'), 2, kind)       # two tube lights on
-            shut = street.storefront(0, 77, kind, [False] * 4)
-            self.assertNotIn('fill="#f4fbff"', shut, kind)
+            front = street.storefront(0, 77, kind)
+            self.assertNotIn('fill="#2a2f37"', front, kind)               # no shutters
+            self.assertIn('fill="#f4fbff"', front, kind)                  # tube lights on
+            self.assertEqual(front.count("<clipPath"), 1, kind)           # one opening, the whole span
+        self.assertIn('stroke="#9aa3ad"', street.storefront(0, 117, "library"))   # the glass door
+        self.assertIn('stroke="#9aa3ad"', street.storefront(0, 77, "store"))
 
     def test_ground_floor_is_a_shop_not_flats(self):
         import street

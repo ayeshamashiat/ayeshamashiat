@@ -3,12 +3,12 @@
 Draws assets/street.svg: a Dhaka street at night during load shedding.
 
 One building per night for the last six weeks, Dhaka style: shops on the ground floor, flats
-above. A night I committed has its lights on: its shutter rolled up, and the busier the day, the
-more flats lit. A night I didn't is a blackout, shutter down. Release nights get fireworks.
+above. A night I committed has its flats lit, more of them the busier the day. A night I didn't is
+a blackout upstairs. Release nights get fireworks.
 
-The shops run along the street under Bangla signboards, each sign spanning a few buildings the
-way real ones do; a sign is lit if any shop under it is open. The cha stall is one of them and
-never closes, because it runs on a hurricane lantern. Around them: crows on the wires, laundry
+The shops run along the street under Bangla signboards, each sign and storefront spanning a few
+buildings the way real ones do. They stay open through load shedding on IPS, and the cha stall
+on a hurricane lantern. Around them: crows on the wires, laundry
 on the roofs, a mosque behind, and a rickshaw with a painted hood.
 
 Called by activity.py; nothing here touches the network. Standard library only.
@@ -122,34 +122,33 @@ def building(x, d, n, level, released):
     return "".join(o)
 
 
-def storefront(xs, w, kind, opens):
-    """One shop's whole front, the Dhaka way: a wide opening behind a row of rolling shutters,
-    one shutter per night above it. A night with commits has its shutter rolled up and the tube
-    light on, so you see into the shop; a blackout night has it pulled down and padlocked."""
+def storefront(xs, w, kind):
+    """One shop's whole front, open the full width of its span. Dhaka shops run on IPS through
+    load shedding, so they stay lit whatever the flats above are doing."""
     top, bot = BASE - FRONT, BASE - 2                 # the opening; a concrete step below
     x0, x1 = xs + 1.5, xs + w - 1.5
-    seg = (x1 - x0) / len(opens)
     light, glow = INSIDE.get(kind, ("#e0a552", ".6"))
     clip = f"in{int(xs)}"
     o = [f'<rect x="{xs - 1.5:.1f}" y="{BASE - GF + SIGN_H + 1}" width="{w + 3:.1f}" height="{GF - SIGN_H - 1}" fill="#1c2028"/>',
          f'<rect x="{x0 - 1:.1f}" y="{bot}" width="{x1 - x0 + 2:.1f}" height="2" fill="#3a3f48"/>',
          f'<clipPath id="{clip}"><rect x="{x0:.1f}" y="{top}" width="{x1 - x0:.1f}" height="{bot - top}"/></clipPath>',
          f'<g clip-path="url(#{clip})"><rect x="{x0:.1f}" y="{top}" width="{x1 - x0:.1f}" height="{bot - top}" '
-         f'fill="{light}" fill-opacity="{glow}"/>', INTERIORS[kind](x0, x1, top, bot), '</g>']
-    for k, up in enumerate(opens):
-        sx = x0 + k * seg
-        if up:   # rolled up into its box, tube light on under it
-            o.append(f'<rect x="{sx:.1f}" y="{top}" width="{seg:.1f}" height="2.6" fill="#454b55"/>'
-                     f'<line x1="{sx:.1f}" y1="{top + 1.3}" x2="{sx + seg:.1f}" y2="{top + 1.3}" stroke="#363b44" stroke-width=".5"/>'
-                     f'<rect x="{sx + 2:.1f}" y="{top + 3.2}" width="{seg - 4:.1f}" height=".9" fill="#f4fbff" fill-opacity=".9"/>')
-        else:    # down for the night
-            o.append(f'<rect x="{sx:.1f}" y="{top}" width="{seg:.1f}" height="{bot - top}" fill="#2a2f37"/>'
-                     + "".join(f'<line x1="{sx:.1f}" y1="{top + 1.5 + r * 1.8:.1f}" x2="{sx + seg:.1f}" y2="{top + 1.5 + r * 1.8:.1f}" '
-                               f'stroke="#20242b" stroke-width=".6"/>' for r in range(9))
-                     + f'<rect x="{sx + seg / 2 - 1.2:.1f}" y="{bot - 2.2}" width="2.4" height="1.6" rx=".4" fill="#8a8f98"/>')
-    for k in range(1, len(opens)):  # the posts between shutters
-        o.append(f'<rect x="{x0 + k * seg - 0.6:.1f}" y="{top}" width="1.2" height="{bot - top}" fill="#14171c"/>')
+         f'fill="{light}" fill-opacity="{glow}"/>', INTERIORS[kind](x0, x1, top, bot)]
+    for tx in range(int(x0 + 3), int(x1 - 10), 24):  # tube lights along the ceiling
+        o.append(f'<rect x="{tx}" y="{top + 0.6}" width="12" height=".9" fill="#f4fbff" fill-opacity=".9"/>')
+    o.append('</g>')
+    o.append(f'<rect x="{x0 - 0.5:.1f}" y="{top - 0.5}" width="{x1 - x0 + 1:.1f}" height="1.4" fill="#454b55"/>')  # the shutter box, rolled up
     return "".join(o)
+
+
+def _glass_door(x, top, bot, w=11):
+    """A two-leaf glass door in an aluminium frame."""
+    return (f'<rect x="{x:.1f}" y="{top + 2}" width="{w}" height="{bot - top - 2}" fill="#b9d6e3" fill-opacity=".35" '
+            f'stroke="#9aa3ad" stroke-width=".8"/>'
+            f'<line x1="{x + w / 2:.1f}" y1="{top + 2}" x2="{x + w / 2:.1f}" y2="{bot}" stroke="#9aa3ad" stroke-width=".7"/>'
+            f'<line x1="{x + 1.5:.1f}" y1="{top + 4}" x2="{x + 3.5:.1f}" y2="{top + 8}" stroke="#ffffff" stroke-opacity=".5" stroke-width=".5"/>'
+            f'<rect x="{x + w / 2 - 1.6:.1f}" y="{(top + bot) / 2:.1f}" width=".7" height="3" fill="#d8dde3"/>'
+            f'<rect x="{x + w / 2 + 0.9:.1f}" y="{(top + bot) / 2:.1f}" width=".7" height="3" fill="#d8dde3"/>')
 
 
 def _biryani(x0, x1, top, bot):
@@ -187,11 +186,13 @@ def _pharmacy(x0, x1, top, bot):
              f'stroke="#f2fbff" stroke-opacity=".7" stroke-width=".5"/>')                         # glass counter
     cx = (x0 + x1) / 2
     o.append(f'<path d="M{cx:.1f} {bot - 4.4} V{bot - 0.6} M{cx - 1.9:.1f} {bot - 2.5} H{cx + 1.9:.1f}" stroke="#1f9e5a" stroke-width="1.2"/>')
+    o.append(f'<rect x="{x1 - 13:.1f}" y="{top + 2}" width="11" height="{bot - top - 2}" fill="#e4f2ea"/>' + _glass_door(x1 - 13, top, bot))
     return "".join(o)
 
 
 def _library(x0, x1, top, bot):
-    o = []
+    o = [_glass_door(x0 + 2, top, bot, 14)]
+    x0 += 18                                                                                      # shelves start after the door
     spines = ["#b4442a", "#3456a8", "#2f7d4f", "#c08a1e", "#7a4fa3", "#e8e2d0", "#1f1f1f"]
     for r in range(3):
         sy = top + 6.5 + r * 3.8
@@ -230,23 +231,28 @@ def _garage(x0, x1, top, bot, cng=False):
 
 
 def _store(x0, x1, top, bot):
+    """মায়ের দোয়া is a departmental store: a glass front, aisles of shelves, a checkout."""
     o = []
-    packets = ["#e63946", "#f4a261", "#2a9d8f", "#e9c46a", "#457b9d", "#8338ec"]
-    k, sx = 0, x0 + 1
-    while sx < x1 - 2:                                                                            # chips in strips
-        for r in range(3):
-            o.append(f'<rect x="{sx:.1f}" y="{top + 1 + r * 3:.1f}" width="2.6" height="2.7" fill="{packets[(k + r * 2) % 6]}"/>')
-        sx, k = sx + 3.4, k + 1
-    o.append(f'<rect x="{x0:.1f}" y="{top + 11}" width="{x1 - x0:.1f}" height=".7" fill="#6b4423"/>')
-    jx = x0 + 2
-    while jx < x1 - 3:                                                                            # jars on the shelf
-        o.append(f'<rect x="{jx:.1f}" y="{top + 8}" width="2.6" height="3" rx=".6" fill="#cfe3ec" fill-opacity=".55"/>'
-                 f'<rect x="{jx:.1f}" y="{top + 7.4}" width="2.6" height=".8" fill="#c0392b"/>')
-        jx += 4.5
-    o.append(f'<rect x="{x0 + 8:.1f}" y="{bot - 4}" width="{x1 - x0 - 16:.1f}" height="4" fill="#6b4423"/>'   # counter, scale
-             f'<path d="M{(x0 + x1) / 2:.1f} {bot - 4} V{bot - 8} M{(x0 + x1) / 2 - 4:.1f} {bot - 8} H{(x0 + x1) / 2 + 4:.1f}" stroke="#b0b5bd" stroke-width=".7"/>')
-    for sx in (x0 + 1, x1 - 7):                                                                   # sacks by the door
-        o.append(f'<path d="M{sx:.1f} {bot} V{bot - 4.5} Q{sx + 3:.1f} {bot - 6.5} {sx + 6:.1f} {bot - 4.5} V{bot} Z" fill="#cdb48a"/>')
+    goods = ["#e63946", "#f4a261", "#2a9d8f", "#e9c46a", "#457b9d", "#8338ec", "#f1faee"]
+    for r in range(4):                                                                            # aisles, back to front
+        sy = top + 4 + r * 3.4
+        o.append(f'<rect x="{x0:.1f}" y="{sy + 2.2:.1f}" width="{x1 - x0:.1f}" height=".6" fill="#8a929c"/>')
+        k, gx = 0, x0 + 0.5
+        while gx < x1 - 1:
+            o.append(f'<rect x="{gx:.1f}" y="{sy:.1f}" width="1.6" height="2.2" fill="{goods[(k * 5 + r * 2) % 7]}"/>')
+            gx, k = gx + 2, k + 1
+    o.append(f'<rect x="{x0 + 3:.1f}" y="{bot - 4.5}" width="14" height="4.5" fill="#d8dde3"/>'      # checkout and till
+             f'<rect x="{x0 + 5:.1f}" y="{bot - 7}" width="4" height="2.5" fill="#2b2f36"/>'
+             f'<rect x="{x0 + 10:.1f}" y="{bot - 5.6}" width="5" height="1.1" fill="#c0392b"/>')
+    door = (x0 + x1) / 2 + 6
+    o.append(f'<rect x="{door:.1f}" y="{top + 2}" width="12" height="{bot - top - 2}" fill="#f2efe6" fill-opacity=".5"/>'
+             + _glass_door(door, top, bot, 12))
+    mx = x0 + 12                                                                                  # glass front: mullions and a sheen
+    while mx < x1 - 2:
+        if not door - 1 < mx < door + 13:
+            o.append(f'<line x1="{mx:.1f}" y1="{top + 2}" x2="{mx:.1f}" y2="{bot}" stroke="#9aa3ad" stroke-width=".6"/>')
+        mx += 12
+    o.append(f'<rect x="{x0:.1f}" y="{top + 2}" width="{x1 - x0:.1f}" height="{bot - top - 2}" fill="#cfe7f2" fill-opacity=".12"/>')
     return "".join(o)
 
 
@@ -275,9 +281,10 @@ def _tailor(x0, x1, top, bot):
         o.append(f'<rect x="{bx:.1f}" y="{top + 4}" width="2.2" height="8" fill="{CLOTH[k % len(CLOTH)]}"/>')
         bx, k = bx + 2.8, k + 1
     o.append(f'<rect x="{x0:.1f}" y="{top + 12}" width="{x1 - x0:.1f}" height=".7" fill="#5a3a1a"/>')
-    mx = x1 - 8                                                                                   # a mannequin in a panjabi
-    o.append(f'<circle cx="{mx:.1f}" cy="{top + 5}" r="1.4" fill="#d9c7a8"/>'
-             f'<path d="M{mx - 2.6:.1f} {top + 6.8} H{mx + 2.6:.1f} L{mx + 2:.1f} {bot - 3} H{mx - 2:.1f} Z" fill="#e8e2d0"/>')
+    for mx, c in ((x1 - 8, "#e8e2d0"), (x1 - 20, "#2f6d8a")):                                     # mannequins in panjabis
+        o.append(f'<circle cx="{mx:.1f}" cy="{top + 5}" r="1.4" fill="#d9c7a8"/>'
+                 f'<path d="M{mx - 2.6:.1f} {top + 6.8} H{mx + 2.6:.1f} L{mx + 2:.1f} {bot - 3} H{mx - 2:.1f} Z" fill="{c}"/>'
+                 f'<line x1="{mx:.1f}" y1="{bot - 3}" x2="{mx:.1f}" y2="{bot}" stroke="#3a2a1a" stroke-width=".6"/>')
     o.append(f'<rect x="{x0 + 2:.1f}" y="{bot - 5}" width="22" height="1.3" fill="#6b4423"/>'                # cutting table
              f'<path d="M{x0 + 5:.1f} {bot - 5} V{bot - 9.5} H{x0 + 12:.1f} V{bot - 8} H{x0 + 7:.1f} V{bot - 5}" fill="#1f1f1f"/>'
              f'<line x1="{x0 + 14:.1f}" y1="{bot - 5.5}" x2="{x0 + 23:.1f}" y2="{bot - 5.5}" stroke="#f2c94c" stroke-width=".7"/>')
@@ -288,7 +295,7 @@ INTERIORS = {"biryani": _biryani, "pharmacy": _pharmacy, "library": _library, "g
              "cng": lambda *a: _garage(*a, cng=True), "store": _store, "sweets": _sweets, "tailor": _tailor}
 
 # how each shop is lit inside: warm bulbs mostly, white tube lights at the pharmacy and the sweet shop
-INSIDE = {"pharmacy": ("#e4f2ea", ".8"), "sweets": ("#f6dcc0", ".75"), "garage": ("#c98c3e", ".5"),
+INSIDE = {"pharmacy": ("#e4f2ea", ".8"), "store": ("#f4f1e8", ".75"), "sweets": ("#f6dcc0", ".75"), "garage": ("#c98c3e", ".5"),
           "cng": ("#c98c3e", ".5"), "library": ("#e7b665", ".6")}
 
 
@@ -524,13 +531,12 @@ def draw(per_day, release_days, day):
             o.append(cha_stall(xs, w))
             props.append((xs - 50, xs + w + 10))
         else:
-            o.append(storefront(xs, w, kind, [counts[c] > 0 for c in range(a, b)]))
+            o.append(storefront(xs, w, kind))
             out = pavement(xs, w, kind, day)
             if out:
                 o.append(out)
                 props.append((xs + w - 40, xs + w + 4))
-        o.append(signboard(xs, w, bangla, bg, fg, lit=cha or any(counts[c] for c in range(a, b)),
-                           size=12 if cha else 10))  # the stall's name is short; bigger letters fill its board
+        o.append(signboard(xs, w, bangla, bg, fg, lit=True, size=12 if cha else 10))  # the stall's name is short; bigger letters fill its board
 
     spots = [x for x in range(20, W - 60, 4)
              if not any(lo - 36 < x < hi for lo, hi in props)]  # never parked on top of a shop's things
@@ -570,9 +576,10 @@ def draw(per_day, release_days, day):
            f"Lights on {on} of {NIGHTS} nights, longest run {run}"
            + (f", brightest night {busiest[1].strftime('%d %b')} with {busiest[0]} commits" if busiest else "")
            + (f", {shipped} release night{'s' if shipped != 1 else ''} with fireworks" if shipped else "")
-           + ". Every building has a shop on the ground floor and flats above; in a blackout the shutter is down. "
+           + ". Shops run along the ground floor with flats above, open and lit on IPS through the load shedding. "
            "The shops have Bangla signboards: " + ", ".join(shop[1] for shop in SHOPS) + ". "
-           "Each shop looks like itself: a biryani deg steaming out front, a pharmacy's green cross, a newspaper rack, "
+           "Each shop looks like itself: a biryani deg steaming out front, a pharmacy's green cross, a library with a glass door, "
+           "a departmental store with a glass front and aisles, a newspaper rack, "
            "stacked tyres, sacks of rice and dal, clay pots of mishti doi, a green CNG at Abbas's, a shirt outside the tailor's. "
            "The cha stall never closes; it runs on a hurricane lantern. Also: crows on the electric wires, "
            "laundry drying on the roofs, a mosque behind, and a rickshaw with a painted hood.")
