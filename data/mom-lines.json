@@ -1,0 +1,215 @@
+{
+ "_note": "Placeholder lines (source: placeholder) written by hand so the feature works today. scripts/mom_lines.py replaces them, bucket by bucket, with lines from the Touch Grass, Babu model (source: model). The README credits the model only when every line is a model line.",
+ "lines": [
+  {
+   "id": "quiet_short-p1",
+   "bucket": "quiet_short",
+   "text": "One day without a commit, babu. The laptop has started asking me where you are.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_short-p2",
+   "bucket": "quiet_short",
+   "text": "Two days, no push. Resting is allowed, babu. Becoming furniture is not.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_short-p3",
+   "bucket": "quiet_short",
+   "text": "No commits yesterday. Fine. Even the rice cooker takes a break. It still cooks the rice, though.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_short-p4",
+   "bucket": "quiet_short",
+   "text": "Your keyboard has been silent since the day before yesterday, babu. I can hear the dust landing on it.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_short-p5",
+   "bucket": "quiet_short",
+   "text": "Small break from coding? Okay. Small. Not the size of your last small break, babu.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_long-p1",
+   "bucket": "quiet_long",
+   "text": "A whole week with no commits, babu. Your GitHub graph looks like our fridge before payday.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_long-p2",
+   "bucket": "quiet_long",
+   "text": "Five days without code. I told the relatives you're a software engineer. Please don't make me a liar.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_long-p3",
+   "bucket": "quiet_long",
+   "text": "Babu, your repos have gone so quiet the neighbours think we sold the laptop.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_long-p4",
+   "bucket": "quiet_long",
+   "text": "Nine days, no push. Even the Wi-Fi router looks unemployed.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_long-p5",
+   "bucket": "quiet_long",
+   "text": "No commits all week. Your laptop charger is getting more exercise than your code, babu.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_extreme-p1",
+   "bucket": "quiet_extreme",
+   "text": "Two weeks without a commit, babu. Should I put your GitHub in the newspaper under missing persons?",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_extreme-p2",
+   "bucket": "quiet_extreme",
+   "text": "Your last commit is so old it remembers when onions were cheap.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_extreme-p3",
+   "bucket": "quiet_extreme",
+   "text": "Babu, your contribution graph is greener in my memory than it is on the screen.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_extreme-p4",
+   "bucket": "quiet_extreme",
+   "text": "Fourteen days of no code. I have started dusting your laptop like a museum piece.",
+   "source": "placeholder"
+  },
+  {
+   "id": "quiet_extreme-p5",
+   "bucket": "quiet_extreme",
+   "text": "At this point your repos need a visit, not a commit. Bring mishti, babu. They've been waiting.",
+   "source": "placeholder"
+  },
+  {
+   "id": "steady-p1",
+   "bucket": "steady",
+   "text": "A few commits again. Good, babu. Not exciting, but neither is dal, and we eat that every day.",
+   "source": "placeholder"
+  },
+  {
+   "id": "steady-p2",
+   "bucket": "steady",
+   "text": "Steady work. I'm not saying I'm proud. I'm saying I mentioned it to Nusrat's mother.",
+   "source": "placeholder"
+  },
+  {
+   "id": "steady-p3",
+   "bucket": "steady",
+   "text": "Some code, some food, some sleep. Balanced, babu. Don't ruin it by debugging until 3 AM.",
+   "source": "placeholder"
+  },
+  {
+   "id": "steady-p4",
+   "bucket": "steady",
+   "text": "You pushed something yesterday. Okay. I will allow one extra cup of cha.",
+   "source": "placeholder"
+  },
+  {
+   "id": "steady-p5",
+   "bucket": "steady",
+   "text": "Regular commits, babu. See what happens when you close YouTube?",
+   "source": "placeholder"
+  },
+  {
+   "id": "busy-p1",
+   "bucket": "busy",
+   "text": "Ten commits in one day? Babu, drink some water. The bugs are not going anywhere.",
+   "source": "placeholder"
+  },
+  {
+   "id": "busy-p2",
+   "bucket": "busy",
+   "text": "So many commits yesterday. Did you eat lunch, or did you commit that too?",
+   "source": "placeholder"
+  },
+  {
+   "id": "busy-p3",
+   "bucket": "busy",
+   "text": "Busy day, babu. I'm proud of you, but your chair has filed a complaint.",
+   "source": "placeholder"
+  },
+  {
+   "id": "busy-p4",
+   "bucket": "busy",
+   "text": "This many commits and still no time to call your mother. Interesting priorities.",
+   "source": "placeholder"
+  },
+  {
+   "id": "busy-p5",
+   "bucket": "busy",
+   "text": "You coded like the load shedding was starting at six. Good. Now sleep, babu.",
+   "source": "placeholder"
+  },
+  {
+   "id": "streak-p1",
+   "bucket": "streak",
+   "text": "Seven days of code in a row, babu. More regular than the gas supply.",
+   "source": "placeholder"
+  },
+  {
+   "id": "streak-p2",
+   "bucket": "streak",
+   "text": "A whole week of commits. I'm telling everyone at the next wedding. Everyone.",
+   "source": "placeholder"
+  },
+  {
+   "id": "streak-p3",
+   "bucket": "streak",
+   "text": "Every single day this week? Who are you, and what have you done with my babu?",
+   "source": "placeholder"
+  },
+  {
+   "id": "streak-p4",
+   "bucket": "streak",
+   "text": "Daily commits, babu. Now bring the same discipline to your bed sheet.",
+   "source": "placeholder"
+  },
+  {
+   "id": "streak-p5",
+   "bucket": "streak",
+   "text": "Streak going strong. Don't break it for one reel, babu. I'm watching the graph.",
+   "source": "placeholder"
+  },
+  {
+   "id": "shipped-p1",
+   "bucket": "shipped",
+   "text": "A new release, babu! I don't know what it does, but I've already told the whole family.",
+   "source": "placeholder"
+  },
+  {
+   "id": "shipped-p2",
+   "bucket": "shipped",
+   "text": "You shipped something. Wonderful. Now write the changelog before you forget what changed.",
+   "source": "placeholder"
+  },
+  {
+   "id": "shipped-p3",
+   "bucket": "shipped",
+   "text": "Release day. I'm proud of you. Quietly. Don't make it emotional.",
+   "source": "placeholder"
+  },
+  {
+   "id": "shipped-p4",
+   "bucket": "shipped",
+   "text": "Babu shipped a release! Should I hand out mishti now, or wait for the bug reports?",
+   "source": "placeholder"
+  },
+  {
+   "id": "shipped-p5",
+   "bucket": "shipped",
+   "text": "New version out. Good. Now go to sleep before you find a bug in it, babu.",
+   "source": "placeholder"
+  }
+ ]
+}
