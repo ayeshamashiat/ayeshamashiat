@@ -3,7 +3,7 @@
 Draws assets/street.svg: a Dhaka street at night during load shedding.
 
 One building per night for the last six weeks, Dhaka style: shops on the ground floor, flats
-above. A night I committed has its lights on: its shopfront open, and the busier the day, the
+above. A night I committed has its lights on: its shutter rolled up, and the busier the day, the
 more flats lit. A night I didn't is a blackout, shutter down. Release nights get fireworks.
 
 The shops run along the street under Bangla signboards, each sign spanning a few buildings the
@@ -79,7 +79,7 @@ def longest_run(counts):
     return best
 
 
-def building(x, d, n, level, released, kind="store", slot=0):
+def building(x, d, n, level, released):
     floors = 3 + int(_h(d, "floors") * 5)                    # 3-7 floors of flats over the shops
     top = BASE - GF - floors * FLOOR - 6
     shade = ["#1a1f28", "#1d222b", "#181c24", "#1f2530"][int(_h(d, "shade") * 4)]
@@ -103,8 +103,6 @@ def building(x, d, n, level, released, kind="store", slot=0):
             o.append(f'<rect x="{x + 2 + k * 4}" y="{top - 6}" width="3" height="{3 + int(_h(d, "len", k) * 3)}" '
                      f'fill="{CLOTH[int(_h(d, "col", k) * len(CLOTH))]}" fill-opacity=".7"/>')
 
-    if kind != "cha":  # the stall draws its own front
-        o.append(shopfront(x, level, kind, slot))
     windows = [(x + 3 + c * 6, BASE - GF - (f + 1) * FLOOR + 3) for f in range(floors) for c in range(2)]
     lit = math.ceil(len(windows) * level / 4)
     order = sorted(range(len(windows)), key=lambda i: _h(d, "w", i))
@@ -124,88 +122,173 @@ def building(x, d, n, level, released, kind="store", slot=0):
     return "".join(o)
 
 
-def shopfront(x, level, kind="store", slot=0):
-    """One building's shop. Open on a night with commits, and every kind of shop looks like
-    itself inside; shutter down in a blackout, whatever it sells. `slot` is which of the shop's
-    fronts this is, so a long shop doesn't repeat itself."""
-    y, ix, iw = BASE - FRONT, x + 2, BW - 4
-    if not level:
-        return (f'<rect x="{ix}" y="{y}" width="{iw}" height="{FRONT}" fill="#252a32"/>'
-                + "".join(f'<line x1="{ix}" y1="{y + 2 + k * 2.5}" x2="{ix + iw}" y2="{y + 2 + k * 2.5}" '
-                          f'stroke="#1b1f26" stroke-width=".7"/>' for k in range(7)))
+def storefront(xs, w, kind, opens):
+    """One shop's whole front, the Dhaka way: a wide opening behind a row of rolling shutters,
+    one shutter per night above it. A night with commits has its shutter rolled up and the tube
+    light on, so you see into the shop; a blackout night has it pulled down and padlocked."""
+    top, bot = BASE - FRONT, BASE - 2                 # the opening; a concrete step below
+    x0, x1 = xs + 1.5, xs + w - 1.5
+    seg = (x1 - x0) / len(opens)
     light, glow = INSIDE.get(kind, ("#e0a552", ".6"))
-    o = [f'<rect x="{ix}" y="{y}" width="{iw}" height="{FRONT}" fill="{light}" fill-opacity="{glow}"/>',
-         f'<circle cx="{x + BW / 2:.1f}" cy="{y + 2}" r="1" fill="#fff3c4"/>']
-    cx = x + BW / 2
-    if kind == "biryani":            # a big deg on the counter, and diners
-        if slot % 2 == 0:
-            o.append(f'<path d="M{cx - 5} {BASE - 9} Q{cx - 6} {BASE - 2} {cx} {BASE - 2} Q{cx + 6} {BASE - 2} {cx + 5} {BASE - 9} Z" fill="#9a6a33"/>'
-                     f'<ellipse cx="{cx}" cy="{BASE - 9}" rx="5.5" ry="1.6" fill="#c08a4a"/>'
-                     f'<rect x="{cx - 1}" y="{BASE - 11.5}" width="2" height="1.6" rx=".8" fill="#c08a4a"/>')
-        else:
-            o.append(f'<rect x="{ix + 1}" y="{BASE - 6}" width="{iw - 2}" height="1.4" fill="#8a2b2b"/>'   # a table, plates, a jug
-                     f'<line x1="{ix + 2}" y1="{BASE - 4.6}" x2="{ix + 2}" y2="{BASE}" stroke="#5a3a1a"/>'
-                     f'<line x1="{ix + iw - 2}" y1="{BASE - 4.6}" x2="{ix + iw - 2}" y2="{BASE}" stroke="#5a3a1a"/>'
-                     f'<ellipse cx="{ix + 3.5}" cy="{BASE - 6.6}" rx="2.2" ry=".8" fill="#f2efe6"/>'
-                     f'<ellipse cx="{ix + iw - 5}" cy="{BASE - 6.6}" rx="2.2" ry=".8" fill="#f2efe6"/>'
-                     f'<rect x="{ix + iw - 2.6}" y="{BASE - 10}" width="1.8" height="3.4" rx=".6" fill="#9fb3c8"/>')
-    elif kind == "pharmacy":         # cool tube light, shelves of little boxes
-        for r in range(3):
-            sy = y + 6 + r * 5
-            o.append(f'<rect x="{ix + 1}" y="{sy}" width="{iw - 2}" height=".9" fill="#6f8a7c"/>')
-            for b in range(3):
-                o.append(f'<rect x="{ix + 1.5 + b * 3.6:.1f}" y="{sy - 2.4}" width="2.6" height="2.4" '
-                         f'fill="{["#d64545", "#3a7bd5", "#f2c94c", "#2f9e6a", "#ffffff"][(r * 3 + b + slot) % 5]}"/>')
-        if slot == 0:
-            o.append(f'<rect x="{ix + iw - 5}" y="{y + 1}" width="5" height="5" fill="#1f9e5a"/>'
-                     f'<path d="M{ix + iw - 2.5} {y + 1.8} V{y + 5.2} M{ix + iw - 4.2} {y + 3.5} H{ix + iw - 0.8}" stroke="#fff" stroke-width="1"/>')
-    elif kind == "library":          # shelves of book spines
-        for r in range(3):
-            sy = y + 7 + r * 5.5
-            o.append(f'<rect x="{ix + 1}" y="{sy}" width="{iw - 2}" height=".9" fill="#5a3a1a"/>')
-            bx = ix + 1.3
-            for b in range(5):
-                h = 2.6 + 1.6 * _h(slot, r, b)
-                o.append(f'<rect x="{bx:.1f}" y="{sy - h:.1f}" width="1.7" height="{h:.1f}" '
-                         f'fill="{["#b4442a", "#3456a8", "#2f7d4f", "#c08a1e", "#7a4fa3", "#e8e2d0"][int(_h(slot, r, b, "c") * 6)]}"/>')
-                bx += 2.1
-    elif kind in ("garage", "cng"):  # a pegboard of tools and a tyre on the wall
-        o.append(f'<circle cx="{ix + 4}" cy="{y + 7}" r="3" fill="none" stroke="#2a2a2a" stroke-width="1.6"/>'
-                 f'<path d="M{ix + 8} {y + 4} V{y + 11} M{ix + 10.5} {y + 4} V{y + 10} M{ix + 7} {y + 4.5} H{ix + 9}" '
-                 f'stroke="#4a4f57" stroke-width="1"/>'
-                 f'<rect x="{ix + 1}" y="{BASE - 5}" width="{iw - 2}" height="5" fill="#3b3f46"/>'
-                 f'<rect x="{ix + 2}" y="{BASE - 7}" width="3" height="2" fill="#c0392b"/>')
-    elif kind == "store":            # chips packets hanging in strips, sacks below
-        for c in range(3):
-            for r in range(3):
-                o.append(f'<rect x="{ix + 1 + c * 4}" y="{y + 1 + r * 3.4:.1f}" width="3" height="3" '
-                         f'fill="{["#e63946", "#f4a261", "#2a9d8f", "#e9c46a", "#457b9d"][(c + r * 2 + slot) % 5]}"/>')
-        o.append(f'<path d="M{ix + 1} {BASE} V{BASE - 5} Q{ix + 3.5} {BASE - 7} {ix + 6} {BASE - 5} V{BASE} Z" fill="#cdb48a"/>'
-                 f'<path d="M{ix + 7} {BASE} V{BASE - 5} Q{ix + 9.5} {BASE - 7} {ix + 12} {BASE - 5} V{BASE} Z" fill="#b89a6a"/>')
-    elif kind == "sweets":           # a glass case of rosogolla and kalojam
-        o.append(f'<rect x="{ix + 0.5}" y="{BASE - 9}" width="{iw - 1}" height="9" fill="#cfe3ec" fill-opacity=".35" '
-                 f'stroke="#e8f4f8" stroke-opacity=".6" stroke-width=".5"/>')
-        for r in range(2):
-            for c in range(4):
-                o.append(f'<circle cx="{ix + 2 + c * 3:.1f}" cy="{BASE - 6.5 + r * 3.5}" r="1.2" '
-                         f'fill="{"#fbf6ea" if (c + r) % 2 else "#5a2a14"}"/>')
-    elif kind == "tailor":           # bolts of cloth, a mannequin, a sewing machine
-        if slot % 2 == 0:
-            for k in range(3):
-                o.append(f'<rect x="{ix + 1 + k * 2.4:.1f}" y="{y + 3}" width="2" height="{FRONT - 4}" '
-                         f'fill="{CLOTH[(k + slot) % len(CLOTH)]}"/>')
-            o.append(f'<circle cx="{ix + iw - 3}" cy="{y + 5}" r="1.5" fill="#d9c7a8"/>'
-                     f'<path d="M{ix + iw - 5.5} {y + 7} H{ix + iw - 0.5} L{ix + iw - 1.5} {y + 14} H{ix + iw - 4.5} Z" fill="#3456a8"/>'
-                     f'<line x1="{ix + iw - 3}" y1="{y + 14}" x2="{ix + iw - 3}" y2="{BASE}" stroke="#3a2a1a"/>')
-        else:
-            o.append(f'<rect x="{ix + 1}" y="{BASE - 6}" width="{iw - 2}" height="1.3" fill="#5a3a1a"/>'
-                     f'<path d="M{ix + 3} {BASE - 6} V{BASE - 11} H{ix + 9} V{BASE - 9.5} H{ix + 5} V{BASE - 6}" fill="#1f1f1f"/>'
-                     f'<circle cx="{ix + 9.5}" cy="{BASE - 8}" r="1" fill="#b0b0b0"/>')
+    clip = f"in{int(xs)}"
+    o = [f'<rect x="{xs - 1.5:.1f}" y="{BASE - GF + SIGN_H + 1}" width="{w + 3:.1f}" height="{GF - SIGN_H - 1}" fill="#1c2028"/>',
+         f'<rect x="{x0 - 1:.1f}" y="{bot}" width="{x1 - x0 + 2:.1f}" height="2" fill="#3a3f48"/>',
+         f'<clipPath id="{clip}"><rect x="{x0:.1f}" y="{top}" width="{x1 - x0:.1f}" height="{bot - top}"/></clipPath>',
+         f'<g clip-path="url(#{clip})"><rect x="{x0:.1f}" y="{top}" width="{x1 - x0:.1f}" height="{bot - top}" '
+         f'fill="{light}" fill-opacity="{glow}"/>', INTERIORS[kind](x0, x1, top, bot), '</g>']
+    for k, up in enumerate(opens):
+        sx = x0 + k * seg
+        if up:   # rolled up into its box, tube light on under it
+            o.append(f'<rect x="{sx:.1f}" y="{top}" width="{seg:.1f}" height="2.6" fill="#454b55"/>'
+                     f'<line x1="{sx:.1f}" y1="{top + 1.3}" x2="{sx + seg:.1f}" y2="{top + 1.3}" stroke="#363b44" stroke-width=".5"/>'
+                     f'<rect x="{sx + 2:.1f}" y="{top + 3.2}" width="{seg - 4:.1f}" height=".9" fill="#f4fbff" fill-opacity=".9"/>')
+        else:    # down for the night
+            o.append(f'<rect x="{sx:.1f}" y="{top}" width="{seg:.1f}" height="{bot - top}" fill="#2a2f37"/>'
+                     + "".join(f'<line x1="{sx:.1f}" y1="{top + 1.5 + r * 1.8:.1f}" x2="{sx + seg:.1f}" y2="{top + 1.5 + r * 1.8:.1f}" '
+                               f'stroke="#20242b" stroke-width=".6"/>' for r in range(9))
+                     + f'<rect x="{sx + seg / 2 - 1.2:.1f}" y="{bot - 2.2}" width="2.4" height="1.6" rx=".4" fill="#8a8f98"/>')
+    for k in range(1, len(opens)):  # the posts between shutters
+        o.append(f'<rect x="{x0 + k * seg - 0.6:.1f}" y="{top}" width="1.2" height="{bot - top}" fill="#14171c"/>')
     return "".join(o)
 
 
-# how each shop is lit inside: warm bulbs mostly, a tube light at the pharmacy
-INSIDE = {"pharmacy": ("#e4f2ea", ".8"), "sweets": ("#f3c99a", ".7"), "garage": ("#c98c3e", ".5"),
+def _biryani(x0, x1, top, bot):
+    o = [f'<rect x="{x0:.1f}" y="{top}" width="{x1 - x0:.1f}" height="{bot - top - 6}" fill="#f2ead8" fill-opacity=".35"/>']
+    o += [f'<line x1="{x0:.1f}" y1="{y}" x2="{x1:.1f}" y2="{y}" stroke="#c9b48e" stroke-opacity=".35" stroke-width=".4"/>'
+          for y in range(top + 3, bot - 6, 3)]
+    o.append(f'<rect x="{x0:.1f}" y="{bot - 6}" width="34" height="6" fill="#8a2b1f"/>')         # the red counter
+    for cx in (x0 + 9, x0 + 24):                                                                 # two degs on it
+        o.append(f'<ellipse cx="{cx:.1f}" cy="{bot - 10}" rx="6.5" ry="4.2" fill="#a86b32"/>'
+                 f'<rect x="{cx - 4:.1f}" y="{bot - 15.5}" width="8" height="2.4" fill="#c99a5b"/>'
+                 f'<rect x="{cx - 4.6:.1f}" y="{bot - 13.4}" width="9.2" height="1.4" fill="#c0392b"/>')
+    for tx in range(int(x0 + 40), int(x1 - 9), 15):                                              # tables
+        o.append(f'<rect x="{tx}" y="{bot - 6}" width="11" height="1.3" fill="#6b4423"/>'
+                 f'<line x1="{tx + 1}" y1="{bot - 4.7}" x2="{tx + 1}" y2="{bot}" stroke="#6b4423" stroke-width=".8"/>'
+                 f'<line x1="{tx + 10}" y1="{bot - 4.7}" x2="{tx + 10}" y2="{bot}" stroke="#6b4423" stroke-width=".8"/>'
+                 f'<ellipse cx="{tx + 3.5}" cy="{bot - 6.4}" rx="2.2" ry=".7" fill="#f6f2e8"/>'
+                 f'<rect x="{tx + 7}" y="{bot - 9.6}" width="1.8" height="3.3" rx=".5" fill="#8fb4d9"/>')
+    o.append(f'<rect x="{x1 - 12:.1f}" y="{top + 4}" width="10" height="7" fill="#1d2a22"/>'          # menu board
+             + "".join(f'<line x1="{x1 - 11:.1f}" y1="{top + 5.8 + r * 1.6:.1f}" x2="{x1 - 4:.1f}" y2="{top + 5.8 + r * 1.6:.1f}" '
+                       f'stroke="#e8e2d0" stroke-width=".5"/>' for r in range(3)))
+    return "".join(o)
+
+
+def _pharmacy(x0, x1, top, bot):
+    o = []
+    colors = ["#d64545", "#3a7bd5", "#f2c94c", "#2f9e6a", "#ffffff", "#9b59b6"]
+    for r in range(3):
+        sy = top + 6 + r * 3.6
+        o.append(f'<rect x="{x0:.1f}" y="{sy:.1f}" width="{x1 - x0:.1f}" height=".7" fill="#7f978a"/>')
+        k, bx = 0, x0 + 1
+        while bx < x1 - 2:
+            o.append(f'<rect x="{bx:.1f}" y="{sy - 2.4:.1f}" width="2.2" height="2.4" fill="{colors[(k * 7 + r * 3) % 6]}"/>')
+            bx, k = bx + 2.7, k + 1
+    o.append(f'<rect x="{x0:.1f}" y="{bot - 5}" width="{x1 - x0:.1f}" height="5" fill="#cfe3ec" fill-opacity=".55" '
+             f'stroke="#f2fbff" stroke-opacity=".7" stroke-width=".5"/>')                         # glass counter
+    cx = (x0 + x1) / 2
+    o.append(f'<path d="M{cx:.1f} {bot - 4.4} V{bot - 0.6} M{cx - 1.9:.1f} {bot - 2.5} H{cx + 1.9:.1f}" stroke="#1f9e5a" stroke-width="1.2"/>')
+    return "".join(o)
+
+
+def _library(x0, x1, top, bot):
+    o = []
+    spines = ["#b4442a", "#3456a8", "#2f7d4f", "#c08a1e", "#7a4fa3", "#e8e2d0", "#1f1f1f"]
+    for r in range(3):
+        sy = top + 6.5 + r * 3.8
+        o.append(f'<rect x="{x0:.1f}" y="{sy:.1f}" width="{x1 - x0:.1f}" height=".8" fill="#5a3a1a"/>')
+        k, bx = 0, x0 + 0.5
+        while bx < x1 - 1.5:
+            h = 2.2 + 1.2 * _h("spine", r, k)
+            o.append(f'<rect x="{bx:.1f}" y="{sy - h:.1f}" width="1.4" height="{h:.1f}" fill="{spines[int(_h("sc", r, k) * 7)]}"/>')
+            bx, k = bx + 1.8, k + 1
+    o.append(f'<rect x="{x0:.1f}" y="{bot - 4}" width="{x1 - x0:.1f}" height="4" fill="#6b4423"/>')            # counter
+    for k, c in enumerate(["#e8e2d0", "#f2c94c", "#3a7bd5", "#e8e2d0"]):                                    # notebooks on it
+        o.append(f'<rect x="{x0 + 4 + k * 5:.1f}" y="{bot - 5.2 - (k % 2) * 0.6:.1f}" width="4" height="1.2" fill="{c}"/>')
+    return "".join(o)
+
+
+def _garage(x0, x1, top, bot, cng=False):
+    o = [f'<rect x="{x0:.1f}" y="{top + 3}" width="{x1 - x0:.1f}" height="{bot - top - 9}" fill="#3a3a36" fill-opacity=".45"/>']
+    for k, tx in enumerate(range(int(x0 + 4), int(x1 - 4), 9)):                                  # tools on the pegboard
+        if k % 3 == 2:
+            continue
+        o.append(f'<path d="M{tx} {top + 5} V{top + 11} M{tx - 1.4} {top + 5.4} H{tx + 1.4}" stroke="#6c727c" stroke-width=".9"/>')
+    o.append(f'<circle cx="{x1 - 6:.1f}" cy="{top + 8}" r="3.4" fill="none" stroke="#151515" stroke-width="1.8"/>')  # a tyre on the wall
+    o.append(f'<rect x="{x0:.1f}" y="{bot - 1.5}" width="{x1 - x0:.1f}" height="1.5" fill="#2b2a28"/>')           # oily floor
+    if cng:   # batteries and oil cans on the bench
+        o.append(f'<rect x="{x0 + 2:.1f}" y="{bot - 6}" width="22" height="1.5" fill="#5a3a1a"/>'
+                 f'<rect x="{x0 + 4:.1f}" y="{bot - 9}" width="5" height="3" fill="#1f1f1f"/>'
+                 f'<rect x="{x0 + 11:.1f}" y="{bot - 10}" width="3" height="4" rx=".5" fill="#c0392b"/>'
+                 f'<rect x="{x0 + 16:.1f}" y="{bot - 10}" width="3" height="4" rx=".5" fill="#e0a520"/>')
+    else:     # a motorbike in for repairs
+        mx = (x0 + x1) / 2 - 8
+        o.append(f'<circle cx="{mx:.1f}" cy="{bot - 3}" r="2.8" fill="none" stroke="#111" stroke-width="1.2"/>'
+                 f'<circle cx="{mx + 14:.1f}" cy="{bot - 3}" r="2.8" fill="none" stroke="#111" stroke-width="1.2"/>'
+                 f'<path d="M{mx:.1f} {bot - 3} L{mx + 4:.1f} {bot - 7} H{mx + 10:.1f} L{mx + 14:.1f} {bot - 3} M{mx + 11:.1f} {bot - 7} L{mx + 12.5:.1f} {bot - 9.5}" '
+                 f'fill="none" stroke="#b3342a" stroke-width="1.6" stroke-linecap="round"/>')
+    return "".join(o)
+
+
+def _store(x0, x1, top, bot):
+    o = []
+    packets = ["#e63946", "#f4a261", "#2a9d8f", "#e9c46a", "#457b9d", "#8338ec"]
+    k, sx = 0, x0 + 1
+    while sx < x1 - 2:                                                                            # chips in strips
+        for r in range(3):
+            o.append(f'<rect x="{sx:.1f}" y="{top + 1 + r * 3:.1f}" width="2.6" height="2.7" fill="{packets[(k + r * 2) % 6]}"/>')
+        sx, k = sx + 3.4, k + 1
+    o.append(f'<rect x="{x0:.1f}" y="{top + 11}" width="{x1 - x0:.1f}" height=".7" fill="#6b4423"/>')
+    jx = x0 + 2
+    while jx < x1 - 3:                                                                            # jars on the shelf
+        o.append(f'<rect x="{jx:.1f}" y="{top + 8}" width="2.6" height="3" rx=".6" fill="#cfe3ec" fill-opacity=".55"/>'
+                 f'<rect x="{jx:.1f}" y="{top + 7.4}" width="2.6" height=".8" fill="#c0392b"/>')
+        jx += 4.5
+    o.append(f'<rect x="{x0 + 8:.1f}" y="{bot - 4}" width="{x1 - x0 - 16:.1f}" height="4" fill="#6b4423"/>'   # counter, scale
+             f'<path d="M{(x0 + x1) / 2:.1f} {bot - 4} V{bot - 8} M{(x0 + x1) / 2 - 4:.1f} {bot - 8} H{(x0 + x1) / 2 + 4:.1f}" stroke="#b0b5bd" stroke-width=".7"/>')
+    for sx in (x0 + 1, x1 - 7):                                                                   # sacks by the door
+        o.append(f'<path d="M{sx:.1f} {bot} V{bot - 4.5} Q{sx + 3:.1f} {bot - 6.5} {sx + 6:.1f} {bot - 4.5} V{bot} Z" fill="#cdb48a"/>')
+    return "".join(o)
+
+
+def _sweets(x0, x1, top, bot):
+    o = [f'<rect x="{x0:.1f}" y="{top}" width="{x1 - x0:.1f}" height="{bot - top - 9}" fill="#fbf4ea" fill-opacity=".35"/>']
+    bx = x0 + 2
+    while bx < x1 - 6:                                                                            # mishti boxes up top
+        o.append(f'<rect x="{bx:.1f}" y="{top + 4}" width="5" height="3" fill="#fbf6ea"/>'
+                 f'<rect x="{bx:.1f}" y="{top + 5}" width="5" height=".8" fill="#c0392b"/>')
+        bx += 7
+    o.append(f'<rect x="{x0:.1f}" y="{bot - 9}" width="{x1 - x0:.1f}" height="9" fill="#d8eef5" fill-opacity=".35" '
+             f'stroke="#f2fbff" stroke-opacity=".7" stroke-width=".5"/>')                         # the long glass case
+    kinds = ["#fbf6ea", "#5a2a14", "#f2b632", "#e8742a"]                                          # rosogolla, kalojam, laddoo, jilapi
+    for r in range(2):
+        k, sx = 0, x0 + 2
+        while sx < x1 - 1:
+            o.append(f'<circle cx="{sx:.1f}" cy="{bot - 6.5 + r * 3.6:.1f}" r="1.1" fill="{kinds[(k // 3 + r) % 4]}"/>')
+            sx, k = sx + 2.6, k + 1
+    return "".join(o)
+
+
+def _tailor(x0, x1, top, bot):
+    o = []
+    k, bx = 0, x0 + 1
+    while bx < x1 - 2:                                                                            # bolts of cloth
+        o.append(f'<rect x="{bx:.1f}" y="{top + 4}" width="2.2" height="8" fill="{CLOTH[k % len(CLOTH)]}"/>')
+        bx, k = bx + 2.8, k + 1
+    o.append(f'<rect x="{x0:.1f}" y="{top + 12}" width="{x1 - x0:.1f}" height=".7" fill="#5a3a1a"/>')
+    mx = x1 - 8                                                                                   # a mannequin in a panjabi
+    o.append(f'<circle cx="{mx:.1f}" cy="{top + 5}" r="1.4" fill="#d9c7a8"/>'
+             f'<path d="M{mx - 2.6:.1f} {top + 6.8} H{mx + 2.6:.1f} L{mx + 2:.1f} {bot - 3} H{mx - 2:.1f} Z" fill="#e8e2d0"/>')
+    o.append(f'<rect x="{x0 + 2:.1f}" y="{bot - 5}" width="22" height="1.3" fill="#6b4423"/>'                # cutting table
+             f'<path d="M{x0 + 5:.1f} {bot - 5} V{bot - 9.5} H{x0 + 12:.1f} V{bot - 8} H{x0 + 7:.1f} V{bot - 5}" fill="#1f1f1f"/>'
+             f'<line x1="{x0 + 14:.1f}" y1="{bot - 5.5}" x2="{x0 + 23:.1f}" y2="{bot - 5.5}" stroke="#f2c94c" stroke-width=".7"/>')
+    return "".join(o)
+
+
+INTERIORS = {"biryani": _biryani, "pharmacy": _pharmacy, "library": _library, "garage": _garage,
+             "cng": lambda *a: _garage(*a, cng=True), "store": _store, "sweets": _sweets, "tailor": _tailor}
+
+# how each shop is lit inside: warm bulbs mostly, white tube lights at the pharmacy and the sweet shop
+INSIDE = {"pharmacy": ("#e4f2ea", ".8"), "sweets": ("#f6dcc0", ".75"), "garage": ("#c98c3e", ".5"),
           "cng": ("#c98c3e", ".5"), "library": ("#e7b665", ".6")}
 
 
@@ -401,7 +484,6 @@ def draw(per_day, release_days, day):
         spans.append((k, k + shop[2], shop))
         k += shop[2]
     assert k == NIGHTS, "shop spans must cover every building"
-    kind_of = {c: (shop[5], c - a) for a, b, shop in spans for c in range(a, b)}
 
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="__ALT__">',
          f"""<style>
@@ -427,13 +509,13 @@ def draw(per_day, release_days, day):
          '<g clip-path="url(#frame)">',
          f'<rect width="{W}" height="{BASE}" fill="url(#sky)"/>',
          f'<rect y="{BASE}" width="{W}" height="{H - BASE}" fill="{CARD}"/>',
-         sky(), mosque(640)]
+         sky(), mosque(250)]
 
     # the street first, so the stall's bench and dog sit on top of it
     o.append(f'<rect y="{BASE}" width="{W}" height="22" fill="#0c0f14"/>')
     o.append(f'<line x1="0" y1="{BASE + 11}" x2="{W}" y2="{BASE + 11}" stroke="#2a2f38" stroke-dasharray="10 12"/>')
     for k, (d, n) in enumerate(zip(nights, counts)):
-        o.append(building(col_x(k), d, n, lvl(n), d in release_days, *kind_of[k]))
+        o.append(building(col_x(k), d, n, lvl(n), d in release_days))
     props = []
     for a, b, (bangla, _, _, bg, fg, kind) in spans:
         xs, w = col_x(a), (b - a) * (BW + GAP) - GAP
@@ -442,6 +524,7 @@ def draw(per_day, release_days, day):
             o.append(cha_stall(xs, w))
             props.append((xs - 50, xs + w + 10))
         else:
+            o.append(storefront(xs, w, kind, [counts[c] > 0 for c in range(a, b)]))
             out = pavement(xs, w, kind, day)
             if out:
                 o.append(out)
