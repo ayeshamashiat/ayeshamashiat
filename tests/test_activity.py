@@ -428,6 +428,14 @@ class Street(unittest.TestCase):
         self.assertIn('opacity="0.32"', street.signboard(0, 60, "মদিনা সুইটস", "#000", "#fff", lit=False))
         self.assertIn('opacity="1"', street.signboard(0, 60, "মদিনা সুইটস", "#000", "#fff", lit=True))
 
+    def test_street_has_only_a_cng_and_a_rickshaw(self):
+        import street
+        svg, alt, _ = self.draw()
+        self.assertIn('fill="#2e8b57"', svg)        # the CNG
+        self.assertIn('fill="#a8241c"', svg)        # the rickshaw hood
+        self.assertNotIn("asleep", svg)
+        self.assertIn("just a green CNG and a cycle rickshaw", alt)
+
     def test_no_mom_sign_in_the_picture(self):
         svg, alt, _ = self.draw()
         self.assertNotIn("AMMU SAYS", svg)

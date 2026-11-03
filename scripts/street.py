@@ -33,7 +33,7 @@ BANGLA = "'Noto Sans Bengali', 'Hind Siliguri', 'Nirmala UI', 'Bangla Sangam MN'
 # Left to right along the street: (Bangla sign, English name for the alt text, buildings it
 # spans, board colour, letter colour). The spans must add up to NIGHTS, and roughly follow the
 # length of each name so no sign gets squashed. The last field picks the shop's character:
-# what you see inside when it's open, and what it leaves out on the pavement.
+# what you see inside.
 SHOPS = [
     ("আল্লাহর দান বিরিয়ানি হাউস", "Allah'r Daan Biryani House", 6, "#1f6b45", "#ffe7a0", "biryani"),
     ("মামার চা স্টল", "Mamar Cha Stall", 4, "#2a1d12", "#f0b44c", "cha"),
@@ -299,56 +299,6 @@ INSIDE = {"pharmacy": ("#e4f2ea", ".8"), "store": ("#f4f1e8", ".75"), "sweets": 
           "cng": ("#c98c3e", ".5"), "library": ("#e7b665", ".6")}
 
 
-def pavement(xs, w, kind, d):
-    """What each shop leaves out on the pavement, lit or not."""
-    y = BASE + 1
-    if kind == "biryani":   # the deg on its own stove, steaming
-        cx = xs + w - 18
-        return (f'<rect x="{cx - 8}" y="{y + 6}" width="16" height="4" rx="1" fill="#4a2c1c"/>'
-                f'<rect x="{cx - 6}" y="{y + 7}" width="12" height="1.6" fill="#ff7a2f" class="ember"/>'
-                f'<path d="M{cx - 7} {y + 6} Q{cx - 8} {y - 2} {cx} {y - 2} Q{cx + 8} {y - 2} {cx + 7} {y + 6} Z" fill="#9a6a33"/>'
-                f'<ellipse cx="{cx}" cy="{y - 1.5}" rx="7.5" ry="2" fill="#c08a4a"/>'
-                + "".join(f'<path class="steam" style="animation-delay:{-k * 1.1}s" d="M{cx - 2 + k * 4} {y - 4} q-2 -2 0 -4" '
-                          f'fill="none" stroke="#cfd6e4" stroke-opacity=".55" stroke-width=".8"/>' for k in range(2)))
-    if kind == "pharmacy":  # a green cross on a stand
-        cx = xs + w - 10
-        return (f'<line x1="{cx}" y1="{y + 2}" x2="{cx}" y2="{y + 10}" stroke="#4a505b" stroke-width="1"/>'
-                f'<rect x="{cx - 4.5}" y="{y - 7}" width="9" height="9" rx="1" fill="#1f9e5a" filter="url(#neon)"/>'
-                f'<path d="M{cx} {y - 5.5} V{y + 0.5} M{cx - 3} {y - 2.5} H{cx + 3}" stroke="#fff" stroke-width="1.6"/>')
-    if kind == "library":   # a newspaper rack
-        x = xs + w - 20
-        return (f'<rect x="{x}" y="{y}" width="14" height="10" fill="none" stroke="#5a5f68" stroke-width=".8"/>'
-                + "".join(f'<rect x="{x + 1.5 + k * 4}" y="{y + 1 + (k % 2)}" width="3" height="6" fill="{c}"/>'
-                          for k, c in enumerate(["#e8e2d0", "#b4442a", "#e8e2d0"])))
-    if kind == "garage":    # a stack of tyres
-        x = xs + w - 16
-        return "".join(f'<ellipse cx="{x + 6}" cy="{y + 9 - k * 3.2:.1f}" rx="6" ry="2" fill="#1a1a1a" stroke="#4a4f57" stroke-width=".8"/>'
-                       for k in range(3))
-    if kind == "store":     # rice and dal in open sacks
-        x = xs + w - 26
-        return "".join(f'<path d="M{x + k * 9} {y + 10} V{y + 3} Q{x + k * 9 + 4} {y + 1} {x + k * 9 + 8} {y + 3} V{y + 10} Z" fill="#cdb48a"/>'
-                       f'<ellipse cx="{x + k * 9 + 4}" cy="{y + 3}" rx="4" ry="1.3" fill="{c}"/>'
-                       for k, c in enumerate(["#f4efe2", "#e2a93b", "#c47a3a"]))
-    if kind == "sweets":    # clay pots of mishti doi
-        x = xs + w - 18
-        return "".join(f'<path d="M{x + k * 6} {y + 4} Q{x + k * 6} {y + 10} {x + k * 6 + 2.5} {y + 10} '
-                       f'Q{x + k * 6 + 5} {y + 10} {x + k * 6 + 5} {y + 4} Z" fill="#a8532a"/>'
-                       f'<ellipse cx="{x + k * 6 + 2.5}" cy="{y + 4}" rx="2.6" ry=".9" fill="#f4ead2"/>' for k in range(3))
-    if kind == "cng":       # a green CNG waiting for Abbas bhai
-        x = xs + w - 34
-        return (f'<path d="M{x} {y + 9} V{y + 1} Q{x} {y - 6} {x + 10} {y - 6} H{x + 20} Q{x + 26} {y - 6} {x + 26} {y + 2} V{y + 9} Z" fill="#2e8b57"/>'
-                f'<path d="M{x + 1} {y - 2.5} Q{x + 2} {y - 7} {x + 10} {y - 7} H{x + 20} Q{x + 25} {y - 7} {x + 25.5} {y - 2.5}" fill="none" stroke="#111" stroke-width="1.6"/>'
-                f'<path d="M{x + 12} {y - 5} V{y + 6} M{x + 16} {y - 5} V{y + 6} M{x + 20} {y - 5} V{y + 6}" stroke="#1a3a28" stroke-width=".8"/>'
-                f'<rect x="{x + 2}" y="{y - 3}" width="7" height="5" rx="1" fill="#9fd3c0" fill-opacity=".5"/>'
-                f'<circle cx="{x + 5}" cy="{y + 10}" r="2.6" fill="#111"/><circle cx="{x + 22}" cy="{y + 10}" r="2.6" fill="#111"/>')
-    if kind == "tailor":    # a shirt on a hanger outside, for show
-        x = xs + w - 12
-        return (f'<line x1="{x}" y1="{y - 1}" x2="{x}" y2="{y + 10}" stroke="#4a505b" stroke-width=".8"/>'
-                f'<path d="M{x - 5} {y + 1} L{x - 2} {y - 1} H{x + 2} L{x + 5} {y + 1} L{x + 4} {y + 3} L{x + 3} {y + 2.5} V{y + 8} H{x - 3} V{y + 2.5} L{x - 4} {y + 3} Z" '
-                f'fill="{CLOTH[int(_h(d, "shirt") * len(CLOTH))]}"/>')
-    return ""
-
-
 def signboard(x, w, bangla, bg, fg, lit, size=10):
     """A Bangla signboard over a few shopfronts. textLength keeps it inside the board whatever
     Bangla font the viewer has."""
@@ -390,18 +340,67 @@ def sky():
     return "".join(o)
 
 
+def wheel(cx, cy, r, spokes=10):
+    o = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r}" fill="none" stroke="#15171b" stroke-width="1.8"/>',
+         f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r - 1.1:.1f}" fill="none" stroke="#9aa3ad" stroke-width=".5"/>']
+    for k in range(spokes):
+        a = math.pi * k / spokes
+        dx, dy = (r - 1.2) * math.cos(a), (r - 1.2) * math.sin(a)
+        o.append(f'<line x1="{cx - dx:.1f}" y1="{cy - dy:.1f}" x2="{cx + dx:.1f}" y2="{cy + dy:.1f}" stroke="#9aa3ad" stroke-width=".3"/>')
+    o.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="1.1" fill="#c8ced6"/>')
+    return "".join(o)
+
+
 def rickshaw(x):
-    """Small enough to stay on the road, so it never covers anyone's ground floor."""
-    y = BASE + 17
-    steel = 'fill="none" stroke="#4a505b" stroke-width="1"'
-    return (f'<g><circle cx="{x}" cy="{y}" r="4" {steel}/><circle cx="{x + 20}" cy="{y}" r="4" {steel}/>'
-            f'<circle cx="{x + 34}" cy="{y}" r="3.5" {steel}/>'
-            f'<path d="M{x} {y} L{x + 8} {y - 7} H{x + 20} V{y} M{x + 20} {y - 4} L{x + 34} {y} M{x + 31} {y - 9} L{x + 34} {y}" {steel}/>'
-            # the painted hood: red, with a band of rickshaw-art colours
-            f'<path d="M{x + 7} {y - 7} Q{x + 6} {y - 16} {x + 14} {y - 16} Q{x + 21} {y - 15} {x + 20} {y - 7} Z" fill="#a8321f"/>'
-            f'<path d="M{x + 8} {y - 11} H{x + 20}" stroke="#f0b44c" stroke-width="1.2" stroke-dasharray="2 1.5"/>'
-            f'<circle cx="{x + 12}" cy="{y - 14}" r=".9" fill="#5fc28a"/><circle cx="{x + 16}" cy="{y - 14}" r=".9" fill="#ff8fb3"/>'
-            f'<rect x="{x + 18}" y="{y - 5}" width="3" height="3" fill="#3f8fd8"/></g>')
+    """A cycle rickshaw parked facing right: big spoked rear wheel, the folded hood with its
+    painted panels and tassels, a red seat, the puller's saddle and a small front wheel."""
+    g = BASE + 20                                   # where the tyres meet the road
+    steel = 'stroke="#aab2bc" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"'
+    rx, fx = x + 13, x + 48                         # rear and front axles
+    o = ['<g>']
+    o.append(f'<path d="M{rx} {g - 8} L{x + 34} {g - 8} L{fx - 3} {g - 18} M{fx} {g - 6} L{fx - 3} {g - 18} L{fx - 4} {g - 22} '
+             f'M{fx - 7} {g - 22} H{fx - 1} M{x + 34} {g - 8} L{x + 33} {g - 17} M{x + 30} {g - 17.5} H{x + 36}" {steel}/>')
+    o.append(f'<line x1="{x + 34}" y1="{g - 8}" x2="{rx}" y2="{g - 8}" stroke="#55606b" stroke-width=".6" stroke-dasharray="1 .6"/>')  # chain
+    o.append(wheel(rx, g - 8, 8))
+    o.append(wheel(fx, g - 6, 6, 8))
+    o.append(f'<rect x="{x + 2}" y="{g - 17}" width="22" height="7" rx="1.5" fill="#1d4e89"/>')          # the body, side panel
+    o.append(f'<path d="M{x + 3} {g - 13.5} H{x + 23}" stroke="#f0b44c" stroke-width=".8" stroke-dasharray="1.6 1"/>'
+             + "".join(f'<circle cx="{x + 6 + k * 5}" cy="{g - 15.4}" r=".9" fill="{c}"/>'
+                       for k, c in enumerate(["#ff8fb3", "#5fc28a", "#ffd27a", "#ff8fb3"])))
+    o.append(f'<rect x="{x + 5}" y="{g - 21}" width="15" height="4" rx="1.5" fill="#c0392b"/>'            # the seat
+             f'<rect x="{x + 4}" y="{g - 25}" width="3" height="8" rx="1" fill="#c0392b"/>')
+    # the hood, folded back: red canvas, a painted band, chrome studs and tassels
+    o.append(f'<path d="M{x + 2} {g - 17} Q{x} {g - 33} {x + 12} {g - 35} Q{x + 24} {g - 35} {x + 24} {g - 22} L{x + 21} {g - 20} '
+             f'Q{x + 21} {g - 31} {x + 12} {g - 31} Q{x + 5} {g - 30} {x + 6} {g - 17} Z" fill="#a8241c"/>')
+    o.append(f'<path d="M{x + 3.4} {g - 24} Q{x + 3} {g - 32} {x + 12} {g - 33.2} Q{x + 22} {g - 33} {x + 22.5} {g - 24}" '
+             f'fill="none" stroke="#f0b44c" stroke-width="1" stroke-dasharray="1.4 1"/>')
+    for k in range(5):
+        tx = x + 6 + k * 4
+        o.append(f'<line x1="{tx}" y1="{g - 34.5 + abs(k - 2) * 0.6:.1f}" x2="{tx}" y2="{g - 37 + abs(k - 2) * 0.6:.1f}" '
+                 f'stroke="{["#ff8fb3", "#5fc28a", "#ffd27a", "#5fc28a", "#ff8fb3"][k]}" stroke-width=".9"/>')
+    o.append(f'<circle cx="{x + 22.8}" cy="{g - 21.5}" r="1.3" fill="#d8dde3"/>')                         # a little mirror
+    o.append('</g>')
+    return "".join(o)
+
+
+def cng(x):
+    """A green CNG auto-rickshaw, cage doors and all, facing left."""
+    g = BASE + 20
+    o = ['<g>',
+         f'<path d="M{x} {g - 4} V{g - 15} Q{x} {g - 24} {x + 10} {g - 24} H{x + 30} Q{x + 36} {g - 24} {x + 37} {g - 15} V{g - 4} Z" fill="#2e8b57"/>',
+         f'<path d="M{x + 1} {g - 18} Q{x + 2} {g - 25} {x + 10} {g - 25.5} H{x + 30} Q{x + 36} {g - 25.5} {x + 36.5} {g - 18}" '
+         f'fill="none" stroke="#111" stroke-width="2.2"/>',
+         f'<rect x="{x + 2}" y="{g - 20}" width="8" height="6" rx="1" fill="#a9d8c6" fill-opacity=".55"/>',  # windscreen
+         f'<rect x="{x + 13}" y="{g - 21}" width="20" height="13" fill="none" stroke="#163b26" stroke-width=".8"/>']
+    for k in range(5):                                                                            # the cage doors
+        o.append(f'<line x1="{x + 15 + k * 4}" y1="{g - 21}" x2="{x + 15 + k * 4}" y2="{g - 8}" stroke="#163b26" stroke-width=".7"/>')
+    o.append(f'<line x1="{x + 13}" y1="{g - 14.5}" x2="{x + 33}" y2="{g - 14.5}" stroke="#163b26" stroke-width=".7"/>'
+             f'<circle cx="{x + 1.5}" cy="{g - 9}" r="1.5" fill="#ffe9a8"/>'                         # headlight
+             f'<rect x="{x + 3}" y="{g - 7}" width="10" height="2" fill="#111"/>')
+    o.append(wheel(x + 7, g - 3.5, 3.5, 6))
+    o.append(wheel(x + 30, g - 3.5, 3.5, 6))
+    o.append('</g>')
+    return "".join(o)
 
 
 def mosque(cx):
@@ -467,15 +466,6 @@ def cha_stall(xs, w):
     for k, dx in enumerate((0, 3)):                                                       # steam
         o.append(f'<path class="steam" style="animation-delay:{-k * 1.3}s" d="M{kx + 8 + dx} {BASE - 16} q-2 -2 0 -4" '
                  f'fill="none" stroke="#cfd6e4" stroke-opacity=".55" stroke-width=".8" stroke-linecap="round"/>')
-    o.append(f'<rect x="{xs + 6}" y="{BASE + 6}" width="40" height="2.5" rx="1" fill="#7a5532"/>'   # bench
-             f'<line x1="{xs + 9}" y1="{BASE + 8.5}" x2="{xs + 9}" y2="{BASE + 14}" stroke="#7a5532" stroke-width="1.8"/>'
-             f'<line x1="{xs + 43}" y1="{BASE + 8.5}" x2="{xs + 43}" y2="{BASE + 14}" stroke="#7a5532" stroke-width="1.8"/>')
-    dx = xs + 66                                                                          # a dog, asleep
-    o.append(f'<ellipse cx="{dx}" cy="{BASE + 15}" rx="7" ry="3.2" fill="#7d6a57"/>'
-             f'<circle cx="{dx + 6}" cy="{BASE + 13}" r="2.5" fill="#7d6a57"/>'
-             f'<path d="M{dx + 6.5} {BASE + 10.8} L{dx + 8.3} {BASE + 9.5} L{dx + 7.8} {BASE + 12.2} Z" fill="#5e4f40"/>'
-             f'<path d="M{dx - 7} {BASE + 15} Q{dx - 10} {BASE + 13} {dx - 8} {BASE + 11}" fill="none" stroke="#7d6a57" '
-             f'stroke-width="1.3" stroke-linecap="round"/>')
     return "".join(o)
 
 
@@ -518,30 +508,25 @@ def draw(per_day, release_days, day):
          f'<rect y="{BASE}" width="{W}" height="{H - BASE}" fill="{CARD}"/>',
          sky(), mosque(250)]
 
-    # the street first, so the stall's bench and dog sit on top of it
+    # the street, under everything that stands on it
     o.append(f'<rect y="{BASE}" width="{W}" height="22" fill="#0c0f14"/>')
     o.append(f'<line x1="0" y1="{BASE + 11}" x2="{W}" y2="{BASE + 11}" stroke="#2a2f38" stroke-dasharray="10 12"/>')
     for k, (d, n) in enumerate(zip(nights, counts)):
         o.append(building(col_x(k), d, n, lvl(n), d in release_days))
-    props = []
     for a, b, (bangla, _, _, bg, fg, kind) in spans:
         xs, w = col_x(a), (b - a) * (BW + GAP) - GAP
         cha = kind == "cha"
         if cha:
             o.append(cha_stall(xs, w))
-            props.append((xs - 50, xs + w + 10))
         else:
             o.append(storefront(xs, w, kind))
-            out = pavement(xs, w, kind, day)
-            if out:
-                o.append(out)
-                props.append((xs + w - 40, xs + w + 4))
         o.append(signboard(xs, w, bangla, bg, fg, lit=True, size=12 if cha else 10))  # the stall's name is short; bigger letters fill its board
 
-    spots = [x for x in range(20, W - 60, 4)
-             if not any(lo - 36 < x < hi for lo, hi in props)]  # never parked on top of a shop's things
-    if spots:
-        o.append(rickshaw(spots[int(_h(day, "rickshaw") * len(spots))]))
+    # the only things on the street: a CNG and a rickshaw, somewhere new each day, never on top of each other
+    cx = 40 + int(_h(day, "cng") * (W - 120))
+    spots = [x for x in range(20, W - 70, 4) if not cx - 62 < x < cx + 45]
+    o.append(cng(cx))
+    o.append(rickshaw(spots[int(_h(day, "rickshaw") * len(spots))]))
     o.append(crows(day))
 
     for k in range(NIGHTS - 1, -1, -7):  # a date under every seventh night, counting back from yesterday
@@ -578,9 +563,9 @@ def draw(per_day, release_days, day):
            + (f", {shipped} release night{'s' if shipped != 1 else ''} with fireworks" if shipped else "")
            + ". Shops run along the ground floor with flats above, open and lit on IPS through the load shedding. "
            "The shops have Bangla signboards: " + ", ".join(shop[1] for shop in SHOPS) + ". "
-           "Each shop looks like itself: a biryani deg steaming out front, a pharmacy's green cross, a library with a glass door, "
-           "a departmental store with a glass front and aisles, a newspaper rack, "
-           "stacked tyres, sacks of rice and dal, clay pots of mishti doi, a green CNG at Abbas's, a shirt outside the tailor's. "
+           "Each shop looks like itself: degs and tables at the biryani house, shelves of medicine at the pharmacy, "
+           "a library with a glass door, a departmental store with a glass front and aisles, garages full of tools, "
+           "a glass case of sweets, and a tailor's with mannequins. "
            "The cha stall never closes; it runs on a hurricane lantern. Also: crows on the electric wires, "
-           "laundry drying on the roofs, a mosque behind, and a rickshaw with a painted hood.")
+           "laundry drying on the roofs, a mosque behind, and on the street just a green CNG and a cycle rickshaw with a painted hood.")
     return "\n".join(o).replace("__ALT__", html.escape(alt)), alt
