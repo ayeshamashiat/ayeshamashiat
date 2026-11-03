@@ -22,7 +22,13 @@ I build software, mostly backend stuff, and lately I've been getting curious abo
 
 The backend part is going well. The AI part is a rabbit hole. There's a folder for it.
 
-<img src="assets/h-built.svg?v=3" width="100%" alt="Things I've built">
+<img src="assets/h-work.svg?v=4" width="100%" alt="Day job">
+
+<img src="assets/work.svg?v=1" width="100%" alt="Software Engineering Intern at RedDot Digital Limited, ESD Division, Dhaka, since September 2026. Working on Smart ECRM for Smart Cambodia under a Lead Software Engineer.">
+
+My first real job. Turns out production code is a lot less forgiving than hackathon code.
+
+<img src="assets/h-built.svg?v=4" width="100%" alt="Things I've built">
 
 <sub><code>01</code></sub>
 
@@ -87,7 +93,7 @@ An agent with a tool registry (weather, finance, irrigation, pest risk, marketpl
 
 <sub>Older work: [CareerPilot](https://github.com/ayeshamashiat/CareerPilor_CodeSprint) (RAG career assistant) · [Jobscape](https://github.com/ayeshamashiat/Jobscape_Backend) (FastAPI, PostgreSQL, spaCy) · [PAMS](https://github.com/ayeshamashiat/PAMS_Backend) (Node, MongoDB, RBAC thesis workflow)</sub>
 
-<img src="assets/h-rabbit-hole.svg?v=3" width="100%" alt="The current rabbit hole">
+<img src="assets/h-rabbit-hole.svg?v=4" width="100%" alt="The current rabbit hole">
 
 ## Machine learning
 
@@ -112,11 +118,11 @@ Very much a work in progress.
 
 **Next rabbit holes:** `RAG` · `LangChain` · `LangGraph` · `LLM workflows` · `Agents`
 
-<img src="assets/h-toolbox.svg?v=3" width="100%" alt="My toolbox">
+<img src="assets/h-toolbox.svg?v=4" width="100%" alt="My toolbox">
 
 <img src="assets/toolbox.svg" width="100%" alt="Toolbox: Python, JavaScript, SQL; FastAPI, Node.js, Express; PostgreSQL, MongoDB, MySQL; NumPy, scikit-learn, spaCy, Sentence Transformers; Docker, AWS, Nginx, GitHub Actions.">
 
-<img src="assets/h-contributions.svg?v=3" width="100%" alt="My contributions">
+<img src="assets/h-contributions.svg?v=4" width="100%" alt="My contributions">
 
 <p align="center">
   <img src="assets/pokeballs.svg?v=2" width="100%" alt="Ayesha's GitHub contributions over the last year. Each day is a Pokéball, and busier days get a different colour of ball. Days with no contributions are empty grass.">
@@ -124,7 +130,7 @@ Very much a work in progress.
 
 One Pokéball for every day I pushed something. The busier the day, the fancier the ball. Empty grass is a day I didn't. It redraws every night.
 
-<img src="assets/h-status.svg?v=3" width="100%" alt="Status report">
+<img src="assets/h-status.svg?v=4" width="100%" alt="Status report">
 
 <img src="assets/status.svg?v=3" width="100%" alt="17+ repositories. 3 hackathon finals. 1 top 100. Top 100: Solvio AI Hackathon 2025. Finalist: CodeSprint, Inter-IUT Hackathon, top 14 among top 50. Finalist: SUST CSE Carnival Hackathon, top 50 among 450+ submissions. Finalist: IUT 12th ICT Fest, Agentic AI Hackathon, top 20 among 700+ submissions.">
 
@@ -134,7 +140,7 @@ One Top 100 placement.
 
 And apparently a growing collection of certificates.
 
-<img src="assets/h-open.svg?v=3" width="100%" alt="Currently open">
+<img src="assets/h-open.svg?v=4" width="100%" alt="Currently open">
 
 <img src="assets/open.svg?v=3" width="100%" alt="Machine learning fundamentals. RAG / LLM rabbit holes. One extremely fast-paced thriller.">
 
@@ -142,7 +148,7 @@ One of these is going significantly better than the others.
 
 I will not tell you which one.
 
-<img src="assets/h-still-here.svg?v=3" width="100%" alt="You're still here">
+<img src="assets/h-still-here.svg?v=4" width="100%" alt="You're still here">
 
 Okay.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Draws the README's section headers, the status report and the "currently open" list
+Draws the README's section headers, the day-job card, the status report and the "currently open" list
 as SVG cards, so they all share one look. Standard library only.
 
   python scripts/sections.py
@@ -13,6 +13,7 @@ W = 880
 CARD, EDGE, AMBER, TEXT, MUTED = "#0f1216", "#232830", "#f0b44c", "#e4e2dd", "#6f7680"
 
 HEADERS = [
+    ("work", "Day job"),
     ("built", "Things I've built"),
     ("rabbit-hole", "The current rabbit hole"),
     ("toolbox", "My toolbox"),
@@ -98,6 +99,22 @@ def current():
     return svg(W, h + 2, body, "Currently open: machine learning fundamentals, RAG / LLM rabbit holes, one extremely fast-paced thriller")
 
 
+def work():
+    h = 132
+    o = [card(0, 0, W, h)]
+    o.append(f'<text class="m" x="24" y="21" font-size="10" letter-spacing="1.6" fill="{MUTED}">EMPLOYMENT.LOG</text>')
+    o.append(f'<rect x="24" y="38" width="84" height="22" rx="11" fill="{AMBER}" fill-opacity=".14" stroke="{AMBER}" stroke-opacity=".6"/>')
+    o.append(f'<text class="m" x="66" y="53" font-size="10.5" font-weight="700" fill="{AMBER}" text-anchor="middle">NOW</text>')
+    o.append(f'<text class="s" x="132" y="56" font-size="20" font-weight="700" fill="{TEXT}">Software Engineering Intern</text>')
+    o.append(f'<text class="m" x="{W - 24}" y="54" font-size="12" fill="{AMBER}" text-anchor="end">Sep 2026 — present</text>')
+    o.append(f'<text class="m" x="132" y="80" font-size="12" fill="{MUTED}">RedDot Digital Limited · ESD Division · Dhaka</text>')
+    o.append(f'<line x1="24" y1="96" x2="{W - 24}" y2="96" stroke="{EDGE}"/>')
+    o.append(f'<text class="m" x="24" y="119" font-size="10.5" font-weight="700" letter-spacing="1.8" fill="{AMBER}">PROJECT</text>')
+    o.append(f'<text class="s" x="132" y="120" font-size="15" fill="{TEXT}">Smart ECRM for Smart Cambodia, under a Lead Software Engineer</text>')
+    return svg(W, h + 2, "".join(o), "Day job: Software Engineering Intern at RedDot Digital Limited, ESD Division, Dhaka, "
+               "since September 2026. Working on Smart ECRM for Smart Cambodia under a Lead Software Engineer.")
+
+
 TOOLBOX = [  # (label, chips, small line under the chips)
     ("LANGUAGES", ["Python", "JavaScript", "SQL"],
      "python: backend · AI/ML · NLP   ·   javascript: backend · web   ·   sql: database work"),
@@ -144,6 +161,8 @@ def main():
         f.write(toolbox())
     with open("assets/open.svg", "w", encoding="utf-8") as f:
         f.write(current())
+    with open("assets/work.svg", "w", encoding="utf-8") as f:
+        f.write(work())
     print("wrote section assets")
 
 
