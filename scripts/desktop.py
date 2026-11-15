@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
 Draws assets/desktop.svg: a deliberately messy desktop with six windows, one per folder.
-A spotlight (and a cursor) visits each window in turn. Then everything minimizes into the
-dock for a moment of clean desktop, before it all comes back.
+A few seconds after the page loads, everything minimizes into the dock (you showed up, so
+you get her attention), then comes back. After that a spotlight (and a cursor) visits each
+window in turn, forever.
 
   python scripts/desktop.py
 
-Edit the data blocks below (recipe, incidents, dilemmas, books) and re-run.
+Edit the data blocks below (recipe, incidents, todos, books) and re-run.
 Standard library only.
 """
 import html
@@ -40,7 +41,7 @@ INCIDENTS = [  # (INES level, place, year)
 ]
 INES_COLOR = {7: "#e06c5f", 6: "#e8935a", 5: AMBER, 4: "#8fa7b0"}
 
-DILEMMAS = [  # (checked, text)
+TODOS = [  # (done, text)
     (False, "sleep"),
     (True, "one more chapter (2 a.m.)"),
     (True, "rewrite it from scratch"),
@@ -52,7 +53,7 @@ DILEMMAS = [  # (checked, text)
 SPINES = [(16, 74, TEAL), (13, 58, AMBER), (20, 82, DIM), (14, 64, "#c9605a"), (18, 78, "#5d8a72"),
           (12, 54, AMBER), (17, 70, TEAL), (15, 60, MUTED), (13, 76, DIM)]
 
-LIT_TABS = {1: 10.4, 2: 2.4, 3: 18.4, 5: 10.4, 7: 2.4, 8: 18.4, 9: 2.4, 11: 10.4, 12: 18.4, 13: 18.4, 14: 2.4, 16: 10.4}
+LIT_TABS = {1: 8.8, 2: 0.8, 3: 16.8, 5: 8.8, 7: 0.8, 8: 16.8, 9: 0.8, 11: 8.8, 12: 16.8, 13: 16.8, 14: 0.8, 16: 8.8}
 
 # window: key -> (x, y, w, h, rotation)
 LAYOUT = {
@@ -64,13 +65,14 @@ LAYOUT = {
     "decisions": (642, 278, 214, 232, -1.8),
 }
 ORDER = ["coding", "reading", "cha", "ml", "nuclear", "decisions"]
-SPOT = {k: 2.4 + 4 * i for i, k in enumerate(ORDER)}  # seconds, one 4s turn each
+SPOT = {k: 0.8 + 4 * i for i, k in enumerate(ORDER)}  # seconds, one 4s turn each in a 24s loop
 CURSOR = [(322, 206), (590, 196), (824, 214), (262, 466), (598, 500), (822, 404)]
 
-# the loop, in seconds: the tour ends at 26.4, then everything minimizes
-T = 36
-MINIMIZE, RESTORE = 27.0, 33.4         # windows start leaving / start coming back
+T = 24                                 # the tour loop
+# the one-time "oh, you're here" minimize, in seconds after the page loads
+MINIMIZE, RESTORE = 4.5, 8.8           # windows start leaving / start coming back
 GONE = 1.0                             # how long a window takes to fly in or out
+ONCE = RESTORE + GONE + 0.6            # length of that one-time timeline
 
 # the dock: one slot per window, plus the tab bar
 DOCK = ORDER + ["tabs"]
@@ -80,8 +82,12 @@ DOCK_COLOR = {"coding": AMBER, "reading": TEAL, "cha": AMBER, "ml": TEAL, "nucle
 BOUNDS = {k: (x, y, w, h) for k, (x, y, w, h, _) in LAYOUT.items()} | {"tabs": (24, 536, 596, 44)}
 
 
-def pct(sec):
-    return f"{100 * sec / T:.2f}%"
+def pct(sec, total=T):
+    return f"{100 * sec / total:.2f}%"
+
+
+def once(sec):
+    return pct(sec, ONCE)
 
 
 def esc(s):
@@ -108,28 +114,71 @@ def window(key, title, body, extra=""):
     )
 
 
+# VS Code's Dark+ theme
+VS_BG, VS_SIDE, VS_TABS, VS_LINE = "#1e1e1e", "#333333", "#252526", "#2a2d2e"
+VS_KEY, VS_CTRL, VS_FN, VS_VAR, VS_TYPE, VS_CONST = "#569cd6", "#c586c0", "#dcdcaa", "#9cdcfe", "#4ec9b0", "#4fc1ff"
+VS_STR, VS_COMMENT, VS_NUM, VS_BLUE = "#ce9178", "#6a9955", "#858585", "#007acc"
+
+
 def coding():
-    k, s, c = AMBER, TEAL, DIM
+    """VS Code: activity bar, tabs, Dark+ syntax colors, a terminal, the blue status bar."""
+    _, _, w, h, _ = LAYOUT["coding"]
+    t = lambda c, s: f'<tspan fill="{c}">{esc(s)}</tspan>'
     code = [
-        f'<tspan fill="{k}">@app.post</tspan>(<tspan fill="{s}">"/check"</tspan>)',
-        f'<tspan fill="{k}">async def</tspan> check(skill: Skill):',
-        '    path = graph.hops(skill, MALWARE)',
-        f'    return decide(path)  <tspan fill="{c}"># ALLOW/ASK/BLOCK</tspan>',
+        t(VS_FN, "@app.post") + "(" + t(VS_STR, '"/check"') + ")",
+        t(VS_KEY, "async def ") + t(VS_FN, "check") + "(" + t(VS_VAR, "skill") + ": " + t(VS_TYPE, "Skill") + "):",
+        "    " + t(VS_VAR, "path") + " = " + t(VS_VAR, "graph") + "." + t(VS_FN, "hops") + "(" + t(VS_VAR, "skill")
+        + ", " + t(VS_CONST, "MALWARE") + ")",
+        "    " + t(VS_CTRL, "return ") + t(VS_FN, "decide") + "(" + t(VS_VAR, "path") + ")  " + t(VS_COMMENT, "# ALLOW/ASK/BLOCK"),
     ]
-    o = []
+    bar = h - 15  # status bar top
+    o = [f'<rect y="29" width="{w}" height="{bar - 29}" fill="{VS_BG}"/>',
+         # activity bar: explorer (active), search, source control, extensions
+         f'<rect y="29" width="26" height="{bar - 29}" fill="{VS_SIDE}"/>',
+         f'<rect y="36" width="2" height="18" fill="#ffffff"/>',
+         f'<path d="M8 39 h6 l3 3 v9 h-9 z" fill="none" stroke="#ffffff" stroke-width="1.2"/>',
+         f'<circle cx="12.5" cy="66" r="3.6" fill="none" stroke="{VS_NUM}" stroke-width="1.2"/>'
+         f'<line x1="15.2" y1="68.7" x2="18" y2="71.5" stroke="{VS_NUM}" stroke-width="1.2"/>',
+         f'<circle cx="10" cy="83" r="1.6" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>'
+         f'<circle cx="10" cy="95" r="1.6" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>'
+         f'<circle cx="17" cy="87" r="1.6" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>'
+         f'<path d="M10 84.6 v8.8 M17 88.6 q0 4 -6 5" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>',
+         f'<rect x="8" y="104" width="4.5" height="4.5" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>'
+         f'<rect x="13.5" y="104" width="4.5" height="4.5" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>'
+         f'<rect x="8" y="109.5" width="4.5" height="4.5" fill="none" stroke="{VS_NUM}" stroke-width="1.1"/>'
+         f'<rect x="14.5" y="108.5" width="4.5" height="4.5" fill="none" stroke="{VS_NUM}" stroke-width="1.1" transform="rotate(20 16.7 110.7)"/>',
+         # tabs
+         f'<rect x="26" y="29" width="{w - 26}" height="19" fill="{VS_TABS}"/>',
+         f'<rect x="26" y="29" width="74" height="19" fill="{VS_BG}"/><rect x="26" y="29" width="74" height="1.5" fill="{VS_BLUE}"/>',
+         f'<text x="34" y="42" font-size="9" fill="{VS_KEY}">py</text><text x="48" y="42" font-size="9" fill="#ffffff">main.py</text>'
+         f'<text x="91" y="42" font-size="8" fill="{VS_NUM}">×</text>',
+         f'<text x="108" y="42" font-size="9" fill="{VS_KEY}" fill-opacity=".6">py</text>'
+         f'<text x="122" y="42" font-size="9" fill="{VS_NUM}">graph.py</text>',
+         f'<rect x="26" y="{50 + 15 * 3}" width="{w - 26}" height="14" fill="{VS_LINE}"/>']  # current line
     for i, ln in enumerate(code):
-        y = 54 + 17 * i
-        o.append(f'<text x="24" y="{y}" font-size="10.5" fill="{DIM}" text-anchor="end">{i + 1}</text>')
-        o.append(f'<text x="34" y="{y}" font-size="10.5" fill="{TEXT}" xml:space="preserve">{ln}</text>')
-    o.append(f'<line x1="14" y1="128.5" x2="316" y2="128.5" stroke="#1e2229"/>')
-    o.append(f'<text x="14" y="150" font-size="10.5" fill="{MUTED}">$ uvicorn main:app --reload</text>')
-    o.append(f'<circle class="pulse" cx="18" cy="167" r="3.5" fill="{AMBER}"/>')
-    o.append(f'<text x="30" y="171" font-size="10.5" fill="{AMBER}">dev open</text>'
-             f'<text x="88" y="171" font-size="10.5" fill="{MUTED}">http://127.0.0.1:8000</text>')
-    o.append(f'<text x="14" y="190" font-size="10.5" fill="{DIM}">INFO  application startup complete.</text>')
-    o.append(f'<text x="14" y="206" font-size="10.5" fill="{MUTED}">$ </text>'
-             f'<rect class="blink" x="26" y="196" width="6" height="11" fill="{AMBER}"/>')
-    return window("coding", "~/projects/bouncer — nvim", "".join(o))
+        y = 59 + 15 * i
+        o.append(f'<text x="44" y="{y}" font-size="9.5" fill="{VS_NUM if i < 3 else "#c6c6c6"}" text-anchor="end">{i + 1}</text>')
+        o.append(f'<text x="52" y="{y}" font-size="9.5" fill="#d4d4d4" xml:space="preserve">{ln}</text>')
+    o.append(f'<rect class="blink" x="{52 + 5.72 * 23}" y="{59 + 15 * 3 - 9}" width="1.4" height="11" fill="#aeafad"/>')
+    # terminal panel
+    o.append(f'<line x1="26" y1="117.5" x2="{w}" y2="117.5" stroke="#3c3c3c"/>')
+    o.append(f'<text x="34" y="130" font-size="8" fill="{VS_NUM}" letter-spacing=".6">PROBLEMS</text>'
+             f'<text x="90" y="130" font-size="8" fill="#e7e7e7" letter-spacing=".6">TERMINAL</text>'
+             f'<rect x="90" y="133" width="41" height="1" fill="#e7e7e7"/>')
+    o.append(f'<text x="34" y="147" font-size="8.5" fill="#cccccc" xml:space="preserve">'
+             f'<tspan fill="{VS_TYPE}">bouncer</tspan> $ uvicorn main:app --reload</text>')
+    o.append(f'<text x="34" y="160" font-size="8.5" fill="#cccccc" xml:space="preserve">'
+             f'<tspan fill="#23d18b">INFO</tspan>:  Uvicorn running on <tspan fill="{VS_CONST}">http://127.0.0.1:8000</tspan></text>')
+    o.append(f'<text x="34" y="173" font-size="8.5" fill="#cccccc" xml:space="preserve">'
+             f'<tspan fill="#23d18b">INFO</tspan>:  Application startup complete.</text>')
+    o.append(f'<text x="34" y="186" font-size="8.5" fill="{VS_TYPE}">bouncer <tspan fill="#cccccc">$</tspan></text>'
+             f'<rect class="blink" x="85" y="178" width="5" height="10" fill="#cccccc"/>')
+    # status bar, rounded at the bottom like the window
+    o.append(f'<path d="M0 {bar} h{w} v5 a10 10 0 0 1 -10 10 h-{w - 20} a10 10 0 0 1 -10 -10 z" fill="{VS_BLUE}"/>')
+    o.append(f'<text x="10" y="{bar + 10.5}" font-size="8" fill="#ffffff">⎇ main*  ⊗ 0 ⚠ 0</text>'
+             f'<text x="{w - 10}" y="{bar + 10.5}" font-size="8" fill="#ffffff" text-anchor="end">'
+             f'Ln 4, Col 24   UTF-8   Python 3.12</text>')
+    return window("coding", "main.py — bouncer", "".join(o))
 
 
 BOOKS = [  # (title, author and genre, the review: first line sits after the stars)
@@ -223,19 +272,25 @@ def nuclear():
 
 
 def decisions():
-    o = []
-    for i, (done, text) in enumerate(DILEMMAS):
-        y = 54 + 24 * i
-        o.append(f'<rect x="15" y="{y - 9}" width="11" height="11" rx="2.5" fill="{AMBER if done else "none"}" '
-                 f'fill-opacity=".18" stroke="{AMBER if done else DIM}"/>')
+    """A to-do app. Done ones get struck through, like in every to-do app."""
+    _, _, w, h, _ = LAYOUT["decisions"]
+    n_done = sum(d for d, _ in TODOS)
+    o = [f'<text x="16" y="54" font-size="14" font-weight="700" fill="#ffffff" style="font-family:{SANS}">Tonight</text>',
+         f'<text x="{w - 16}" y="54" font-size="9" fill="{MUTED}" text-anchor="end">{n_done} of {len(TODOS)} done</text>',
+         f'<text x="16" y="68" font-size="8.5" fill="{DIM}">due: 2:00 a.m. · overdue</text>']
+    for i, (done, text) in enumerate(TODOS):
+        y = 89 + 21 * i
         if done:
-            o.append(f'<path d="M17.5 {y - 3.5} l2.5 2.5 l4 -5.5" fill="none" stroke="{AMBER}" stroke-width="1.5" '
+            o.append(f'<circle cx="22" cy="{y - 3.5}" r="5.5" fill="{AMBER}"/>'
+                     f'<path d="M19.4 {y - 3.6} l1.8 1.9 l3.4 -3.9" fill="none" stroke="#2a1d05" stroke-width="1.4" '
                      f'stroke-linecap="round" stroke-linejoin="round"/>')
-        o.append(f'<text x="34" y="{y}" font-size="10.5" fill="{TEXT if done else MUTED}">{esc(text)}</text>')
-    o.append(f'<line x1="14" y1="196.5" x2="200" y2="196.5" stroke="#1e2229"/>')
-    o.append(f'<text x="14" y="212" font-size="9.5" font-style="italic" fill="{MUTED}">decisions: questionable.</text>')
-    o.append(f'<text x="14" y="226" font-size="9.5" font-style="italic" fill="{MUTED}">regrets: pending.</text>')
-    return window("decisions", "dilemmas.txt", "".join(o))
+            o.append(f'<text x="35" y="{y}" font-size="10" fill="{MUTED}" text-decoration="line-through">{esc(text)}</text>')
+        else:
+            o.append(f'<circle cx="22" cy="{y - 3.5}" r="5.5" fill="none" stroke="{MUTED}" stroke-width="1.2"/>')
+            o.append(f'<text x="35" y="{y}" font-size="10" fill="{TEXT}">{esc(text)}</text>')
+    o.append(f'<line x1="14" y1="{h - 26.5}" x2="{w - 14}" y2="{h - 26.5}" stroke="#1e2229"/>')
+    o.append(f'<text x="16" y="{h - 11}" font-size="10" fill="{AMBER}">+ <tspan fill="{MUTED}">add a task</tspan></text>')
+    return window("decisions", "To Do", "".join(o))
 
 
 def tabs():
@@ -265,7 +320,7 @@ def dock():
 
 
 def away_css():
-    """Minimize into the dock, hold, come back. Each window flies to its own dock slot."""
+    """Minimize into the dock, hold, come back. Once. Each window flies to its own dock slot."""
     out = []
     for i, k in enumerate(DOCK):
         x, y, w, h = BOUNDS[k]
@@ -273,23 +328,23 @@ def away_css():
         dy = DOCK_Y + 21 - (y + h)
         go, back = MINIMIZE + 0.08 * i, RESTORE + 0.08 * i
         away = f"transform: translate({dx:.1f}px, {dy:.1f}px) scale(.03); opacity: 0;"
-        out.append(f"  .mz-{k} {{ animation: mz-{k} {T}s ease-in-out infinite; }}\n"
-                   f"  @keyframes mz-{k} {{ 0%, {pct(go)} {{ transform: none; opacity: 1; }} "
-                   f"{pct(go + GONE)}, {pct(back)} {{ {away} }} {pct(back + GONE)}, 100% {{ transform: none; opacity: 1; }} }}")
+        out.append(f"  .mz-{k} {{ animation: mz-{k} {ONCE}s ease-in-out both; }}\n"
+                   f"  @keyframes mz-{k} {{ 0%, {once(go)} {{ transform: none; opacity: 1; }} "
+                   f"{once(go + GONE)}, {once(back)} {{ {away} }} {once(back + GONE)}, 100% {{ transform: none; opacity: 1; }} }}")
     return "\n".join(out)
 
 
 def cursor_css():
-    """Visits each window, then steps aside while everything is minimized."""
-    steps = [f"0%, {pct(SPOT['coding'] + 2.9)} {{ transform: translate({CURSOR[0][0]}px, {CURSOR[0][1]}px); opacity: 1; }}"]
-    for i in range(1, len(CURSOR)):
-        t = SPOT[ORDER[i]]
+    """Visits each window on the tour; steps aside while everything is minimized."""
+    steps = [f"0% {{ transform: translate({CURSOR[0][0]}px, {CURSOR[0][1]}px); }}"]
+    for i, k in enumerate(ORDER):
+        t = SPOT[k]
         steps.append(f"{pct(t)}, {pct(t + 2.9)} {{ transform: translate({CURSOR[i][0]}px, {CURSOR[i][1]}px); }}")
-    steps += [f"{pct(MINIMIZE - .2)} {{ transform: translate({CURSOR[-1][0]}px, {CURSOR[-1][1]}px); opacity: 1; }}",
-              f"{pct(MINIMIZE + .3)}, {pct(RESTORE + GONE)} {{ transform: translate({CURSOR[-1][0]}px, {CURSOR[-1][1]}px); opacity: 0; }}",
-              f"{pct(RESTORE + GONE + .01)} {{ transform: translate({CURSOR[0][0]}px, {CURSOR[0][1]}px); opacity: 0; }}",
-              f"100% {{ transform: translate({CURSOR[0][0]}px, {CURSOR[0][1]}px); opacity: 1; }}"]
-    return "  .cursor { animation: roam %ss ease-in-out infinite; }\n  @keyframes roam {\n    %s }" % (T, "\n    ".join(steps))
+    steps.append(f"100% {{ transform: translate({CURSOR[0][0]}px, {CURSOR[0][1]}px); }}")
+    return ("  .cursor { animation: roam %ss ease-in-out infinite; }\n  @keyframes roam {\n    %s }\n"
+            "  .aside { animation: aside %ss ease both; }\n"
+            "  @keyframes aside { 0%%, %s { opacity: 1; } %s, %s { opacity: 0; } %s, 100%% { opacity: 1; } }"
+            % (T, "\n    ".join(steps), ONCE, once(MINIMIZE), once(MINIMIZE + .3), once(RESTORE + GONE), once(RESTORE + GONE + .4)))
 
 
 def css():
@@ -310,9 +365,9 @@ def css():
 {cursor_css()}
   .mz {{ transform-box: fill-box; transform-origin: 50% 100%; }}
 {away_css()}
-  .docked {{ opacity: 0; animation: docked {T}s ease infinite; }}
-  @keyframes docked {{ 0%, {pct(MINIMIZE + GONE - .2)} {{ opacity: 0; }} {pct(MINIMIZE + GONE)}, {pct(RESTORE)} {{ opacity: 1; }}
-                      {pct(RESTORE + .3)}, 100% {{ opacity: 0; }} }}
+  .docked {{ opacity: 0; animation: docked {ONCE}s ease both; }}
+  @keyframes docked {{ 0%, {once(MINIMIZE + GONE - .2)} {{ opacity: 0; }} {once(MINIMIZE + GONE)}, {once(RESTORE)} {{ opacity: 1; }}
+                      {once(RESTORE + .3)}, 100% {{ opacity: 0; }} }}
   .steam {{ animation: rise 2.6s ease-in-out infinite; }}
   .steam.b {{ animation-delay: 1.3s; }}
   @keyframes rise {{ 0% {{ opacity: 0; transform: translateY(3px); }} 40% {{ opacity: 1; }} 100% {{ opacity: 0; transform: translateY(-4px); }} }}
@@ -329,11 +384,11 @@ def css():
 
 def main():
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
-         f'aria-label="Ayesha\'s messy desktop. A code editor with a dev server open. Goodreads open on her read shelf, five stars each: As Long As the Lemon Trees Grow by Zoulfa Katouh, war fiction set in Syria, Mornings in Jenin by Susan Abulhawa, historical fiction about Palestine from before the Nakba to the 2000s, and Poisoner in Chief by Stephen Kinzer, nonfiction about the CIA. '
+         f'aria-label="Ayesha\'s messy desktop. VS Code with the Bouncer API open and a dev server running in the terminal. Goodreads open on her read shelf, five stars each: As Long As the Lemon Trees Grow by Zoulfa Katouh, war fiction set in Syria, Mornings in Jenin by Susan Abulhawa, historical fiction about Palestine from before the Nakba to the 2000s, and Poisoner in Chief by Stephen Kinzer, nonfiction about the CIA. '
          f'A recipe for lebu-cha: 1 cup water, 1 and a half spoons sugar or honey, 1 cardamom, a pinch of cinnamon, a handful of mint, some squeezed lime. '
          f'A machine learning notebook with a loss curve. A log of nuclear accidents: Chernobyl, Fukushima, Kyshtym, Three Mile Island, Windscale, Goiania, Tokaimura. '
-         f'A to-do list of questionable decisions. A row of browser tabs. '
-         f'Every so often she minimizes everything into the dock, leaving a clean desktop, then opens it all again.">',
+         f'A to-do app: tonight, 4 of 6 done; sleep is not one of them. A row of browser tabs. '
+         f'A few seconds in, she notices you and minimizes everything into the dock, leaving a clean desktop, then opens it all again.">',
          css(),
          f'<defs><filter id="sh" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="130%">'
          f'<feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'
@@ -351,8 +406,8 @@ def main():
          f'<circle cx="842" cy="276" r="26" fill="none" stroke="{AMBER}" stroke-opacity=".10" stroke-width="3"/>',
          dock(),
          coding(), reading(), cha(), ml(), nuclear(), decisions(), tabs(),
-         f'<g class="cursor"><path d="M0 0 L0 15 L4 11.5 L7 18 L9.5 17 L6.5 10.5 L11.5 10.5 Z" fill="#ffffff" '
-         f'stroke="#000" stroke-width="1" stroke-linejoin="round"/></g>',
+         f'<g class="aside"><g class="cursor"><path d="M0 0 L0 15 L4 11.5 L7 18 L9.5 17 L6.5 10.5 L11.5 10.5 Z" fill="#ffffff" '
+         f'stroke="#000" stroke-width="1" stroke-linejoin="round"/></g></g>',
          '</g>',
          f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="none" stroke="{EDGE}"/>',
          '</svg>']
