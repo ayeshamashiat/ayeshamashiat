@@ -8,11 +8,9 @@ Give me a second. I was doing something.
 
 <p align="center">
   <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">
-    <img src="assets/desktop.svg?v=6" width="100%" alt="Ayesha's desktop: a terminal with six folders: coding, reading, making cha, ML rabbit hole, nuclear accidents and questionable decisions. 17 tabs are open. 4 of them are important. She doesn't know which 4.">
+    <img src="assets/desktop.svg?v=7" width="100%" alt="Ayesha's desktop: a terminal with six folders: coding, reading, making cha, ML rabbit hole, nuclear accidents and questionable decisions.">
   </a>
 </p>
-
-<p align="center"><sub>the folders actually open. just not here, github won't let an image do anything fun. <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">here's the real one.</a></sub></p>
 
 ### ⌁ Anyway.
 
@@ -130,19 +128,6 @@ Very much a work in progress.
 <p align="center">
   <img src="assets/street.svg?v=2026-11-14" width="100%" alt="Load-shedding street: one building for each of the last 42 nights in Dhaka. Lit windows mean I contributed on GitHub that day; dark flats mean I didn&#x27;t. Lights on 20 of 42 nights, longest run 6, brightest night 01 Nov with 23 contributions, 1 release night with fireworks. Shops run along the ground floor with flats above, open and lit on IPS through the load shedding. The shops have Bangla signboards: Allah&#x27;r Daan Biryani House, Mamar Cha Stall, Bhai Bhai Pharmacy, Priyo Library &amp; Stationery, Bismillah Auto Repairs, Mayer Doa Store, Madina Sweets, Abbas Auto Repair, New Modern Tailors. Each shop looks like itself: degs and tables at the biryani house, shelves of medicine at the pharmacy, a library with a glass door, a departmental store with a glass front and aisles, garages full of tools, a glass case of sweets, and a tailor&#x27;s with mannequins. The cha stall never closes; it runs on a hurricane lantern. Also: crows on the electric wires, laundry drying on the roofs, a mosque behind, and on the street just a green CNG and a cycle rickshaw with a painted hood.">
 </p>
-
-> **Mom:** Your keyboard has been silent since the day before yesterday, babu. I can hear the dust landing on it.
-
-<details>
-<summary><b>Ship log</b></summary>
-
-- `2026-11-11` **AyeshaMashiatPortfolio** — Add school and college to Journey, update intro wording ([7dce26e](https://github.com/ayeshamashiat/AyeshaMashiatPortfolio/commit/7dce26ebe1c2ab2fa373ee538f15abb5538a2328))
-- `2026-11-11` **AyeshaMashiatPortfolio** — Newspaper theme: new intro, profile and weather boxes, floating CV button, Link… ([1237ad7](https://github.com/ayeshamashiat/AyeshaMashiatPortfolio/commit/1237ad75b34aeb3d81f0317be9ffefff48bd0048))
-- `2026-11-10` **Lead-Management-System** — added entities and repositories ([407c2a2](https://github.com/ayeshamashiat/Lead-Management-System/commit/407c2a2f32195b54afb432a28e80958697089f08))
-- `2026-11-09` **Lead-Management-System** — folder structure ([a9e45a6](https://github.com/ayeshamashiat/Lead-Management-System/commit/a9e45a6fd95f121d73c04c8b914557bafb3f910e))
-- `2026-11-07` **Thunderdome** — budget student pitch; fix test imports for gladiator built extras ([e59bf60](https://github.com/ayeshamashiat/Thunderdome/commit/e59bf60f116b989fe5999f9cd5b779e04ad4a7ac))
-
-</details>
 <!-- ACTIVITY:END -->
 
 <img src="assets/h-status.svg?v=4" width="100%" alt="Status report">

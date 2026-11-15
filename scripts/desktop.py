@@ -224,9 +224,6 @@ def tabs():
         o.append(f'<rect class="{cls}" x="{x}" y="10" width="30" height="24" rx="6"{st}/>')
         o.append(f'<circle cx="{x + 15}" cy="22" r="2.6" fill="{DIM}" fill-opacity=".8"/>')
     o.append("</g>")
-    o.append(f'<g transform="translate(642 528) rotate(-2.5 110 28)"><rect width="214" height="56" rx="3" fill="{AMBER}" filter="url(#sh)"/>'
-             f'<text x="14" y="25" font-size="11" font-weight="700" fill="#2a1d05">4 of 17 tabs are important.</text>'
-             f'<text x="14" y="43" font-size="11" fill="#2a1d05">I don\'t know which 4.</text></g>')
     return "".join(o)
 
 
@@ -273,7 +270,7 @@ def main():
          f'aria-label="Ayesha\'s messy desktop. A code editor with a dev server open. A bookshelf: read and loved As Long As the Lemon Trees Grow by Zoulfa Katouh, war fiction set in Syria, Mornings in Jenin by Susan Abulhawa, historical fiction about Palestine from before the Nakba to the 2000s, and Poisoner in Chief by Stephen Kinzer, nonfiction about the CIA. '
          f'A recipe for lebu-cha: 1 cup water, 1 and a half spoons sugar or honey, 1 cardamom, a pinch of cinnamon, a handful of mint, some squeezed lime. '
          f'A machine learning notebook with a loss curve. A log of nuclear accidents: Chernobyl, Fukushima, Kyshtym, Three Mile Island, Windscale, Goiania, Tokaimura. '
-         f'A to-do list of questionable decisions. 17 browser tabs open, 4 important, she doesn\'t know which 4.">',
+         f'A to-do list of questionable decisions. A row of browser tabs.">',
          css(),
          f'<defs><filter id="sh" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="130%">'
          f'<feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".5"/></filter>'

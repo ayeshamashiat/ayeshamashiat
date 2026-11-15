@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """
 Writes the README's activity section: a load-shedding street (assets/street.svg, drawn by
-street.py), then one line from Mom (the AI mom in Touch Grass, Babu) picked by yesterday's
-public activity, then a short ship log of real commits and releases in a <details> dropdown.
-Mom and the ship log are plain Markdown, so the text stays searchable.
+street.py), one building per night, lit on the nights I contributed on GitHub.
 
   GITHUB_TOKEN=... python scripts/activity.py ayeshamashiat
   GITHUB_TOKEN=... python scripts/activity.py --dry-run      # print it, write nothing
@@ -11,16 +9,14 @@ Mom and the ship log are plain Markdown, so the text stays searchable.
 
 How busy each day was comes from the user's GitHub contribution calendar, the same numbers as
 the graph on their profile (private contributions only as anonymous counts, if they show them
-there). The ship log reads only public, non-fork repos owned by the user. Yesterday is judged
-in Asia/Dhaka; which date a contribution lands on is GitHub's call, as on the graph.
-Mom's lines live in data/mom-lines.json; nothing here ever runs a model.
+there). Release nights (fireworks) come from public, non-fork repos owned by the user.
+Days are judged in Asia/Dhaka; which date a contribution lands on is GitHub's call, as on the graph.
 If any request fails, nothing is written and the script exits non-zero, so a broken API
-never turns into a "you did nothing" roast. Standard library only.
+never turns into a dark street. Standard library only.
 """
 import argparse
 import datetime as dt
 import random
-import hashlib
 import html
 import json
 import os
@@ -44,40 +40,7 @@ except Exception:  # no tz database: Dhaka is UTC+6 all year, no DST
 ROOT = Path(__file__).resolve().parent.parent
 START, END = "<!-- ACTIVITY:START -->", "<!-- ACTIVITY:END -->"
 
-LOOKBACK_DAYS = 90     # ship log window, and how far back activity is counted
-MAX_ENTRIES = 5
-PER_REPO = 2           # so one project can't take over the log
-SUBJECT_MAX = 80
-NO_REPEAT_DAYS = 14
-LINE_MAX = 140
-
-BUSY_COMMITS = 10      # contributions in a day, as the graph counts them
-STREAK_DAYS = 7
-QUIET_LONG, QUIET_EXTREME = 4, 14
-BUCKETS = ["shipped", "busy", "streak", "quiet_short", "quiet_long", "quiet_extreme", "steady"]
-SOURCES = {"model", "placeholder"}
-
-# Commit subjects that say nothing. Matched against the whole subject, lowercased,
-# with trailing punctuation dropped. Add a pattern here to hide more.
-LOW_SIGNAL = [
-    r"updates?d?",
-    r"updated? (the )?readme(\.md)?",
-    r"wip",
-    r"fix(ed)? typos?",
-    r"typos?",
-    r"(added |made |some )?minor (changes?|fix(es)?|updates?|edits?)",
-    r"small (changes?|fix(es)?)",
-    r"changes?",
-    r"initial commit",
-    r"first commit",
-    r"init",
-    r"test(ing)?",
-    r"\.+",
-]
-_LOW = re.compile("|".join(f"(?:{p})" for p in LOW_SIGNAL))
-
-CAPTION = ("<sub>Mom's lines come from the on-device model in "
-           "[Touch Grass, Babu](https://github.com/ayeshamashiat/Touch-Grass-Babu).</sub>")
+LOOKBACK_DAYS = 90     # how much fake activity --demo makes up
 
 
 class DataError(Exception):
@@ -184,10 +147,10 @@ def calendar_from_html(page):
 class Event:
     repo: str
     when: dt.datetime      # aware
-    text: str              # commit subject or release name, raw
-    label: str             # short sha or tag
+    text: str              # release name, raw
+    label: str             # tag
     url: str
-    kind: str              # "commit" | "release"
+    kind: str              # "release"
     sha: str = ""
 
     @property
@@ -212,46 +175,9 @@ def is_bot(user, name=""):
     return user.get("type") == "Bot" or user.get("login", "").endswith("[bot]") or name.endswith("[bot]")
 
 
-def subject_of(message):
-    return " ".join((message or "").splitlines()[0].split()) if message else ""
-
-
-def is_merge(c):
-    return len(c.get("parents") or []) > 1 or subject_of(c["commit"]["message"]).startswith("Merge ")
-
-
-def low_signal(subject):
-    s = subject.lower().strip().rstrip(".!:;, ")
-    return not s or bool(_LOW.fullmatch(s))
-
-
-def own_commit(c, login):
-    """Written by `login` (by GitHub account, not just a name) and not a bot."""
-    author = c.get("author") or {}
-    return (author.get("login", "").lower() == login.lower()
-            and not is_bot(author, c["commit"]["author"].get("name", "")))
-
-
-def fetch_commits(gh, repo, login, since):
-    """Commits on the default branch by `login`: everything since `since`, and at least
-    the newest page, so the log can fall back to older work when the window is empty."""
-    out = []
-    try:
-        for page in gh.pages(f"/repos/{repo['full_name']}/commits", {"author": login, "per_page": 100}):
-            out += page
-            if len(page) < 100 or parse_time(page[-1]["commit"]["author"]["date"]) < since:
-                break
-    except DataError as e:
-        if "HTTP 409" in str(e):  # empty repository: no commits is the truth here
-            return []
-        raise
-    return out
-
-
 def collect(gh, login, now):
-    """Everything the section needs: how busy each day was (the contribution calendar), and
-    commits and releases for the ship log (public repos only)."""
-    since = now - dt.timedelta(days=LOOKBACK_DAYS)
+    """Everything the street needs: how busy each day was (the contribution calendar), and
+    releases for the fireworks (public repos only)."""
     per_day = gh.calendar(login)
     if max(per_day) < last_completed_day(now) - dt.timedelta(days=1):
         raise DataError(f"contribution calendar stops at {max(per_day)}; refusing to call that inactivity")
@@ -260,17 +186,11 @@ def collect(gh, login, now):
     if not repos:
         raise DataError(f"no public repos found for {login}; refusing to call that inactivity")
 
-    seen, commits, releases = set(), [], []
+    releases = []
     for repo in repos:
         name = repo["name"]
-        if name.lower() == login.lower():  # the profile repo never goes in the ship log
+        if name.lower() == login.lower():  # the profile repo's releases don't count
             continue
-        for c in fetch_commits(gh, repo, login, since):
-            if not own_commit(c, login) or is_merge(c) or c["sha"] in seen:
-                continue
-            seen.add(c["sha"])
-            commits.append(Event(name, parse_time(c["commit"]["author"]["date"]), subject_of(c["commit"]["message"]),
-                                 c["sha"][:7], c["html_url"], "commit", c["sha"]))
         for r in next(gh.pages(f"/repos/{repo['full_name']}/releases", {"per_page": 100}), []):
             if r.get("draft") or is_bot(r.get("author")):
                 continue
@@ -278,140 +198,19 @@ def collect(gh, login, now):
             text = " ".join((r.get("name") or r.get("tag_name") or "").split())
             releases.append(Event(name, parse_time(when), text, r["tag_name"], r["html_url"], "release",
                                   r.get("target_commitish", "")))
-    return per_day, commits, releases
+    return per_day, releases
 
 
-# ---------------------------------------------------------------- mom's bucket
+# ---------------------------------------------------------------- days
 def last_completed_day(now):
     return now.astimezone(DHAKA).date() - dt.timedelta(days=1)
 
 
-def run_length(per_day, day, active):
-    n = 0
-    while n <= LOOKBACK_DAYS and (per_day.get(day - dt.timedelta(days=n), 0) > 0) == active:
-        n += 1
-    return n
-
-
-def bucket_for(per_day, releases, day):
-    """shipped > busy > streak > the rest."""
-    if any(r.day == day for r in releases):
-        return "shipped"
-    if per_day.get(day, 0) >= BUSY_COMMITS:
-        return "busy"
-    if per_day.get(day, 0) == 0:
-        quiet = run_length(per_day, day, False)
-        return "quiet_extreme" if quiet >= QUIET_EXTREME else "quiet_long" if quiet >= QUIET_LONG else "quiet_short"
-    if run_length(per_day, day, True) >= STREAK_DAYS:
-        return "streak"
-    return "steady"
-
-
-def load_lines(path):
-    data = json.loads(Path(path).read_text(encoding="utf-8"))
-    lines = data["lines"] if isinstance(data, dict) else data
-    ids = set()
-    for ln in lines:
-        missing = {"id", "bucket", "text", "source"} - ln.keys()
-        if missing:
-            raise DataError(f"line {ln.get('id', '?')} is missing {sorted(missing)}")
-        if ln["id"] in ids:
-            raise DataError(f"duplicate line id {ln['id']}")
-        ids.add(ln["id"])
-        if ln["bucket"] not in BUCKETS:
-            raise DataError(f"line {ln['id']}: unknown bucket {ln['bucket']!r}")
-        if ln["source"] not in SOURCES:
-            raise DataError(f"line {ln['id']}: source must be model or placeholder, not {ln['source']!r}")
-        if not ln["text"].strip() or len(ln["text"]) > LINE_MAX or "\n" in ln["text"]:
-            raise DataError(f"line {ln['id']}: text must be one line of 1-{LINE_MAX} characters")
-    empty = [b for b in BUCKETS if not any(ln["bucket"] == b for ln in lines)]
-    if empty:
-        raise DataError(f"no lines for bucket(s) {empty}")
-    return lines
-
-
-def _h(*parts):
-    return int(hashlib.sha256("|".join(map(str, parts)).encode()).hexdigest()[:12], 16)
-
-
-def pick_line(lines, bucket, day, history):
-    """Same date and history in, same line out. Lines used in the last 14 days are skipped;
-    if the bucket has run out, the one used longest ago wins."""
-    pool = sorted((ln for ln in lines if ln["bucket"] == bucket), key=lambda ln: ln["id"])
-    used = {}
-    for h in history:
-        d = dt.date.fromisoformat(h["date"])
-        if d == day:
-            again = next((ln for ln in pool if ln["id"] == h["id"]), None)
-            if again:
-                return again  # a rerun on the same day keeps the same line
-        elif d < day:
-            used[h["id"]] = max(used.get(h["id"], d), d)
-    fresh = [ln for ln in pool if ln["id"] not in used or (day - used[ln["id"]]).days >= NO_REPEAT_DAYS]
-    if fresh:
-        return fresh[_h(day, bucket) % len(fresh)]
-    return min(pool, key=lambda ln: (used[ln["id"]], _h(day, ln["id"])))
-
-
-def remember(history, day, line_id, keep_days=30):
-    out = [h for h in history if h["date"] != day.isoformat()
-           and (day - dt.date.fromisoformat(h["date"])).days < keep_days]
-    return sorted(out + [{"date": day.isoformat(), "id": line_id}], key=lambda h: h["date"])
-
-
-# ---------------------------------------------------------------- ship log
-def ship_log(commits, releases, now):
-    """Up to 5 entries, newest first, at most 2 per repo. A release beats the commits from
-    the same repo and day (and the commit it was cut from)."""
-    released = {(r.repo, r.day) for r in releases} | {(r.repo, r.sha) for r in releases if r.sha}
-    events = [r for r in releases if not low_signal(r.text)]
-    events += [c for c in commits
-               if (c.repo, c.day) not in released and (c.repo, c.sha) not in released and not low_signal(c.text)]
-    events.sort(key=lambda e: e.when, reverse=True)
-
-    def take(evs):
-        out, per = [], {}
-        for e in evs:
-            if per.get(e.repo, 0) < PER_REPO:
-                out.append(e)
-                per[e.repo] = per.get(e.repo, 0) + 1
-            if len(out) == MAX_ENTRIES:
-                break
-        return out
-
-    recent = take([e for e in events if e.when >= now - dt.timedelta(days=LOOKBACK_DAYS)])
-    return recent or take(events)  # nothing lately: show the latest real work, with its real dates
-
-
-# ---------------------------------------------------------------- markdown
-_MD = re.compile(r"([\\`*_\[\]|~])")
-
-
-def esc(text):
-    return _MD.sub(r"\\\1", html.escape(text, quote=False))
-
-
-def truncate(text, n=SUBJECT_MAX):
-    return text if len(text) <= n else text[:n - 1].rstrip() + "…"
-
-
-def entry_md(e):
-    url = e.url.replace("(", "%28").replace(")", "%29").replace(" ", "%20")
-    return f"- `{e.day.isoformat()}` **{esc(e.repo)}** — {esc(truncate(e.text))} ([{esc(e.label)}]({url}))"
-
-
-def render(line, all_model, entries, img, alt):
-    out = ["<!-- generated by scripts/activity.py every night; edits in here get overwritten -->", "",
-           '<p align="center">',
-           f'  <img src="{img}" width="100%" alt="{html.escape(alt)}">',
-           "</p>", ""]
-    out += [f"> **Mom:** {esc(line['text'])}", ""]
-    if all_model:
-        out += [CAPTION, ""]
-    out += ["<details>", "<summary><b>Ship log</b></summary>", ""]
-    out += [entry_md(e) for e in entries] or ["_Nothing shipped yet._"]
-    out += ["", "</details>"]
-    return "\n".join(out)
+def render(img, alt):
+    return "\n".join(["<!-- generated by scripts/activity.py every night; edits in here get overwritten -->", "",
+                      '<p align="center">',
+                      f'  <img src="{img}" width="100%" alt="{html.escape(alt)}">',
+                      "</p>"])
 
 
 def replace_section(readme, body):
@@ -423,34 +222,27 @@ def replace_section(readme, body):
 
 
 # ---------------------------------------------------------------- main
-def build(gh, login, now, lines, history, data=None):
-    per_day, commits, releases = data or collect(gh, login, now)
+def build(gh, login, now, data=None):
+    per_day, releases = data or collect(gh, login, now)
     day = last_completed_day(now)
-    bucket = bucket_for(per_day, releases, day)
-    line = pick_line(lines, bucket, day, history)
     svg, alt = street.draw(per_day, {r.day for r in releases}, day)
     img = f"assets/street.svg?v={day.isoformat()}"  # a new URL each day, so GitHub's image cache lets go
-    body = render(line, all(ln["source"] == "model" for ln in lines), ship_log(commits, releases, now), img, alt)
-    return body, svg, bucket, day, line
+    return render(img, alt), svg, day
 
 
 def demo_data(now):
     """Made-up but plausible activity, for previewing the street without the network."""
     rng = random.Random(7)
     today = now.astimezone(DHAKA).date()
-    per_day, commits, releases = {}, [], []
+    per_day, releases = {}, []
     for k in range(1, LOOKBACK_DAYS):
         d = today - dt.timedelta(days=k)
         burst = (k // 9) % 2 == 0
         if rng.random() < (0.8 if burst else 0.3):
             per_day[d] = rng.randint(1, 4) + (rng.randint(2, 12) if burst and rng.random() < 0.4 else 0)
-    for k, (repo, text) in enumerate([("Bouncer", "Add per-verdict query trace"), ("PetniHunter", "Bangla ghost-entity guard"),
-                                      ("AgriSense", "Shift season plan on weather alerts"), ("Bouncer", "Graph map page")]):
-        when = dt.datetime.combine(today - dt.timedelta(days=2 + 5 * k), dt.time(12), DHAKA)
-        commits.append(Event(repo, when, text, f"{k:07x}", f"https://github.com/ayeshamashiat/{repo}", "commit"))
     releases.append(Event("Touch-Grass-Babu", dt.datetime.combine(today - dt.timedelta(days=11), dt.time(20), DHAKA),
                           "Touch Grass, Babu 1.0", "v1.0", "https://github.com/ayeshamashiat/Touch-Grass-Babu", "release"))
-    return per_day, commits, releases
+    return per_day, releases
 
 
 def main(argv=None, gh=None):
@@ -458,8 +250,6 @@ def main(argv=None, gh=None):
     ap.add_argument("login", nargs="?", default=os.environ.get("GITHUB_REPOSITORY_OWNER", "ayeshamashiat"))
     ap.add_argument("--dry-run", action="store_true", help="print the section, write nothing")
     ap.add_argument("--readme", type=Path, default=ROOT / "README.md")
-    ap.add_argument("--lines", type=Path, default=ROOT / "data/mom-lines.json")
-    ap.add_argument("--history", type=Path, default=ROOT / "data/mom-history.json")
     ap.add_argument("--svg", type=Path, default=ROOT / "assets/street.svg")
     ap.add_argument("--now", help="pretend it's this ISO time (for checking a past day)")
     ap.add_argument("--demo", action="store_true", help="fake activity, no network (implies --dry-run)")
@@ -471,17 +261,14 @@ def main(argv=None, gh=None):
         now = now.replace(tzinfo=dt.timezone.utc)
     gh = gh or GitHub(os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN"))
     try:
-        lines = load_lines(args.lines)
-        history = json.loads(args.history.read_text(encoding="utf-8")) if args.history.exists() else []
         readme = args.readme.read_text(encoding="utf-8")
-        body, svg, bucket, day, line = build(gh, args.login, now, lines, history,
-                                             demo_data(now) if args.demo else None)
+        body, svg, day = build(gh, args.login, now, demo_data(now) if args.demo else None)
         new = replace_section(readme, body)
     except DataError as e:
         print(f"activity: {e}. README left untouched.", file=sys.stderr)
         return 1
 
-    print(f"activity: {day} (Asia/Dhaka) -> {bucket} -> {line['id']}", file=sys.stderr)
+    print(f"activity: {day} (Asia/Dhaka)", file=sys.stderr)
     if args.dry_run or args.demo:
         print(body)
         if args.preview:
@@ -495,8 +282,6 @@ def main(argv=None, gh=None):
     args.svg.parent.mkdir(parents=True, exist_ok=True)
     args.svg.write_text(svg, encoding="utf-8")
     args.readme.write_text(new, encoding="utf-8")
-    args.history.parent.mkdir(parents=True, exist_ok=True)
-    args.history.write_text(json.dumps(remember(history, day, line["id"]), indent=1) + "\n", encoding="utf-8")
     print(f"activity: wrote {args.readme.name}", file=sys.stderr)
     return 0
 
