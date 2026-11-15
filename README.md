@@ -8,7 +8,7 @@ Give me a second. I was doing something.
 
 <p align="center">
   <a href="https://ayeshamashiat.github.io/ayeshamashiat/desktop.svg">
-    <img src="assets/desktop.svg?v=7" width="100%" alt="Ayesha's desktop: a terminal with six folders: coding, reading, making cha, ML rabbit hole, nuclear accidents and questionable decisions.">
+    <img src="assets/desktop.svg?v=8" width="100%" alt="Ayesha's desktop: a terminal with six folders: coding, reading, making cha, ML rabbit hole, nuclear accidents and questionable decisions.">
   </a>
 </p>
 

@@ -287,8 +287,6 @@ def main():
          # a coffee ring, because of course
          f'<circle cx="842" cy="276" r="26" fill="none" stroke="{AMBER}" stroke-opacity=".10" stroke-width="3"/>',
          coding(), reading(), cha(), ml(), nuclear(), decisions(), tabs(),
-         f'<text x="{W / 2}" y="618" font-size="9.5" fill="{DIM}" text-anchor="middle" letter-spacing="2">'
-         f'CLICK FOR THE ONE THAT ACTUALLY OPENS ↗</text>',
          f'<g class="cursor"><path d="M0 0 L0 15 L4 11.5 L7 18 L9.5 17 L6.5 10.5 L11.5 10.5 Z" fill="#ffffff" '
          f'stroke="#000" stroke-width="1" stroke-linejoin="round"/></g>',
          '</g>',
